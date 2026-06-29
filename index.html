@@ -1,0 +1,1722 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CrowdAcadêmico - Protótipo Funcional v6</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=DM+Serif+Display&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'], serif: ['DM Serif Display', 'serif'] },
+                    colors: { primary: '#0F9B58', 'primary-dark': '#0B7A45', surface: '#F8FAFC', dark: '#0F172A' }
+                }
+            }
+        }
+    </script>
+    <style>
+        .view-section { display: none; opacity: 0; transition: opacity 0.3s ease-in-out; }
+        .view-section.active { display: block; opacity: 1; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        
+        .admin-menu-item { transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease; }
+        .admin-content-panel { transition: transform 0.2s ease, box-shadow 0.2s ease; box-shadow: 0 10px 20px rgba(15, 23, 42, 0.05); }
+        .admin-content-panel:hover { transform: translateY(-1px); box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08); }
+        
+        /* Toggle Switch Customizado para as configurações */
+        .toggle-checkbox:checked { right: 0; border-color: #0F9B58; }
+        .toggle-checkbox:checked + .toggle-label { background-color: #0F9B58; }
+        .toggle-checkbox { right: 0; z-index: 1; border-color: #e2e8f0; transition: all 0.3s; }
+        .toggle-label { width: 3rem; height: 1.5rem; background-color: #cbd5e1; border-radius: 9999px; transition: all 0.3s; }
+    </style>
+</head>
+<body class="bg-surface text-slate-800 flex flex-col min-h-screen">
+
+    <div class="fixed bottom-4 right-4 z-[9999] bg-dark text-white p-4 rounded-xl shadow-2xl text-xs font-mono opacity-30 hover:opacity-100 transition-opacity duration-300 border border-slate-700">
+        <div class="font-bold border-b border-slate-700 pb-2 mb-3 text-slate-300 uppercase tracking-widest text-[10px]">Telas do Protótipo</div>
+        <div class="grid grid-cols-2 gap-2 w-64">
+            <button onclick="nav('home')" class="bg-slate-800 hover:bg-primary px-3 py-2 rounded text-left transition-colors">1. Home</button>
+            <button onclick="nav('campanha')" class="bg-slate-800 hover:bg-primary px-3 py-2 rounded text-left transition-colors">2. Detalhes Proj</button>
+            <button onclick="nav('checkout')" class="bg-slate-800 hover:bg-primary px-3 py-2 rounded text-left transition-colors">3. Checkout PIX</button>
+            <button onclick="nav('login')" class="bg-slate-800 hover:bg-blue-600 px-3 py-2 rounded text-left transition-colors">4. Login/Cad</button>
+            <button onclick="nav('dash-user')" class="bg-slate-800 hover:bg-purple-600 px-3 py-2 rounded text-left transition-colors">5. Painel Doador</button>
+            <button onclick="nav('dash-pesq')" class="bg-slate-800 hover:bg-purple-600 px-3 py-2 rounded text-left transition-colors">6. Painel Pesq.</button>
+            <button onclick="nav('criar')" class="bg-slate-800 hover:bg-orange-600 px-3 py-2 rounded text-left transition-colors">7. Criar Projeto</button>
+            <button onclick="nav('admin')" class="bg-slate-800 hover:bg-red-600 px-3 py-2 rounded text-left transition-colors">8. Painel Administrativo</button>
+        </div>
+    </div>
+
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3 cursor-pointer" onclick="nav('home')">
+                <div class="w-9 h-9 bg-primary rounded-lg flex items-center justify-center text-white font-bold shadow-inner"><i class="fa-solid fa-flask"></i></div>
+                <span class="font-bold text-xl tracking-tight text-dark hidden sm:block">CrowdAcadêmico</span>
+            </div>
+            <nav class="hidden md:flex space-x-8 h-full">
+                <button onclick="nav('home')" class="text-dark font-bold border-b-2 border-primary h-full flex items-center">Explorar Projetos</button>
+                <button onclick="showAction('Seção “Como Funciona” simulada para o protótipo.');" class="text-slate-500 hover:text-dark font-medium h-full flex items-center transition-colors">Como Funciona</button>
+                <button onclick="showAction('Seção “Transparência LGPD” simulada para o protótipo.');" class="text-slate-500 hover:text-dark font-medium h-full flex items-center transition-colors">Transparência LGPD</button>
+            </nav>
+            <div class="flex items-center space-x-4">
+                <button onclick="nav('criar')" class="bg-primary hover:bg-primary-dark text-white px-5 py-2.5 rounded-lg font-bold transition-all text-sm shadow-md hidden lg:block">Submeter Pesquisa</button>
+                <button onclick="nav('dash-user')" class="bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-800 px-4 py-2.5 rounded-lg font-semibold transition-all text-sm flex items-center gap-2"><i class="fa-solid fa-circle-user text-slate-500"></i> Meu Painel</button>
+                <button onclick="nav('login')" class="text-slate-600 hover:text-dark font-semibold text-sm transition-colors">Entrar</button>
+            </div>
+        </div>
+    </header>
+
+    <div id="app" class="flex-grow flex flex-col w-full">
+
+        <main id="view-home" class="view-section active flex-grow">
+            <section class="bg-gradient-to-br from-[#0A1628] via-[#0F2D1E] to-[#0A1628] py-32 relative overflow-hidden border-b border-slate-800">
+                <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1532187863486-abf9dbad1b14?q=80&w=2070&auto=format&fit=crop')] opacity-[0.18] bg-cover bg-center"></div>
+                <div class="absolute inset-0 bg-gradient-to-b from-transparent via-[#0A1628]/75 to-[#0A1628]"></div>
+                <div class="absolute inset-0 bg-[radial-gradient(#10b981_0.8px,transparent_1px)] [background-size:32px_32px] opacity-[0.08]"></div>
+                <div class="absolute top-1/3 right-1/4 w-[28rem] h-[28rem] rounded-full bg-emerald-500/10 blur-[100px] pointer-events-none"></div>
+                <div class="absolute bottom-0 left-1/4 w-[20rem] h-[20rem] rounded-full bg-blue-500/10 blur-[80px] pointer-events-none"></div>
+
+                <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
+                    <div class="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest bg-white/10 backdrop-blur-md text-slate-300 px-3 py-2 rounded-full border border-white/15 mb-6">Requisito Funcional: Captar atenção e apresentar o propósito</div>
+                    <span class="inline-flex items-center gap-1.5 bg-emerald-500/15 backdrop-blur-sm text-emerald-300 text-xs font-bold px-4 py-2 rounded-full uppercase tracking-wider mb-7 border border-emerald-500/30">
+                        <i class="fa-solid fa-shield-check"></i> Pesquisadores Verificados via CNPq Lattes
+                    </span>
+                    <div class="inline-flex items-center justify-center text-xs uppercase tracking-[0.4em] font-black text-emerald-400 mb-5 block">CIÊNCIA FEITA NO BRASIL</div>
+                    <h1 class="font-serif text-5xl md:text-7xl text-white leading-tight mb-8 tracking-tight drop-shadow-[0_18px_24px_rgba(0,0,0,0.35)]">A pesquisa brasileira <br/>precisa de <span class="text-emerald-400">você</span>.</h1>
+                    <p class="text-lg md:text-xl text-slate-200 mb-10 max-w-2xl mx-auto leading-relaxed">Financiamento direto, transparente e sem burocracia entre sociedade e laboratórios universitários brasileiros.</p>
+                    <div class="flex flex-col sm:flex-row justify-center gap-4">
+                        <button onclick="document.getElementById('projetos').scrollIntoView({behavior:'smooth'})" class="bg-emerald-500 hover:bg-emerald-400 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all shadow-lg shadow-emerald-500/25 hover:-translate-y-0.5 hover:shadow-emerald-500/40">Apoiar um Projeto</button>
+                        <button onclick="nav('criar')" class="bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all">Sou Pesquisador</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-slate-50 py-20">
+                <div class="max-w-7xl mx-auto px-4">
+                    <div class="mb-10 text-center">
+                        <div class="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest bg-slate-100 text-slate-600 px-3 py-2 rounded-full border border-slate-200 mb-4">Requisito Funcional: Mostrar perfis de interação da plataforma</div>
+                        <h2 class="text-3xl md:text-4xl font-serif font-bold text-dark mb-3">Quatro perfis, uma experiência adaptada</h2>
+                        <p class="text-sm md:text-base text-slate-500 max-w-2xl mx-auto">Visitante anônimo, apoiador cadastrado, pesquisador e administrador aparecem com jornadas distintas e controle claro.</p>
+                    </div>
+                    <div id="profiles-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6"></div>
+                </div>
+            </section>
+
+            <section class="bg-gradient-to-r from-[#0B1E2D] via-[#10253B] to-[#0B2015] text-white py-14 relative overflow-hidden">
+                <div class="absolute inset-0 bg-[radial-gradient(#10b981_0.8px,transparent_1px)] [background-size:28px_28px] opacity-[0.05]"></div>
+                <div id="home-stats" class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-slate-700/50 relative z-10"></div>
+            </section>
+
+            <section id="projetos" class="max-w-7xl mx-auto px-4 py-20 flex flex-col lg:flex-row gap-10">
+                <aside class="w-full lg:w-64 flex-shrink-0">
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm sticky top-24">
+                        <h3 class="font-bold text-lg text-dark mb-6 flex items-center gap-2"><i class="fa-solid fa-filter text-slate-400"></i> Filtros</h3>
+                        
+                        <div class="mb-6">
+                            <h4 class="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-3">Status da Captação</h4>
+                            <div class="space-y-3">
+                                <label class="flex items-center text-sm font-medium text-slate-700 cursor-pointer group"><input type="checkbox" checked class="mr-3 w-4 h-4 text-primary rounded border-slate-300 focus:ring-primary accent-primary"><span class="group-hover:text-primary transition-colors">Em captação</span></label>
+                                <label class="flex items-center text-sm font-medium text-slate-700 cursor-pointer group"><input type="checkbox" class="mr-3 w-4 h-4 text-primary rounded border-slate-300 focus:ring-primary accent-primary"><span class="group-hover:text-primary transition-colors">Financiados (Sucesso)</span></label>
+                            </div>
+                        </div>
+
+                        <div class="mb-6">
+                            <h4 class="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-3">Área de Conhecimento</h4>
+                            <div class="space-y-3">
+                                <label class="flex items-center text-sm font-medium text-slate-700 cursor-pointer group"><input type="checkbox" class="mr-3 w-4 h-4 accent-primary rounded"><span class="group-hover:text-primary transition-colors">Ciências Biológicas</span></label>
+                                <label class="flex items-center text-sm font-medium text-slate-700 cursor-pointer group"><input type="checkbox" class="mr-3 w-4 h-4 accent-primary rounded"><span class="group-hover:text-primary transition-colors">Exatas e Engenharias</span></label>
+                                <label class="flex items-center text-sm font-medium text-slate-700 cursor-pointer group"><input type="checkbox" class="mr-3 w-4 h-4 accent-primary rounded"><span class="group-hover:text-primary transition-colors">Ciências da Saúde</span></label>
+                                <label class="flex items-center text-sm font-medium text-slate-700 cursor-pointer group"><input type="checkbox" class="mr-3 w-4 h-4 accent-primary rounded"><span class="group-hover:text-primary transition-colors">Ciências Humanas</span></label>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h4 class="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-3">Modelo de Financiamento</h4>
+                            <div class="space-y-3">
+                                <label class="flex items-center text-sm font-medium text-slate-700 cursor-pointer group"><input type="radio" name="filtro-modelo" checked class="mr-3 w-4 h-4 accent-primary"><span class="group-hover:text-primary transition-colors">Todos</span></label>
+                                <label class="flex items-center text-sm font-medium text-slate-700 cursor-pointer group"><input type="radio" name="filtro-modelo" class="mr-3 w-4 h-4 accent-primary"><span class="group-hover:text-primary transition-colors">Tudo ou Nada</span></label>
+                                <label class="flex items-center text-sm font-medium text-slate-700 cursor-pointer group"><input type="radio" name="filtro-modelo" class="mr-3 w-4 h-4 accent-primary"><span class="group-hover:text-primary transition-colors">Flexível</span></label>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+
+                <div class="flex-1">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
+                        <h2 class="text-2xl font-serif text-dark font-bold">Projetos em Destaque</h2>
+                        <select class="bg-white border border-slate-200 text-sm font-medium text-slate-700 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary px-4 py-2.5 outline-none shadow-sm cursor-pointer">
+                            <option>Mais recentes</option>
+                            <option>Maior percentual atingido</option>
+                            <option>Encerrando em breve</option>
+                        </select>
+                    </div>
+
+                    <div id="project-cards" class="grid grid-cols-1 lg:grid-cols-3 gap-10"></div>
+                    
+                    <div class="mt-12 text-center">
+                        <button onclick="showAction('Mais projetos serão exibidos em versões futuras do protótipo.');" class="bg-white border-2 border-slate-200 text-slate-600 font-bold py-3 px-8 rounded-xl hover:bg-slate-50 hover:border-slate-300 hover:text-dark transition-all shadow-sm">Carregar mais projetos</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <main id="view-campanha" class="view-section flex-grow">
+            <section class="bg-gradient-to-br from-[#0A1628] via-[#0F2D1E] to-[#0A1628] pt-14 pb-24 border-b border-slate-800 relative overflow-hidden">
+                <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1532187863486-abf9dbad1b14?q=80&w=2070&auto=format&fit=crop')] opacity-[0.18] bg-cover bg-center"></div>
+                <div class="absolute inset-0 bg-gradient-to-b from-transparent via-[#0A1628]/70 to-[#0A1628]"></div>
+                <div class="absolute inset-0 bg-[radial-gradient(#10b981_0.8px,transparent_1px)] [background-size:32px_32px] opacity-[0.065]"></div>
+                <div class="max-w-7xl mx-auto px-4 relative z-10">
+                    <div class="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest bg-white/10 text-slate-300 px-3 py-2 rounded-full border border-white/15 mb-6">Requisito Funcional: RF-044 / RF-033 — Tela de detalhes de projeto com CTA de apoio</div>
+                    <p class="text-sm font-medium text-slate-300 mb-6 flex items-center gap-2"><span class="cursor-pointer hover:text-white transition" onclick="nav('home')"><i class="fa-solid fa-house text-xs"></i> Home</span> <i class="fa-solid fa-chevron-right text-[10px]"></i> Ciências Biológicas</p>
+                    <span class="bg-amber-500/20 text-amber-200 border border-amber-500/30 text-[10px] font-black px-3 py-1.5 rounded-full uppercase tracking-widest mb-4 inline-block">Projeto Tudo ou Nada</span>
+                    <h1 class="text-3xl md:text-5xl font-serif text-white font-bold leading-tight max-w-4xl mb-6">Análise do impacto de microplásticos na saúde de peixes nativos do Rio Paraná</h1>
+                    <div class="flex flex-col sm:flex-row sm:items-center gap-4 text-slate-300 text-sm font-medium">
+                        <span class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-emerald-500 flex items-center justify-center text-white font-bold text-xs">M</div> Dra. Marina Souza (UNESP)</span>
+                        <span class="text-slate-600">|</span>
+                        <span><i class="fa-solid fa-location-dot mr-1"></i> Ilha Solteira, SP</span>
+                        <span class="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-200 text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full">2 endossos aprovados</span>
+                    </div>
+                </div>
+            </section>
+
+            <div class="max-w-7xl mx-auto px-4 -mt-16 pb-16 flex flex-col lg:flex-row gap-10 relative z-10">
+                <div class="flex-1">
+                    <div class="w-full aspect-video bg-slate-900 rounded-2xl overflow-hidden relative flex items-center justify-center mb-10 shadow-2xl group cursor-pointer border-4 border-white">
+                        <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1200&q=80" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-105 transition-transform duration-700">
+                        <div class="w-20 h-20 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center z-10 group-hover:bg-primary transition-colors border border-white/30">
+                            <i class="fa-solid fa-play text-white text-2xl ml-1"></i>
+                        </div>
+                        <span class="absolute bottom-4 left-4 bg-white/90 text-slate-700 text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full border border-slate-200">RF-033: Vídeo incorporado</span>
+                    </div>
+
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 mb-8 p-2 flex gap-2 overflow-x-auto hide-scrollbar">
+                        <button onclick="setProjectTab('sobre')" id="tab-btn-sobre" class="bg-slate-100 text-dark font-bold px-6 py-3 rounded-xl text-sm whitespace-nowrap transition">Sobre a Pesquisa</button>
+                        <button onclick="setProjectTab('metodologia')" id="tab-btn-metodologia" class="text-slate-500 hover:bg-slate-50 hover:text-dark font-medium px-6 py-3 rounded-xl text-sm whitespace-nowrap transition">Metodologia e Custos</button>
+                        <button onclick="setProjectTab('atualizacoes')" id="tab-btn-atualizacoes" class="text-slate-500 hover:bg-slate-50 hover:text-dark font-medium px-6 py-3 rounded-xl text-sm whitespace-nowrap transition flex items-center gap-2">Atualizações <span class="bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full text-[10px] font-bold">3</span></button>
+                        <button onclick="setProjectTab('endossos')" id="tab-btn-endossos" class="text-slate-500 hover:bg-slate-50 hover:text-dark font-medium px-6 py-3 rounded-xl text-sm whitespace-nowrap transition flex items-center gap-2">Endossos Acadêmicos <span class="bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full text-[10px] font-bold">2</span></button>
+                    </div>
+
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-8 md:p-10">
+                        <div id="tab-sobre" class="tab-content active">
+                            <div class="prose prose-slate prose-lg max-w-none prose-headings:font-serif prose-headings:text-dark prose-p:text-slate-600 prose-a:text-primary">
+                                <p class="lead text-xl text-slate-700 font-medium mb-8">O Rio Paraná é um dos ecossistemas aquáticos mais importantes do Brasil. Recentemente, detectamos altas concentrações de polímeros sintéticos em amostras preliminares. Este projeto visa investigar os impactos fisiológicos e genéticos dessa contaminação na ictiofauna nativa.</p>
+                                
+                                <h3 class="text-2xl mt-10 mb-4 border-b border-slate-100 pb-2">O Problema</h3>
+                                <p>Durante 18 meses, coletaremos amostras em 5 pontos críticos da bacia. Realizaremos análises de microscopia confocal, testes de toxicidade aguda e sequenciamento de DNA. Os resultados fomentarão políticas públicas de proteção ambiental e regulação de descarte industrial.</p>
+                                
+                                <div class="bg-blue-50 border-l-4 border-blue-500 p-6 rounded-r-xl my-8">
+                                    <h4 class="text-blue-900 font-bold m-0 mb-2 text-lg">Por que financiar este projeto?</h4>
+                                    <p class="text-blue-800 m-0 text-sm">A pesquisa sobre microplásticos em águas doces brasileiras ainda é escassa. O fomento tradicional sofreu cortes, e a janela climática para coleta exige ação imediata neste semestre.</p>
+                                </div>
+
+                                <h3 class="text-2xl mt-10 mb-6 border-b border-slate-100 pb-2">Destinação dos Recursos</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 not-prose mb-8">
+                                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-100">
+                                        <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center text-primary mb-4"><i class="fa-solid fa-microscope text-lg"></i></div>
+                                        <h4 class="font-bold text-dark text-sm mb-1">Equipamentos</h4>
+                                        <div class="text-lg font-black text-primary mb-2">R$ 18.000</div>
+                                        <p class="text-xs text-slate-500">Aluguel de horas no microscópio confocal e digestor de amostras.</p>
+                                    </div>
+                                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-100">
+                                        <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center text-primary mb-4"><i class="fa-solid fa-vial text-lg"></i></div>
+                                        <h4 class="font-bold text-dark text-sm mb-1">Reagentes</h4>
+                                        <div class="text-lg font-black text-primary mb-2">R$ 12.000</div>
+                                        <p class="text-xs text-slate-500">Kits de extração de DNA e solventes HPLC de alta pureza.</p>
+                                    </div>
+                                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-100">
+                                        <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center text-primary mb-4"><i class="fa-solid fa-book-open text-lg"></i></div>
+                                        <h4 class="font-bold text-dark text-sm mb-1">Publicação</h4>
+                                        <div class="text-lg font-black text-primary mb-2">R$ 5.000</div>
+                                        <p class="text-xs text-slate-500">Taxas de publicação em periódicos científicos (Open Access).</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tab-metodologia" class="tab-content">
+                            <h3 class="text-2xl font-semibold text-dark mb-4">Metodologia e Custos</h3>
+                            <p class="text-slate-600 mb-6">O protótipo apresenta a capacidade da plataforma em expor com clareza custos de campo, análises de laboratório e publicações científicas. Esta visão ajuda o apoiador a entender onde o recurso será aplicado.</p>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                <div class="bg-slate-50 p-6 rounded-3xl border border-slate-200">
+                                    <h4 class="font-bold text-dark mb-3">Metodologia</h4>
+                                    <ul class="list-disc list-inside text-sm text-slate-600 space-y-2">
+                                        <li>Coleta de amostras em 5 pontos críticos.</li>
+                                        <li>Análises de microscopia confocal e sequenciamento.</li>
+                                        <li>Testes de toxicidade e modelagem ambiental.</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-slate-50 p-6 rounded-3xl border border-slate-200">
+                                    <h4 class="font-bold text-dark mb-3">Custo estimado</h4>
+                                    <ul class="list-disc list-inside text-sm text-slate-600 space-y-2">
+                                        <li>R$ 18.000 em equipamentos.</li>
+                                        <li>R$ 12.000 em reagentes.</li>
+                                        <li>R$ 5.000 em publicações.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tab-atualizacoes" class="tab-content">
+                            <h3 class="text-2xl font-semibold text-dark mb-4">Atualizações de Campanha</h3>
+                            <ul class="space-y-5 text-slate-600">
+                                <li class="bg-slate-50 p-5 rounded-3xl border border-slate-200">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <span class="font-bold text-dark">15/05/2026</span>
+                                        <span class="text-xs text-slate-500 uppercase tracking-widest">Atualizado</span>
+                                    </div>
+                                    <p>Nova análise laboratorial confirma presença de microplásticos em 4 espécies nativas.</p>
+                                </li>
+                                <li class="bg-slate-50 p-5 rounded-3xl border border-slate-200">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <span class="font-bold text-dark">01/05/2026</span>
+                                        <span class="text-xs text-slate-500 uppercase tracking-widest">Planejamento</span>
+                                    </div>
+                                    <p>Definidos protocolos de coleta e cronograma de amostragem para os próximos 3 meses.</p>
+                                </li>
+                            </ul>
+                        </div>
+                        <div id="tab-endossos" class="tab-content">
+                            <div class="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest bg-emerald-100 text-emerald-800 px-3 py-2 rounded-full border border-emerald-200 mb-6">RF-064: Seção de Endossos Acadêmicos</div>
+                            <div class="bg-emerald-50 border border-emerald-100 rounded-3xl p-5 mb-6 text-sm text-emerald-800">
+                                <p class="font-semibold">Endossos aprovados são visíveis publicamente nesta página como prova de suporte acadêmico.</p>
+                            </div>
+                            <h3 class="text-2xl font-semibold text-dark mb-4">Endossos Acadêmicos</h3>
+                            <div class="space-y-4 text-slate-600">
+                                <p class="bg-slate-50 p-5 rounded-3xl border border-slate-200">Dra. Luciana Pereira, Universidade Estadual, endossa o projeto por seu impacto ambiental e base metodológica sólida.</p>
+                                <p class="bg-slate-50 p-5 rounded-3xl border border-slate-200">Instituto de Pesquisa em Recursos Hídricos destaca a importância de dados reais para políticas públicas.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w-full lg:w-[400px] flex-shrink-0">
+                    <div class="sticky top-24 space-y-6">
+                        
+                        <div class="bg-white rounded-2xl border border-slate-200 p-8 shadow-xl">
+                            <div class="mb-8">
+                                <div class="text-5xl font-black text-dark mb-2 tracking-tight">R$ 22.750</div>
+                                <p class="text-sm text-slate-500 font-medium">arrecadados da meta de R$ 35.000</p>
+                            </div>
+                            
+                            <div class="w-full bg-slate-100 rounded-full h-3 mb-6 overflow-hidden border border-slate-200/50">
+                                <div class="bg-primary h-full rounded-full" style="width: 65%"></div>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 gap-4 mb-8">
+                                <div class="bg-slate-50 rounded-xl p-3 border border-slate-100 text-center">
+                                    <div class="text-xl font-bold text-dark">65%</div>
+                                    <div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Atingido</div>
+                                </div>
+                                <div class="bg-amber-50 rounded-xl p-3 border border-amber-100 text-center">
+                                    <div class="text-xl font-bold text-amber-700">18</div>
+                                    <div class="text-[10px] uppercase font-bold text-amber-600/70 tracking-wider">Dias Restantes</div>
+                                </div>
+                            </div>
+
+                            <button onclick="nav('checkout')" class="w-full bg-primary hover:bg-primary-dark text-white font-bold text-lg py-4 rounded-xl transition-all shadow-lg hover:shadow-primary/30 hover:-translate-y-0.5 flex items-center justify-center gap-2 mb-4">
+                                Apoiar esta Pesquisa <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                            
+                            <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 mb-6 text-sm text-slate-600">
+                                <p class="font-semibold text-slate-800 mb-2">Fluxo de contribuição</p>
+                                <p class="leading-relaxed">Para apoiar anonimamente, siga para o checkout PIX. Usuários logados podem ter opções extras de pagamento via cartão ou boleto, mas elas não estão disponíveis neste fluxo anônimo.</p>
+                            </div>
+                            
+                            <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 mb-6 text-sm text-slate-600">
+                                <p class="font-semibold text-slate-800 mb-2">Modelo de financiamento</p>
+                                <p class="leading-relaxed">Este projeto usa o modelo <strong>Tudo ou Nada</strong>: se a meta não for atingida, as contribuições não são cobradas ou são devolvidas. No modelo Flexível, o valor arrecadado permanece com o projeto.</p>
+                            </div>
+                            
+                            <div class="mb-6 text-sm text-slate-600 leading-relaxed">
+                                <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 mb-4">
+                                    <p class="font-semibold text-slate-800 mb-2">Regras de pagamento</p>
+                                    <p>Contribuições anônimas são aceitas apenas via <strong>PIX</strong>. Cartão de crédito, débito e boleto estão disponíveis somente para usuários cadastrados e autenticados.</p>
+                                </div>
+                                <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 mb-4">
+                                    <p class="font-semibold text-slate-800 mb-2">Modelo de financiamento</p>
+                                    <ul class="list-disc list-inside text-sm text-slate-600 space-y-2">
+                                        <li><strong>Tudo ou Nada:</strong> se a meta não for atingida, as contribuições são estornadas ou não cobradas.</li>
+                                        <li><strong>Flexível:</strong> o valor arrecadado é mantido mesmo que a meta não seja alcançada.</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 text-xs text-amber-800 leading-relaxed flex items-start gap-3">
+                                    <i class="fa-solid fa-shield-halved mt-0.5 text-amber-500 text-lg"></i>
+                                    <div><strong>Garantia Tudo ou Nada:</strong> Seu apoio só é efetivado (cobrado ou não devolvido) se o projeto atingir 100% da meta no prazo. Risco zero.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+                            <h3 class="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-5 border-b border-slate-100 pb-3">Pesquisador Responsável</h3>
+                            <div class="flex items-center gap-4 mb-5">
+                                <div class="w-14 h-14 bg-emerald-100 border border-emerald-200 text-emerald-700 rounded-full flex items-center justify-center text-xl font-black shadow-inner">M</div>
+                                <div>
+                                    <div class="font-bold text-dark text-base flex items-center gap-1.5">Dra. Marina Souza <i class="fa-solid fa-circle-check text-primary text-xs" title="Identidade Validada"></i></div>
+                                    <div class="text-xs text-slate-500 mb-0.5">Laboratório de Ecologia Aquática</div>
+                                    <div class="text-xs font-bold text-slate-600">UNESP Ilha Solteira</div>
+                                </div>
+                            </div>
+                            <a href="#" onclick="showAction('Link Lattes aberto.'); return false;" class="w-full inline-flex justify-center items-center gap-2 border-2 border-slate-200 text-slate-700 hover:border-slate-300 hover:bg-slate-50 text-sm font-bold py-3 rounded-xl transition-all">
+                                <i class="fa-solid fa-link text-slate-400"></i> Ver Currículo Lattes
+                            </a>
+                            
+                            <div class="mt-6 pt-4 border-t border-slate-100 text-center">
+                                <button onclick="showAction('Denúncia simulada. A moderação é parte do fluxo prototipado.');" class="text-xs font-bold text-slate-400 hover:text-red-500 transition flex items-center justify-center w-full gap-1.5">
+                                    <i class="fa-regular fa-flag"></i> Denunciar irregularidade
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <main id="view-checkout" class="view-section flex-grow bg-slate-50 py-12">
+            <div class="max-w-4xl mx-auto px-4">
+                <div class="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest bg-slate-100 text-slate-600 px-3 py-2 rounded-full border border-slate-200 mb-4">Requisito Funcional: Simular fluxo de pagamento PIX para apoio rápido</div>
+                <p class="max-w-4xl text-sm text-slate-500 mb-6">Esta tela simula o fluxo de contribuição anônima via PIX. Cartão de crédito, débito e boleto são liberados apenas para usuários cadastrados. O QR Code expira em 30 minutos.</p>
+            </div>
+            <div class="max-w-4xl mx-auto px-4 flex flex-col md:flex-row gap-8">
+                <div class="flex-1 bg-white rounded-3xl border border-slate-200 shadow-xl overflow-hidden">
+                    <div class="bg-dark px-8 py-5 flex justify-between items-center">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-brands fa-pix text-emerald-400 text-2xl"></i>
+                            <h2 class="font-bold text-white text-lg">Pagamento Instantâneo</h2>
+                        </div>
+                        <span class="bg-amber-500/20 border border-amber-500/50 text-amber-300 text-[10px] font-black px-3 py-1.5 rounded-full uppercase tracking-widest animate-pulse">Aguardando Pagamento...</span>
+                    </div>
+                    
+                    <div class="p-10 flex flex-col items-center text-center relative overflow-hidden">
+                        <div class="absolute -top-24 -right-24 w-48 h-48 bg-emerald-50 rounded-full blur-3xl opacity-50 pointer-events-none"></div>
+                        
+                        <h3 class="text-xl font-bold text-dark mb-2">Escaneie o QR Code</h3>
+                        <p class="text-sm text-slate-500 mb-8 max-w-sm">Abra o aplicativo do seu banco, selecione a opção "PIX" e escaneie a imagem abaixo.</p>
+                        
+                        <div class="w-56 h-56 border-2 border-slate-100 p-3 rounded-2xl mb-8 bg-white shadow-lg relative mx-auto group">
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=CrowdAcademicoTCC_Lucas_Alexia" class="w-full h-full opacity-90 group-hover:opacity-100 transition-opacity">
+                            <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-white/50 backdrop-blur-sm rounded-xl">
+                                <i class="fa-brands fa-pix text-6xl text-emerald-500 drop-shadow-md"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="w-full max-w-md mb-8">
+                            <label class="block text-left text-[11px] font-black text-slate-400 uppercase tracking-widest mb-2">Ou utilize o Pix Copia e Cola:</label>
+                            <div class="flex rounded-xl shadow-sm overflow-hidden border-2 border-slate-200 focus-within:border-primary transition-colors bg-slate-50">
+                                <input id="pix-code" type="text" readonly value="00020126580014br.gov.bcb.pix.0136123e4567-e89b-12d3-a456-426614174000..." class="flex-1 bg-transparent p-4 text-sm font-mono text-slate-600 outline-none truncate">
+                                <button onclick="copyPix()" class="bg-dark hover:bg-black text-white px-6 font-bold text-sm transition-colors border-l border-slate-200">Copiar</button>
+                            </div>
+                        </div>
+                        
+                        <div class="inline-flex items-center gap-3 font-mono bg-amber-50 border border-amber-200 text-amber-800 px-5 py-2.5 rounded-lg text-sm font-bold shadow-sm">
+                            <i class="fa-regular fa-clock animate-spin-slow"></i> Expira em: <span class="text-red-600">14:59</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w-full md:w-96 flex-shrink-0 h-max">
+                    <div class="bg-white border border-slate-200 rounded-3xl p-8 shadow-xl mb-4 relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-full h-2 bg-primary"></div>
+                        
+                        <h3 class="font-bold text-dark text-lg mb-6 pb-4 border-b border-slate-100">Resumo da Contribuição</h3>
+                        
+                        <div class="space-y-4 text-sm mb-8">
+                            <div class="flex justify-between items-start gap-4">
+                                <span class="text-slate-500 font-medium">Projeto</span>
+                                <span class="font-bold text-dark text-right truncate">Microplásticos no Rio Paraná</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-500 font-medium">Apoio Financeiro</span>
+                                <span class="font-bold text-dark">R$ 150,00</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-500 font-medium">Taxa de Transação</span>
+                                <span class="text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded text-xs border border-emerald-100">Isento via PIX</span>
+                            </div>
+                            <div class="border-t-2 border-dashed border-slate-200 pt-5 mt-5 flex justify-between items-center">
+                                <span class="font-black text-slate-800 uppercase tracking-wider text-xs">Total a pagar</span>
+                                <span class="text-2xl font-black text-primary">R$ 150,00</span>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 mb-6 text-sm text-slate-600">
+                            <p class="font-semibold text-slate-800 mb-2">Regras de contribuição</p>
+                            <p class="leading-relaxed">PIX é o meio disponível para apoiadores anônimos. Cartão de crédito, débito e boleto são liberados apenas para usuários cadastrados. O valor mínimo por contribuição é <strong>R$ 5,00</strong> (RF-056).</p>
+                        </div>
+                        
+                        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 mb-6 text-sm text-slate-600">
+                            <p class="font-semibold text-slate-800 mb-2">Aviso importante</p>
+                            <p class="leading-relaxed">Esta contribuição está sujeita aos termos específicos do modelo <strong>Tudo ou Nada</strong>. No modelo Flexível, o recurso continua com o projeto mesmo que a meta não seja atingida.</p>
+                        </div>
+                        
+                        <label class="flex items-start gap-3 cursor-pointer p-4 bg-slate-50 rounded-xl border border-slate-200 mb-8 hover:bg-slate-100 transition-colors">
+                            <input type="checkbox" checked class="mt-1 w-4 h-4 accent-primary rounded border-slate-300">
+                            <span class="text-xs text-slate-600 font-medium leading-relaxed">Li e aceito os <strong class="text-primary">Termos de Pagamento</strong> desta transação e compreendo as regras do modelo de financiamento <strong class="text-dark">Tudo ou Nada</strong>, incluindo as condições de reembolso aplicáveis. (RF-054)</span>
+                        </label>
+                        
+                        <button onclick="alert('Simulação: Webhook da API confirmou o pagamento 200 OK!'); nav('dash-user')" class="w-full bg-dark hover:bg-black text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-bolt text-yellow-400"></i> Simular Pagamento Concluído
+                        </button>
+                    </div>
+                    
+                    <button onclick="nav('campanha')" class="w-full text-slate-500 hover:text-dark text-sm font-bold flex items-center justify-center gap-2 py-2">
+                        <i class="fa-solid fa-arrow-left"></i> Cancelar contribuição
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <main id="view-login" class="view-section bg-surface">
+            <div class="min-h-[calc(100vh-4rem)] flex items-center justify-center p-4">
+                <div class="max-w-md w-full bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden">
+                    <div class="px-10 pt-8">
+                        <div class="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest bg-slate-100 text-slate-600 px-3 py-2 rounded-full border border-slate-200 mb-6">Requisito Funcional: Tela de login / cadastro de usuário</div>
+                    </div>
+                    <div class="p-10 text-center border-b border-slate-100 relative overflow-hidden bg-slate-50">
+                        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-32 bg-primary/20 rounded-full blur-3xl"></div>
+                        
+                        <div class="w-14 h-14 bg-primary rounded-2xl mx-auto flex items-center justify-center text-white font-bold text-2xl mb-5 shadow-lg relative z-10"><i class="fa-solid fa-flask"></i></div>
+                        <h2 class="text-3xl font-serif font-bold text-dark mb-2 relative z-10">Bem-vindo(a)</h2>
+                        <p class="text-sm text-slate-500 font-medium relative z-10">Acesse sua conta para apoiar a ciência brasileira.</p>
+                    </div>
+                    
+                    <div class="p-10 space-y-6">
+                        <div>
+                            <label class="block text-[11px] font-black text-slate-400 uppercase tracking-widest mb-2">Seu E-mail</label>
+                            <input type="email" class="w-full bg-slate-50 border-2 border-slate-200 rounded-xl p-3.5 outline-none focus:border-primary focus:bg-white text-sm font-medium transition-colors" placeholder="seu@email.com">
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <label class="block text-[11px] font-black text-slate-400 uppercase tracking-widest">Sua Senha</label>
+                                <a href="#" onclick="showAction('Recuperação de senha simulada no protótipo.'); return false;" class="text-xs text-primary font-bold hover:underline">Esqueceu a senha?</a>
+                            </div>
+                            <input type="password" class="w-full bg-slate-50 border-2 border-slate-200 rounded-xl p-3.5 outline-none focus:border-primary focus:bg-white text-sm font-medium transition-colors" placeholder="••••••••">
+                        </div>
+                        
+                        <label class="flex items-start gap-3 cursor-pointer mt-4">
+                            <input type="checkbox" class="mt-1 w-4 h-4 accent-primary rounded border-slate-300">
+                            <span class="text-xs text-slate-500 font-medium">Aceito os <a href="#" onclick="showAction('Termos de Uso simulados no protótipo.'); return false;" class="text-primary font-bold">Termos de Uso</a> da plataforma (Obrigatório para novo cadastro).</span>
+                        </label>
+                        
+                        <button onclick="nav('dash-user')" class="w-full bg-dark hover:bg-black text-white font-bold text-lg py-4 rounded-xl transition-all shadow-lg hover:shadow-xl mt-4">Entrar / Criar Conta</button>
+                        
+                        <div class="relative flex py-4 items-center">
+                            <div class="flex-grow border-t-2 border-slate-100"></div>
+                            <span class="flex-shrink-0 mx-4 text-slate-300 text-[10px] font-black uppercase tracking-widest">Ou acesse com</span>
+                            <div class="flex-grow border-t-2 border-slate-100"></div>
+                        </div>
+                        
+                        <button onclick="showAction('Login social com Google simulado no protótipo.');" class="w-full border-2 border-slate-200 text-dark font-bold py-3.5 rounded-xl hover:bg-slate-50 transition flex items-center justify-center gap-3 text-sm">
+                            <i class="fa-brands fa-google text-red-500 text-lg"></i> Google
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <main id="view-dash-user" class="view-section flex-grow bg-slate-50 py-10">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest bg-slate-100 text-slate-600 px-3 py-2 rounded-full border border-slate-200 mb-6">Requisito Funcional: Painel do apoiador com histórico e navegação</div>
+            </div>
+            <div class="max-w-7xl mx-auto px-4 flex flex-col lg:flex-row gap-8">
+                <aside class="w-full lg:w-72 bg-white rounded-3xl shadow-sm border border-slate-200 p-6 h-max">
+                    <div class="flex items-center gap-4 mb-8 p-3 bg-slate-50 rounded-2xl border border-slate-100">
+                        <div class="w-14 h-14 bg-slate-200 text-slate-600 rounded-xl flex items-center justify-center font-bold text-xl shadow-inner"><i class="fa-solid fa-user"></i></div>
+                        <div>
+                            <div class="font-black text-dark">Doador Padrão</div>
+                            <div class="text-xs text-slate-500 font-medium mt-0.5">Membro desde 2026</div>
+                        </div>
+                    </div>
+                    
+                    <nav class="space-y-2 mb-8">
+                        <button class="w-full flex items-center justify-between px-4 py-3 text-sm font-bold rounded-xl bg-primary/10 text-primary-dark">
+                            <span class="flex items-center gap-3"><i class="fa-solid fa-heart w-4"></i> Meus Apoios</span>
+                            <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                        </button>
+                        <button onclick="showAction('Campanhas seguidas listadas no painel do usuário.');" class="w-full flex items-center justify-between px-4 py-3 text-sm font-bold rounded-xl text-slate-600 hover:bg-slate-50 transition-colors">
+                            <span class="flex items-center gap-3"><i class="fa-solid fa-star w-4"></i> Campanhas Seguidas</span>
+                        </button>
+                        <button disabled class="w-full flex items-center justify-between px-4 py-3 text-sm font-bold rounded-xl bg-slate-100 text-slate-400 border border-slate-200 cursor-not-allowed">
+                            <span class="flex items-center gap-3"><i class="fa-solid fa-lock w-4"></i> Projetos Criados</span>
+                        </button>
+                    </nav>
+                    <p class="text-[10px] uppercase tracking-widest text-slate-400 mb-6">RF-012/RF-013: disponível somente para usuários com perfil de Pesquisador. Complete seu perfil para liberar essa aba.</p>
+                    
+                    <div class="bg-indigo-50 border border-indigo-100 rounded-2xl p-5 text-center relative overflow-hidden group">
+                        <div class="absolute -right-4 -top-4 w-16 h-16 bg-indigo-500/10 rounded-full blur-xl group-hover:bg-indigo-500/20 transition-colors"></div>
+                        <i class="fa-solid fa-graduation-cap text-indigo-500 text-3xl mb-3 drop-shadow-sm"></i>
+                        <h4 class="font-black text-indigo-950 text-sm mb-2">É um pesquisador?</h4>
+                        <p class="text-xs text-indigo-700/80 font-medium mb-4 leading-relaxed">Valide seu vínculo institucional via Lattes para criar campanhas e captar recursos.</p>
+                        <button onclick="nav('dash-pesq')" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold py-3 rounded-xl shadow-md transition-all hover:shadow-indigo-500/30">Solicitar Perfil Científico</button>
+                    </div>
+                </aside>
+
+                <div class="flex-1 space-y-8">
+                    <h2 class="text-3xl font-serif font-bold text-dark">Histórico de Contribuições (RF-007)</h2>
+                    <div id="donor-metrics" class="grid grid-cols-1 sm:grid-cols-3 gap-4"></div>
+                    <div id="donor-followed-campaigns" class="bg-slate-50 rounded-3xl border border-slate-200 p-6 mt-8"></div>
+                    <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-slate-200">
+                                <thead class="bg-slate-50">
+                                    <tr>
+                                        <th class="px-8 py-5 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Data</th>
+                                        <th class="px-8 py-5 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Projeto Apoiado</th>
+                                        <th class="px-8 py-5 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Valor</th>
+                                        <th class="px-8 py-5 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Pagamento</th>
+                                        <th class="px-8 py-5 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Status (RF-051)</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="donor-contributions" class="bg-white divide-y divide-slate-100 text-sm"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <main id="view-dash-pesq" class="view-section flex-grow bg-slate-50 py-10">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest bg-slate-100 text-slate-600 px-3 py-2 rounded-full border border-slate-200 mb-6">Requisito Funcional: Painel do pesquisador com métricas de campanha</div>
+            </div>
+            <div class="max-w-7xl mx-auto px-4 flex flex-col lg:flex-row gap-8">
+                <aside class="w-full lg:w-72 bg-white rounded-3xl shadow-sm border border-slate-200 p-6 h-max">
+                    <div class="flex flex-col items-center mb-8 p-6 bg-gradient-to-b from-indigo-50 to-white rounded-2xl border border-indigo-100 text-center relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-full h-1 bg-indigo-500"></div>
+                        <div class="w-20 h-20 bg-indigo-600 text-white rounded-2xl flex items-center justify-center font-black text-3xl mb-4 shadow-lg shadow-indigo-500/30">L</div>
+                        <div class="font-black text-dark text-lg mb-1">Lucas Novais</div>
+                        <div class="inline-flex items-center gap-1.5 text-[10px] uppercase font-black tracking-widest text-indigo-700 bg-indigo-100 border border-indigo-200 px-2.5 py-1 rounded-md mt-2">
+                            <i class="fa-solid fa-shield-check"></i> IFSP Verificado
+                        </div>
+                    </div>
+                    
+                    <nav class="space-y-2">
+                        <button class="w-full flex items-center justify-between px-4 py-3 text-sm font-bold rounded-xl bg-indigo-50 text-indigo-700 border border-indigo-100">
+                            <span class="flex items-center gap-3"><i class="fa-solid fa-flask w-4"></i> Meus Projetos</span>
+                            <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                        </button>
+                        <button class="w-full flex items-center justify-between px-4 py-3 text-sm font-bold rounded-xl text-slate-600 hover:bg-slate-50 transition-colors">
+                            <span class="flex items-center gap-3"><i class="fa-solid fa-wallet w-4"></i> Extrato Financeiro</span>
+                        </button>
+                        <button class="w-full flex items-center justify-between px-4 py-3 text-sm font-bold rounded-xl text-slate-600 hover:bg-slate-50 transition-colors">
+                            <span class="flex items-center gap-3"><i class="fa-solid fa-comments w-4"></i> Endossos Recebidos</span>
+                        </button>
+                        <button class="w-full flex items-center justify-between px-4 py-3 text-sm font-bold rounded-xl text-slate-600 hover:bg-slate-50 transition-colors">
+                            <span class="flex items-center gap-3"><i class="fa-solid fa-bell w-4"></i> Comentários</span>
+                        </button>
+                    </nav>
+                </aside>
+
+                <div class="flex-1 space-y-8">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                        <h2 class="text-3xl font-serif font-bold text-dark">Gestão de Campanhas</h2>
+                        <button onclick="nav('criar')" class="bg-dark hover:bg-black text-white px-6 py-3 rounded-xl font-bold text-sm shadow-lg transition-all hover:shadow-xl hover:-translate-y-0.5 flex items-center gap-2">
+                            <i class="fa-solid fa-plus text-primary"></i> Criar Nova Campanha
+                        </button>
+                    </div>
+
+                    <div class="bg-white rounded-3xl shadow-sm border border-slate-200 p-8">
+                        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4 border-b border-slate-100 pb-6">
+                            <div>
+                                <span class="bg-emerald-100 text-emerald-800 border border-emerald-200 text-[10px] font-black px-2.5 py-1 rounded-md uppercase tracking-widest mb-3 inline-flex items-center gap-1.5"><i class="fa-solid fa-satellite-dish animate-pulse"></i> Captação Ativa</span>
+                                <h3 class="font-bold text-2xl text-dark">IA Híbrida para Sistemas Tutores Inteligentes (STI)</h3>
+                            </div>
+                            <button onclick="showAction('Postar atualização simulada no protótipo.');" class="border-2 border-slate-200 hover:border-primary hover:text-primary text-slate-600 text-sm font-bold px-5 py-2.5 rounded-xl transition-all whitespace-nowrap shadow-sm flex items-center gap-2"><i class="fa-solid fa-bullhorn"></i> Postar Atualização</button>
+                        </div>
+                        
+                        <div id="researcher-stats" class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8"></div>
+                        <div id="researcher-progress" class="bg-slate-50 p-6 rounded-2xl border border-slate-100"></div>
+                        <div class="bg-white rounded-3xl shadow-sm border border-slate-200 p-8">
+                            <div class="flex items-center justify-between mb-6 gap-4">
+                                <div>
+                                    <div class="text-[11px] font-black uppercase tracking-widest text-slate-400">Projetos Criados</div>
+                                    <h3 class="text-2xl font-bold text-dark">Campanhas em andamento</h3>
+                                </div>
+                                <span class="text-xs font-bold uppercase tracking-widest text-slate-500 bg-slate-100 px-3 py-2 rounded-full">RF-015</span>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full divide-y divide-slate-200 text-sm">
+                                    <thead class="bg-slate-50">
+                                        <tr>
+                                            <th class="px-6 py-4 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Campanha</th>
+                                            <th class="px-6 py-4 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Bruto</th>
+                                            <th class="px-6 py-4 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Líquido Estimado</th>
+                                            <th class="px-6 py-4 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Doadores</th>
+                                            <th class="px-6 py-4 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Prazo</th>
+                                            <th class="px-6 py-4 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Meta</th>
+                                            <th class="px-6 py-4 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="researcher-projects" class="bg-white divide-y divide-slate-100 text-sm"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-3xl shadow-sm border border-slate-200 p-8">
+                            <div id="researcher-summary-cards" class="grid grid-cols-1 sm:grid-cols-3 gap-4"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <main id="view-criar" class="view-section flex-grow bg-slate-50 py-12">
+            <div class="max-w-4xl mx-auto px-4">
+                <div class="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest bg-slate-100 text-slate-600 px-3 py-2 rounded-full border border-slate-200 mb-6">Requisito Funcional: RF-020 / RF-024 / RF-027 / RF-028 — Formulário de submissão de campanha</div>
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+                    <div>
+                        <h1 class="text-4xl font-serif font-bold text-dark">Submeter Projeto Científico</h1>
+                        <p class="text-sm text-slate-500 mt-2 max-w-xl">As campanhas submetidas ficam em status <strong>Aguardando Aprovação</strong> até serem revisadas pelo administrador. Cada pesquisador pode ter no máximo 2 campanhas simultâneas em andamento ou aguardando aprovação.</p>
+                    </div>
+                    <button onclick="nav('dash-pesq')" class="text-sm font-bold text-slate-400 hover:text-dark transition-colors flex items-center gap-2"><i class="fa-solid fa-xmark"></i> Cancelar</button>
+                </div>
+                
+                <div class="bg-white rounded-3xl shadow-xl border border-slate-200 p-10 relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-primary to-blue-500"></div>
+                    
+                    <div class="bg-blue-50 border border-blue-200 rounded-2xl p-6 mb-10 flex gap-4 items-start shadow-inner">
+                        <div class="bg-blue-100 text-blue-600 p-2 rounded-lg mt-0.5"><i class="fa-solid fa-microscope text-xl"></i></div>
+                        <div>
+                            <h4 class="font-bold text-blue-900 mb-1">Análise de Curadoria (RF-016)</h4>
+                            <p class="text-sm text-blue-800/80 font-medium leading-relaxed">Todo projeto submetido passa por uma rigorosa avaliação do Conselho Científico da plataforma antes de ser publicado. Certifique-se de que o escopo e o orçamento estejam perfeitamente justificados.</p>
+                        </div>
+                    </div>
+
+                    <form class="space-y-8" onsubmit="event.preventDefault(); alert('Projeto submetido com sucesso! Status: Aguardando Aprovação (RF-027).'); nav('dash-pesq')">
+                        <div>
+                            <label class="block text-[11px] font-black text-slate-500 uppercase tracking-widest mb-2">Título do Projeto</label>
+                            <input type="text" required class="w-full bg-slate-50 border-2 border-slate-200 rounded-xl p-4 outline-none focus:border-primary focus:bg-white text-base font-bold text-dark transition-colors placeholder:font-medium placeholder:text-slate-400" placeholder="Ex: Impacto das altas temperaturas em SSDs NVMe">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-black text-slate-500 uppercase tracking-widest mb-2">Descrição Detalhada do Projeto (RF-020 / RF-024)</label>
+                            <textarea required rows="6" class="w-full bg-slate-50 border-2 border-slate-200 rounded-2xl p-4 outline-none focus:border-primary focus:bg-white text-sm font-medium text-dark transition-colors resize-none" placeholder="Descreva objetivos, metodologia, resultados esperados e impacto científico."></textarea>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div>
+                                <label class="block text-[11px] font-black text-slate-500 uppercase tracking-widest mb-2">Área CNPq (RF-028)</label>
+                                <select id="create-area-options" class="w-full bg-slate-50 border-2 border-slate-200 rounded-xl p-4 outline-none focus:border-primary focus:bg-white text-sm font-bold text-dark transition-colors appearance-none cursor-pointer"></select>
+                                <p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Áreas ativas listadas em ordem alfabética.</p>
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-black text-slate-500 uppercase tracking-widest mb-2">Instituição Vinculada</label>
+                                <div class="w-full bg-slate-100 border-2 border-slate-200 rounded-xl p-4 text-sm font-bold text-slate-500 cursor-not-allowed flex items-center gap-2">
+                                    <i class="fa-solid fa-lock text-slate-400 text-xs"></i> IFSP (Via Lattes)
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div>
+                                <label class="block text-[11px] font-black text-slate-500 uppercase tracking-widest mb-2">Meta de Arrecadação (R$)</label>
+                                <div class="relative">
+                                    <span class="absolute left-4 top-1/2 -translate-y-1/2 font-bold text-slate-400">R$</span>
+                                    <input type="number" required min="1000" class="w-full bg-slate-50 border-2 border-slate-200 rounded-xl p-4 pl-12 outline-none focus:border-primary focus:bg-white text-base font-bold text-dark transition-colors" placeholder="15000">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-black text-slate-500 uppercase tracking-widest mb-2">Prazo de Captação (RF-045)</label>
+                                <div class="relative">
+                                    <input type="number" required min="15" max="60" value="30" class="w-full bg-slate-50 border-2 border-slate-200 rounded-xl p-4 pr-16 outline-none focus:border-primary focus:bg-white text-base font-bold text-dark transition-colors">
+                                    <span class="absolute right-4 top-1/2 -translate-y-1/2 font-bold text-slate-400 text-sm">Dias</span>
+                                </div>
+                                <p class="text-[10px] font-bold text-slate-400 mt-2 uppercase tracking-wider">Mín: 15 / Máx: 60 dias corridos</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-[11px] font-black text-slate-500 uppercase tracking-widest mb-4">Selecione o Modelo de Financiamento</label>
+                            <div id="create-model-options" class="flex flex-col sm:flex-row gap-6"></div>
+                        </div>
+                        
+                        <div class="bg-slate-50 border border-slate-200 rounded-3xl p-5 text-sm text-slate-600 mb-6">
+                            <p class="font-semibold text-slate-800 mb-2">Importante</p>
+                            <p class="leading-relaxed">Projetos enviados entram em status <strong>Aguardando Aprovação</strong> e só são exibidos publicamente após aprovação do administrador (RF-027). O máximo permitido é <strong>2 campanhas simultâneas</strong> em andamento ou aguardando aprovação por pesquisador (RF-029). Em campanhas all-or-nothing, apenas PIX é aceito e contribuições são canceladas se a meta não for atingida (RF-022).</p>
+                        </div>
+                        <div class="pt-8 mt-10 border-t-2 border-slate-100 flex flex-col sm:flex-row justify-between gap-4">
+                            <button type="button" onclick="nav('dash-pesq')" class="px-8 py-4 rounded-xl font-bold text-slate-500 hover:bg-slate-100 hover:text-dark transition-colors">Descartar Rascunho</button>
+                            <button type="submit" class="bg-dark hover:bg-black text-white font-bold py-4 px-10 rounded-xl shadow-xl transition-all hover:-translate-y-0.5 flex items-center gap-2">
+                                <i class="fa-solid fa-paper-plane text-primary"></i> Submeter Projeto
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+
+        <main id="view-admin" class="view-section flex-grow bg-slate-100 min-h-screen">
+            <div class="max-w-7xl mx-auto px-4 py-10">
+                <div class="grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-8">
+                    <aside class="bg-white border-r border-slate-200 p-6 sticky top-0 self-start h-[calc(100vh-4rem)] overflow-y-auto">
+                        <div class="flex items-center gap-3 mb-6">
+                            <i class="fa-solid fa-shield-halved text-[#991B1B] text-lg"></i>
+                            <div>
+                                <div class="font-black text-sm text-dark">Painel Administrativo</div>
+                                <div class="text-[10px] uppercase tracking-widest text-slate-400">Acesso Restrito</div>
+                            </div>
+                        </div>
+                        <div class="border-b border-slate-200 mb-6"></div>
+
+                        <div id="admin-menu-sections"></div>
+
+                        <div class="border-b border-slate-200 mb-6"></div>
+
+                        <button type="button" onclick="nav('home')" class="w-full text-left px-3 py-2.5 flex items-center gap-3 text-sm text-slate-500 hover:text-dark hover:bg-slate-100 rounded-md transition-colors">
+                            <i class="fa-solid fa-right-from-bracket text-slate-400"></i>
+                            Sair
+                        </button>
+                    </aside>
+
+                    <div class="space-y-6">
+                        <section id="admin-visao-geral" class="admin-content-panel bg-white rounded-xl border border-slate-200 shadow-sm p-8">
+                            <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
+                                <div>
+                                    <div class="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest bg-slate-100 text-slate-600 px-3 py-2 rounded-full border border-slate-200 mb-3">Requisito Funcional: Tela de administração com métricas e moderação</div>
+                                    <h2 class="text-3xl font-serif font-bold text-dark">Painel de Controle Administrativo</h2>
+                                    <p class="text-sm text-slate-500 max-w-2xl">Visão consolidada das principais métricas e ações de monitoramento da plataforma.</p>
+                                </div>
+                                <div class="inline-flex items-center gap-2 rounded-xl bg-slate-50 px-4 py-3 border border-slate-200">
+                                    <i class="fa-solid fa-circle-check text-emerald-500"></i>
+                                    <span class="text-sm font-bold text-slate-700">Modo Protótipo</span>
+                                </div>
+                            </div>
+                            <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <button onclick="setAdminTab('aprovar')" class="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-primary text-white px-4 py-3 text-sm font-bold hover:bg-primary-dark transition">Aprovar Campanhas</button>
+                                <button onclick="setAdminTab('denuncias')" class="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-slate-100 text-slate-700 px-4 py-3 text-sm font-bold hover:bg-slate-200 transition">Ver Denúncias</button>
+                            </div>
+                            <div class="mt-8 border border-slate-200 rounded-lg overflow-hidden bg-white">
+                                <table class="w-full">
+                                    <thead class="bg-slate-50 border-b border-slate-200">
+                                        <tr>
+                                            <th class="text-left px-6 py-4 text-[11px] font-black uppercase tracking-widest text-slate-500">Métrica</th>
+                                            <th class="text-right px-6 py-4 text-[11px] font-black uppercase tracking-widest text-slate-500">Valor</th>
+                                            <th class="text-right px-6 py-4 text-[11px] font-black uppercase tracking-widest text-slate-500">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="admin-overview-metrics" class="divide-y divide-slate-200 text-sm"></tbody>
+                                </table>
+                            </div>
+
+                            <div class="grid grid-cols-1 xl:grid-cols-[1.5fr_1fr] gap-8 mt-8">
+                                <div class="bg-slate-50 p-6 rounded-3xl border border-slate-200 shadow-sm">
+                                    <div class="flex items-center justify-between mb-5">
+                                        <div>
+                                            <div class="text-[11px] font-black uppercase tracking-widest text-slate-400">Últimas Ações</div>
+                                            <h3 class="font-bold text-dark text-lg mt-1">Atividades recentes</h3>
+                                        </div>
+                                        <span class="text-[10px] uppercase font-black tracking-widest text-slate-500 bg-slate-100 px-3 py-2 rounded-full">Tempo real</span>
+                                    </div>
+                                    <ul class="space-y-4 text-sm text-slate-600">
+                                        <li class="flex items-start gap-3"><span class="mt-1 inline-flex h-2.5 w-2.5 rounded-full bg-primary"></span>Campanha “Testes de VRM em Placas B450” enviada para aprovação.</li>
+                                        <li class="flex items-start gap-3"><span class="mt-1 inline-flex h-2.5 w-2.5 rounded-full bg-amber-500"></span>3 denúncias novas recebidas para campanhas ativas.</li>
+                                        <li class="flex items-start gap-3"><span class="mt-1 inline-flex h-2.5 w-2.5 rounded-full bg-emerald-600"></span>Solicitação de upgrade de perfil de pesquisador aguardando análise.</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-slate-50 p-6 rounded-3xl border border-slate-200 shadow-sm">
+                                    <div class="text-[11px] font-black uppercase tracking-widest text-slate-400 mb-3">Tempo médio de resposta</div>
+                                    <div class="text-4xl font-black text-dark">2,8 dias</div>
+                                    <p class="text-sm text-slate-500 mt-3">Média de tempo entre a submissão e a decisão de aprovação/rejeição.</p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section id="admin-aprovar" class="admin-content-panel hidden bg-white rounded-xl border border-slate-200 shadow-sm p-8">
+                            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
+                                <div>
+                                    <h3 class="text-2xl font-bold text-dark">Projetos Pendentes de Aprovação</h3>
+                                    <p class="text-sm text-slate-500">Avalie os envios de pesquisadores e decida rapidamente.</p>
+                                    <p class="text-xs text-slate-500 uppercase tracking-widest mt-3">Rejeições exigem justificativa e mantêm a campanha oculta até novo envio. (RF-069/RF-070)</p>
+                                </div>
+                                <button onclick="showAction('Lista de campanhas pendentes atualizada.');" class="bg-primary hover:bg-primary-dark text-white text-sm font-bold px-5 py-3 rounded-xl transition-colors">Atualizar Dash</button>
+                            </div>
+                            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+                                <div class="relative w-full sm:max-w-sm">
+                                    <input type="search" class="w-full border border-slate-200 rounded-lg bg-slate-50 py-3 pl-12 pr-4 text-sm text-slate-700 outline-none focus:border-primary" placeholder="Buscar projeto ou pesquisador">
+                                    <i class="fa-solid fa-search text-slate-400 absolute left-4 top-1/2 -translate-y-1/2"></i>
+                                </div>
+                                <div class="flex flex-wrap gap-2">
+                                    <button onclick="showAction('Filtro de modelo aplicado.');" class="text-xs font-bold uppercase tracking-widest bg-slate-100 text-slate-700 px-4 py-2 rounded-lg hover:bg-slate-200 transition">Tudo ou Nada</button>
+                                    <button onclick="showAction('Filtro de modelo aplicado.');" class="text-xs font-bold uppercase tracking-widest bg-slate-100 text-slate-700 px-4 py-2 rounded-lg hover:bg-slate-200 transition">Flexível</button>
+                                    <button onclick="showAction('Mostrar apenas urgentes.');" class="text-xs font-bold uppercase tracking-widest bg-slate-100 text-slate-700 px-4 py-2 rounded-lg hover:bg-slate-200 transition">Urgente</button>
+                                </div>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full divide-y divide-slate-200">
+                                    <thead class="bg-slate-50">
+                                        <tr>
+                                            <th class="px-6 py-4 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Submissão</th>
+                                            <th class="px-6 py-4 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Projeto</th>
+                                            <th class="px-6 py-4 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Pesquisador</th>
+                                            <th class="px-6 py-4 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Modelo / Meta</th>
+                                            <th class="px-6 py-4 text-right text-[11px] font-black text-slate-400 uppercase tracking-widest">Decisão</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="admin-approvals-list" class="divide-y divide-slate-200 text-sm"></tbody>
+                                </table>
+                            </div>
+                        </section>
+
+                        <section id="admin-upgrade" class="admin-content-panel hidden bg-white rounded-xl border border-slate-200 shadow-sm p-8">
+                            <div class="flex items-center justify-between gap-4 mb-8">
+                                <div>
+                                    <h3 class="text-2xl font-bold text-dark">Solicitações de Upgrade de Perfil</h3>
+                                    <p class="text-sm text-slate-500">Acompanhe pedidos de pesquisadores que desejam obter perfil científico.</p>
+                                </div>
+                                <span class="text-xs font-bold uppercase tracking-widest text-slate-500 bg-slate-100 px-3 py-2 rounded-full">RF-010 / RF-016</span>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                                <div class="rounded-3xl border border-slate-200 bg-slate-50 p-6">
+                                    <div class="text-[11px] font-black uppercase tracking-widest text-slate-400 mb-3">Pendentes</div>
+                                    <div class="text-4xl font-black text-amber-600">3</div>
+                                </div>
+                                <div class="rounded-3xl border border-slate-200 bg-slate-50 p-6">
+                                    <div class="text-[11px] font-black uppercase tracking-widest text-slate-400 mb-3">Aprovadas</div>
+                                    <div class="text-4xl font-black text-emerald-600">12</div>
+                                </div>
+                                <div class="rounded-3xl border border-slate-200 bg-slate-50 p-6">
+                                    <div class="text-[11px] font-black uppercase tracking-widest text-slate-400 mb-3">Rejeitadas</div>
+                                    <div class="text-4xl font-black text-rose-600">1</div>
+                                </div>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full divide-y divide-slate-200 text-sm">
+                                    <thead class="bg-slate-50">
+                                        <tr>
+                                            <th class="px-6 py-4 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Solicitante</th>
+                                            <th class="px-6 py-4 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Vínculo</th>
+                                            <th class="px-6 py-4 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Data</th>
+                                            <th class="px-6 py-4 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Status</th>
+                                            <th class="px-6 py-4 text-right text-[11px] font-black text-slate-400 uppercase tracking-widest">Ação</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="admin-upgrade-list" class="bg-white divide-y divide-slate-200"></tbody>
+                                </table>
+                            </div>
+                        </section>
+
+                        <section id="admin-denuncias" class="admin-content-panel hidden bg-white rounded-xl border border-slate-200 shadow-sm p-8">
+                            <div class="flex flex-col gap-4 mb-8">
+                                <div>
+                                    <h3 class="text-2xl font-bold text-dark">Moderação e Reclamações</h3>
+                                    <p class="text-sm text-slate-500">Acompanhe denúncias de campanhas e perfis com status de averiguação.</p>
+                                </div>
+                                <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                                    <div class="relative w-full lg:max-w-sm">
+                                        <input type="search" class="w-full border border-slate-200 rounded-lg bg-slate-50 py-3 pl-12 pr-4 text-sm text-slate-700 outline-none focus:border-primary" placeholder="Buscar denúncia, campanha ou pesquisador">
+                                        <i class="fa-solid fa-search text-slate-400 absolute left-4 top-1/2 -translate-y-1/2"></i>
+                                    </div>
+                                    <div class="flex flex-wrap gap-2">
+                                        <button onclick="showAction('Filtro de tipo aplicado.');" class="text-xs font-bold uppercase tracking-widest bg-slate-100 text-slate-700 px-4 py-2 rounded-lg hover:bg-slate-200 transition">Campanhas</button>
+                                        <button onclick="showAction('Filtro de tipo aplicado.');" class="text-xs font-bold uppercase tracking-widest bg-slate-100 text-slate-700 px-4 py-2 rounded-lg hover:bg-slate-200 transition">Perfis</button>
+                                        <button onclick="showAction('Mostrar apenas pendentes.');" class="text-xs font-bold uppercase tracking-widest bg-slate-100 text-slate-700 px-4 py-2 rounded-lg hover:bg-slate-200 transition">Pendentes</button>
+                                    </div>
+                                </div>
+                                <div class="rounded-lg border border-slate-200 bg-slate-50 p-4">
+                                    <p class="text-sm text-slate-500">Campanhas denunciadas podem ser encerradas e ocultadas imediatamente para proteção do doador, conforme RF-079. A ação de encerramento por moderação deve seguir o modelo da campanha.</p>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <div class="rounded-3xl border border-slate-200 bg-slate-50 p-5">
+                                        <div class="text-[11px] font-black uppercase tracking-widest text-slate-400 mb-3">Pendente</div>
+                                        <div class="text-3xl font-black text-amber-600">4</div>
+                                    </div>
+                                    <div class="rounded-3xl border border-slate-200 bg-slate-50 p-5">
+                                        <div class="text-[11px] font-black uppercase tracking-widest text-slate-400 mb-3">Em Análise</div>
+                                        <div class="text-3xl font-black text-blue-600">2</div>
+                                    </div>
+                                    <div class="rounded-3xl border border-slate-200 bg-slate-50 p-5">
+                                        <div class="text-[11px] font-black uppercase tracking-widest text-slate-400 mb-3">Encerramentos</div>
+                                        <div class="text-3xl font-black text-emerald-600">1</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full divide-y divide-slate-200 text-sm">
+                                    <thead class="bg-slate-50">
+                                        <tr>
+                                            <th class="px-6 py-4 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Tipo</th>
+                                            <th class="px-6 py-4 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Alvo</th>
+                                            <th class="px-6 py-4 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Denunciante</th>
+                                            <th class="px-6 py-4 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Data</th>
+                                            <th class="px-6 py-4 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Status</th>
+                                            <th class="px-6 py-4 text-right text-[11px] font-black text-slate-400 uppercase tracking-widest">Ação</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="admin-complaints-list" class="bg-white divide-y divide-slate-200"></tbody>
+                                </table>
+                            </div>
+                        </section>
+
+                        <section id="admin-enc-antecipados" class="admin-content-panel hidden bg-white rounded-xl border border-slate-200 shadow-sm p-8">
+                            <div class="mb-8">
+                                <div class="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest bg-slate-100 text-slate-600 px-3 py-2 rounded-full border border-slate-200 mb-3">Requisito Funcional: RF-040/RF-041</div>
+                                <h3 class="text-2xl font-bold text-dark">Encerramentos Antecipados</h3>
+                                <p class="text-sm text-slate-500">Solicitações de pesquisadores com justificativas e valores arrecadados.</p>
+                            </div>
+                            <div class="rounded-lg border border-slate-200 bg-slate-50 p-6 mb-8">
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                    <div>
+                                        <div class="text-[11px] font-black uppercase tracking-widest text-slate-400 mb-2">Solicitações Pendentes</div>
+                                        <div class="text-3xl font-black text-amber-600">2</div>
+                                    </div>
+                                    <div>
+                                        <div class="text-[11px] font-black uppercase tracking-widest text-slate-400 mb-2">Campanhas Ativas com Pedidos</div>
+                                        <div class="text-3xl font-black text-dark">2</div>
+                                    </div>
+                                    <div>
+                                        <div class="text-[11px] font-black uppercase tracking-widest text-slate-400 mb-2">Aguardando Aprovação</div>
+                                        <div class="text-3xl font-black text-blue-600">1</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full divide-y divide-slate-200 text-sm">
+                                    <thead class="bg-slate-50">
+                                        <tr>
+                                            <th class="px-6 py-4 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Pesquisador</th>
+                                            <th class="px-6 py-4 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Campanha</th>
+                                            <th class="px-6 py-4 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Modelo</th>
+                                            <th class="px-6 py-4 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Arrecadado</th>
+                                            <th class="px-6 py-4 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Justificativa</th>
+                                            <th class="px-6 py-4 text-right text-[11px] font-black text-slate-400 uppercase tracking-widest">Ação</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="admin-early-closures-list" class="divide-y divide-slate-200 text-sm"></tbody>
+                                </table>
+                            </div>
+                        </section>
+
+                        <section id="admin-taxa" class="admin-content-panel hidden bg-white rounded-xl border border-slate-200 shadow-sm p-8">
+                            <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-6">
+                                <div>
+                                    <h3 class="text-2xl font-bold text-dark">Taxa da Plataforma</h3>
+                                    <p class="text-sm text-slate-500 max-w-2xl">Definição da taxa padrão aplicada a projetos aprovados.</p>
+                                </div>
+                                <div class="inline-flex items-center gap-2 rounded-xl bg-slate-50 px-4 py-3 border border-slate-200">
+                                    <i class="fa-solid fa-percent text-primary"></i>
+                                    <span class="text-sm font-bold text-slate-700">RF-036</span>
+                                </div>
+                            </div>
+                            <div class="rounded-2xl border border-slate-200 bg-slate-50 p-6">
+                                <div class="text-[11px] font-black uppercase tracking-widest text-slate-400 mb-3">Taxa padrão</div>
+                                <div class="text-3xl font-black text-dark">5%</div>
+                                <div class="mt-4 text-sm text-slate-600">Taxa aplicável a campanhas aprovadas. O percentual vigente no momento da aprovação é persistido por campanha.</div>
+                                <button onclick="showAction('Ajuste da taxa do protótipo realizado.');" class="mt-6 inline-flex items-center gap-2 bg-primary text-white text-sm font-bold px-5 py-3 rounded-lg hover:bg-primary-dark transition-colors">Editar Taxa</button>
+                            </div>
+                        </section>
+
+                        <section id="admin-areas" class="admin-content-panel hidden bg-white rounded-xl border border-slate-200 shadow-sm p-8">
+                            <div class="flex items-center justify-between mb-6 border-b border-slate-200 pb-4">
+                                <div>
+                                    <div class="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest bg-slate-100 text-slate-600 px-3 py-2 rounded-full border border-slate-200 mb-3">RF-028</div>
+                                    <h3 class="text-2xl font-bold text-dark">Áreas CNPq</h3>
+                                    <p class="text-sm text-slate-500">Gerencie os campos de pesquisa exibidos aos pesquisadores.</p>
+                                </div>
+                                <button onclick="showAction('Nova área cadastrada no protótipo.');" class="text-blue-500 hover:text-primary text-sm font-bold">Nova Área</button>
+                            </div>
+                            <div class="border border-slate-200 rounded-lg overflow-hidden mt-6">
+                                <table class="w-full">
+                                    <tbody id="admin-areas-list" class="divide-y divide-slate-200"></tbody>
+                                </table>
+                            </div>
+                        </section>
+
+                        <section id="admin-denuncias-tipo" class="admin-content-panel hidden bg-white rounded-xl border border-slate-200 shadow-sm p-8">
+                            <div class="flex items-center justify-between mb-6 border-b border-slate-200 pb-4">
+                                <div>
+                                    <h3 class="text-2xl font-bold text-dark">Motivos de Denúncia</h3>
+                                    <p class="text-sm text-slate-500">Defina categorias de moderação para relatórios de conteúdo.</p>
+                                </div>
+                                <button onclick="showAction('Novo motivo adicionado no protótipo.');" class="text-red-500 hover:text-red-600 text-sm font-bold">Novo Motivo</button>
+                            </div>
+                            <div class="border border-slate-200 rounded-lg overflow-hidden mt-6">
+                                <table class="w-full">
+                                    <tbody id="admin-reasons-list" class="divide-y divide-slate-200"></tbody>
+                                </table>
+                            </div>
+                        </section>
+
+                        <section id="admin-rbac" class="admin-content-panel hidden bg-white rounded-xl border border-slate-200 shadow-sm p-8">
+                            <div class="mb-6">
+                                <h3 class="text-2xl font-bold text-dark">Matriz de Permissões (RBAC)</h3>
+                                <p class="text-sm text-slate-500">Acompanhe o acesso de cada perfil aos recursos principais.</p>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full divide-y divide-slate-200 text-sm">
+                                    <thead>
+                                        <tr>
+                                            <th class="pb-4 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest w-1/3">Recurso / Ação</th>
+                                            <th class="pb-4 text-center text-[11px] font-black text-slate-400 uppercase tracking-widest">Anônimo</th>
+                                            <th class="pb-4 text-center text-[11px] font-black text-slate-400 uppercase tracking-widest">Cadastrado</th>
+                                            <th class="pb-4 text-center text-[11px] font-black text-slate-400 uppercase tracking-widest">Pesquisador</th>
+                                            <th class="pb-4 text-center text-[11px] font-black text-slate-400 uppercase tracking-widest">Admin</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="admin-rbac-list" class="divide-y divide-slate-200 text-sm"></tbody>
+                                </table>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+    </div>
+
+    <footer class="bg-dark text-slate-400 py-16 border-t border-slate-800 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-12">
+            <div class="col-span-1 md:col-span-1">
+                <div class="flex items-center gap-3 mb-5">
+                    <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center text-white font-bold"><i class="fa-solid fa-flask"></i></div>
+                    <span class="font-bold text-2xl tracking-tight text-white">CrowdAcadêmico</span>
+                </div>
+                <p class="text-sm leading-relaxed font-medium">Plataforma brasileira dedicada exclusivamente ao avanço da pesquisa científica e tecnológica. Transparente, validado e focado no Brasil.</p>
+            </div>
+            <div>
+                <h4 class="text-white font-black mb-6 text-[11px] tracking-widest uppercase">Explore Projetos</h4>
+                <ul class="space-y-4 text-sm font-medium">
+                    <li><a href="#" class="hover:text-primary transition-colors flex items-center gap-2"><i class="fa-solid fa-angle-right text-[10px] text-slate-600"></i> Ciências Biológicas</a></li>
+                    <li><a href="#" class="hover:text-primary transition-colors flex items-center gap-2"><i class="fa-solid fa-angle-right text-[10px] text-slate-600"></i> Exatas e Engenharias</a></li>
+                    <li><a href="#" class="hover:text-primary transition-colors flex items-center gap-2"><i class="fa-solid fa-angle-right text-[10px] text-slate-600"></i> Ciências Humanas</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-black mb-6 text-[11px] tracking-widest uppercase">Para Pesquisadores</h4>
+                <ul class="space-y-4 text-sm font-medium">
+                    <li><a href="#" class="hover:text-primary transition-colors flex items-center gap-2"><i class="fa-solid fa-angle-right text-[10px] text-slate-600"></i> Diretrizes de Submissão</a></li>
+                    <li><a href="#" class="hover:text-primary transition-colors flex items-center gap-2"><i class="fa-solid fa-angle-right text-[10px] text-slate-600"></i> Validação via Lattes</a></li>
+                    <li><a href="#" class="hover:text-primary transition-colors flex items-center gap-2"><i class="fa-solid fa-angle-right text-[10px] text-slate-600"></i> Taxas e Repasses</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-black mb-6 text-[11px] tracking-widest uppercase">Segurança e Pagamentos</h4>
+                <div class="flex gap-5 text-3xl text-slate-600 mb-6">
+                    <i class="fa-brands fa-pix hover:text-emerald-500 transition-colors cursor-pointer" title="PIX Instantâneo"></i>
+                    <i class="fa-brands fa-cc-visa hover:text-blue-500 transition-colors cursor-pointer" title="Cartões de Crédito"></i>
+                    <i class="fa-solid fa-shield-check hover:text-white transition-colors cursor-pointer" title="Conformidade LGPD"></i>
+                </div>
+                <p class="text-xs font-medium leading-relaxed">Transações processadas em ambiente seguro e criptografado de ponta a ponta.</p>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 mt-16 pt-8 border-t border-slate-800 text-xs text-center font-medium uppercase tracking-wider text-slate-500">
+            &copy; 2026 CrowdAcadêmico. Protótipo UI TCC - TSI - IFSP.
+        </div>
+    </footer>
+
+    <script>
+        const homeProfiles = [
+            {
+                icon: 'fa-user-secret',
+                iconBg: 'bg-slate-100 text-slate-700',
+                badge: 'bg-slate-400',
+                title: 'Visitante Anônimo',
+                heading: 'Explorar projetos',
+                description: 'Consumo leve para conhecer campanhas, metas e reputação científica sem logar.',
+                footer: 'Navegação aberta'
+            },
+            {
+                icon: 'fa-heart',
+                iconBg: 'bg-emerald-100 text-emerald-700',
+                badge: 'bg-emerald-400',
+                title: 'Apoiador Cadastrado',
+                heading: 'Apoiar com transparência',
+                description: 'Acompanhar doações e concluir pagamentos por PIX com clareza e segurança.',
+                footer: 'Credibilidade científica'
+            },
+            {
+                icon: 'fa-flask',
+                iconBg: 'bg-blue-100 text-blue-700',
+                badge: 'bg-blue-400',
+                title: 'Pesquisador',
+                heading: 'Gerenciar campanhas',
+                description: 'Submeter projetos e acompanhar captação com relatórios de progresso e métricas.',
+                footer: 'Controle total'
+            },
+            {
+                icon: 'fa-shield-halved',
+                iconBg: 'bg-red-100 text-red-700',
+                badge: 'bg-red-400',
+                title: 'Administrador',
+                heading: 'Controlar a plataforma',
+                description: 'Aprovar campanhas, moderar conteúdo e manter o ambiente científico seguro.',
+                footer: 'Gestão centralizada'
+            }
+        ];
+
+        const homeStats = [
+            { value: 'R$ 2.4M', valueClass: 'text-white', label: 'Levantados para a ciência' },
+            { value: '143', valueClass: 'text-emerald-400', label: 'Projetos financiados' },
+            { value: '18.5k', valueClass: 'text-white', label: 'Apoiadores ativos' }
+        ];
+
+        const featuredProjects = [
+            {
+                image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80',
+                badge: 'Tudo ou Nada',
+                badgeClasses: 'bg-amber-100/95 backdrop-blur text-amber-800 border-amber-200',
+                category: 'Ciências Biológicas',
+                title: 'Análise de Microplásticos no Rio Paraná',
+                description: 'Investigação dos impactos fisiológicos da contaminação polimérica em espécies de peixes nativos da bacia hidrográfica.',
+                avatar: 'M',
+                avatarClasses: 'bg-emerald-100 text-emerald-700 border-emerald-200',
+                researcher: 'Dra. Marina Souza',
+                institution: 'UNESP Ilha Solteira',
+                value: 'R$ 22.750',
+                progressLabel: '65% de R$ 35k',
+                progressWidth: '65%',
+                supportLabel: '94 apoios',
+                timeLabel: '18 dias rest.'
+            },
+            {
+                image: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=800&q=80',
+                badge: 'Flexível',
+                badgeClasses: 'bg-blue-100/95 backdrop-blur text-blue-800 border-blue-200',
+                category: 'Engenharias / Computação',
+                title: 'IA Híbrida em Sistemas Tutores (STI)',
+                description: 'Desenvolvimento de arquitetura LLM para auxílio hiper-personalizado no ensino de matemática básica.',
+                avatar: 'L',
+                avatarClasses: 'bg-indigo-100 text-indigo-700 border-indigo-200',
+                researcher: 'Lucas Novais',
+                institution: 'IFSP Birigui',
+                value: 'R$ 4.500',
+                progressLabel: '45% de R$ 10k',
+                progressWidth: '45%',
+                supportLabel: '22 apoios',
+                timeLabel: '45 dias rest.'
+            },
+            {
+                image: 'https://images.unsplash.com/photo-1507413245164-6160d8298b31?auto=format&fit=crop&w=800&q=80',
+                badge: 'Tudo ou Nada',
+                badgeClasses: 'bg-slate-100/95 backdrop-blur text-slate-800 border-slate-200',
+                category: 'Ciências da Saúde',
+                title: 'Desenvolvimento de Vacina de RNA contra Dengue',
+                description: 'Testes pré-clínicos de plataforma mRNA para combate a arboviroses no Brasil.',
+                avatar: 'A',
+                avatarClasses: 'bg-rose-100 text-rose-700 border-rose-200',
+                researcher: 'Prof.ª Ana Ribeiro',
+                institution: 'USP Ribeirão Preto',
+                value: 'R$ 12.300',
+                progressLabel: '52% de R$ 23.5k',
+                progressWidth: '52%',
+                supportLabel: '61 apoios',
+                timeLabel: '22 dias rest.'
+            }
+        ];
+
+        const donorMetrics = [
+            { value: 'R$ 2.340', label: 'Total doado', accent: 'text-dark' },
+            { value: '7', label: 'Campanhas apoiadas', accent: 'text-primary' },
+            { value: '98%', label: 'Contribuições confirmadas', accent: 'text-emerald-600' }
+        ];
+
+        const donorFollowedCampaigns = [
+            { title: 'Microplásticos no Rio Paraná', meta: 'Em captação', accent: 'bg-emerald-100 text-emerald-700' },
+            { title: 'IA Híbrida para STI', meta: 'Atualização recente', accent: 'bg-blue-100 text-blue-700' }
+        ];
+
+        const donorContributions = [
+            { date: '12/06/2026', project: 'Microplásticos no Rio Paraná', value: 'R$ 150,00', payment: 'PIX', status: 'Confirmado', statusClass: 'bg-emerald-50 text-emerald-700' },
+            { date: '05/06/2026', project: 'IA Híbrida para STI', value: 'R$ 80,00', payment: 'Cartão', status: 'Processando', statusClass: 'bg-amber-50 text-amber-700' }
+        ];
+
+        const researcherStats = [
+            { value: 'R$ 4.500', label: 'Arrecadado', accent: 'text-dark' },
+            { value: '45%', label: 'Meta atingida', accent: 'text-primary' },
+            { value: '22', label: 'Doadores', accent: 'text-indigo-600' },
+            { value: '18', label: 'Dias restantes', accent: 'text-amber-600' }
+        ];
+
+        const researcherProgress = {
+            title: 'Campanha em andamento',
+            value: 'R$ 4.500 / R$ 10.000',
+            width: '45%'
+        };
+
+        const researcherProjects = [
+            { campaign: 'IA Híbrida para STI', gross: 'R$ 4.500', net: 'R$ 3.900', donors: '22', deadline: '18 dias', goal: 'R$ 10.000', status: 'Em captação', statusClass: 'bg-emerald-50 text-emerald-700' },
+            { campaign: 'Biomarcadores de Dengue', gross: 'R$ 9.800', net: 'R$ 8.500', donors: '47', deadline: '12 dias', goal: 'R$ 15.000', status: 'Quase lá', statusClass: 'bg-amber-50 text-amber-700' }
+        ];
+
+        const researcherSummaryCards = [
+            { title: 'Endossos recebidos', value: '3', accent: 'bg-emerald-50 text-emerald-700' },
+            { title: 'Atualizações publicadas', value: '5', accent: 'bg-blue-50 text-blue-700' },
+            { title: 'Pendências', value: '1', accent: 'bg-amber-50 text-amber-700' }
+        ];
+
+        const createAreaOptions = [
+            { value: 'biologicas', label: 'Ciências Biológicas' },
+            { value: 'exatas', label: 'Ciências Exatas e da Terra' },
+            { value: 'saude', label: 'Ciências da Saúde' }
+        ];
+
+        const createModelOptions = [
+            { value: 'all-or-nothing', title: 'Tudo ou Nada', description: 'Apoio só é cobrado se a meta for atingida.', checked: true },
+            { value: 'flex', title: 'Flexível', description: 'O valor arrecadado permanece com o projeto mesmo sem meta completa.', checked: false }
+        ];
+
+        const adminMenuGroups = [
+            {
+                title: 'MODERAÇÃO',
+                items: [
+                    { tab: 'visao-geral', label: 'Visão Geral', icon: 'fa-gauge', active: true },
+                    { tab: 'aprovar', label: 'Aprovar Campanhas', icon: 'fa-circle-check', count: '4', countClass: 'bg-amber-100 text-amber-700' },
+                    { tab: 'denuncias', label: 'Denúncias', icon: 'fa-flag', count: '6', countClass: 'bg-red-100 text-red-700' },
+                    { tab: 'upgrade', label: 'Solicitações', icon: 'fa-user-arrow-up', count: '3', countClass: 'bg-slate-100 text-slate-700' },
+                    { tab: 'enc-antecipados', label: 'Enc. Antecipados', icon: 'fa-circle-stop', count: '2', countClass: 'bg-blue-100 text-blue-700' }
+                ]
+            },
+            {
+                title: 'CONFIGURAÇÕES',
+                items: [
+                    { tab: 'taxa', label: 'Taxa da Plataforma', icon: 'fa-percent' },
+                    { tab: 'areas', label: 'Áreas CNPq', icon: 'fa-microscope' },
+                    { tab: 'denuncias-tipo', label: 'Motivos de Denúncia', icon: 'fa-list-check' },
+                    { tab: 'rbac', label: 'Controle de Acesso', icon: 'fa-lock' }
+                ]
+            }
+        ];
+
+        const adminOverviewMetrics = [
+            { label: 'Campanhas Ativas', value: '12', status: 'Publicadas', statusClass: 'bg-emerald-50 text-emerald-700' },
+            { label: 'Aguardando Aprovação', value: '4', status: 'Em análise', statusClass: 'bg-amber-50 text-amber-700' },
+            { label: 'Campanhas com Sucesso', value: '8', status: 'Encerradas', statusClass: 'bg-emerald-50 text-emerald-700' },
+            { label: 'Não Atingidas', value: '3', status: 'Encerradas', statusClass: 'bg-rose-50 text-rose-700' }
+        ];
+
+        const adminPendingApprovals = [
+            { submission: 'Hoje, 14:30', project: 'Testes de VRM em Placas B450', researcher: 'Lucas Novais (IFSP)', model: 'Tudo ou Nada', modelClass: 'bg-amber-100 text-amber-700', value: 'R$ 15.000' }
+        ];
+
+        const adminUpgradeRequests = [
+            { requester: 'Lucas Novais', link: 'IFSP', date: '12/06/2026', status: 'Pendente', statusClass: 'bg-amber-100 text-amber-700' },
+            { requester: 'Mariana Silva', link: 'Unesp', date: '08/06/2026', status: 'Aprovado', statusClass: 'bg-emerald-100 text-emerald-700' }
+        ];
+
+        const adminComplaints = [
+            { type: 'Campanha', target: 'Ondas Sustentáveis', complainant: 'Pedro Costa', date: '13/06/2026', status: 'Pendente', statusClass: 'bg-amber-100 text-amber-700' },
+            { type: 'Perfil', target: 'Dra. Mariana Alves', complainant: 'Clara Souza', date: '11/06/2026', status: 'Em Análise', statusClass: 'bg-blue-100 text-blue-700' }
+        ];
+
+        const adminEarlyClosures = [
+            { researcher: 'Prof.ª Ana Ribeiro', campaign: 'Sensor de Poluição Urbana', model: 'Flexível', value: 'R$ 8.200', reason: 'Mudança de escopo para protótipo de campo.' }
+        ];
+
+        const adminCnpqAreas = [
+            { name: 'Ciências Exatas e da Terra', status: 'Ativo', statusClass: 'bg-emerald-50 text-emerald-700' },
+            { name: 'Engenharias', status: 'Ativo', statusClass: 'bg-emerald-50 text-emerald-700' },
+            { name: 'Ciências Agrárias', status: 'Inativo', statusClass: 'bg-slate-100 text-slate-600', inactive: true }
+        ];
+
+        const adminComplaintReasons = [
+            { name: 'Conteúdo Fraudulento', status: 'Ativo', statusClass: 'bg-emerald-50 text-emerald-700' },
+            { name: 'Pesquisador Falso', status: 'Ativo', statusClass: 'bg-emerald-50 text-emerald-700' }
+        ];
+
+        const adminRbacRows = [
+            { resource: 'Doar via PIX (RF-046)', anonymous: '✔', registered: '✔', researcher: '✔', admin: '✔' },
+            { resource: 'Doar via Cartão (RF-047)', anonymous: '—', registered: '✔', researcher: '✔', admin: '✔' },
+            { resource: 'Registrar Denúncia (RF-072)', anonymous: '—', registered: '✔', researcher: '✔', admin: '—' },
+            { resource: 'Criar Campanha (RF-012)', anonymous: '—', registered: '—', researcher: '✔', admin: '—' },
+            { resource: 'Publicar Endosso (RF-061)', anonymous: '—', registered: '—', researcher: '✔', admin: '—' },
+            { resource: 'Moderar Projetos (RF-069)', anonymous: '—', registered: '—', researcher: '—', admin: '✔' }
+        ];
+
+        function escapeHtml(value) {
+            return String(value)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/\"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function renderHomeProfiles() {
+            const container = document.getElementById('profiles-grid');
+            if (!container) return;
+            container.innerHTML = homeProfiles.map(profile => `
+                <div class="bg-white rounded-3xl border border-slate-200 shadow-xl p-6 hover:-translate-y-1 transition-all">
+                    <div class="inline-flex items-center justify-center w-14 h-14 rounded-3xl ${profile.iconBg} mb-5 shadow-sm"><i class="fa-solid ${profile.icon} text-lg"></i></div>
+                    <div class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-3">${escapeHtml(profile.title)}</div>
+                    <h3 class="text-xl font-bold text-dark mb-3">${escapeHtml(profile.heading)}</h3>
+                    <p class="text-sm text-slate-500">${escapeHtml(profile.description)}</p>
+                    <div class="mt-6 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+                        <span class="w-2 h-2 rounded-full ${profile.badge}"></span> ${escapeHtml(profile.footer)}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderHomeStats() {
+            const container = document.getElementById('home-stats');
+            if (!container) return;
+            container.innerHTML = homeStats.map(stat => `
+                <div class="py-4 md:py-0"><div class="text-4xl md:text-5xl font-black mb-2 tracking-tight ${stat.valueClass}">${escapeHtml(stat.value)}</div><div class="text-slate-400 text-sm font-bold uppercase tracking-widest">${escapeHtml(stat.label)}</div></div>
+            `).join('');
+        }
+
+        function renderFeaturedProjects() {
+            const container = document.getElementById('project-cards');
+            if (!container) return;
+            container.innerHTML = featuredProjects.map(project => `
+                <div onclick="nav('campanha')" class="bg-white rounded-2xl border border-slate-200 overflow-hidden hover:shadow-2xl transition-all cursor-pointer flex flex-col group h-full hover:-translate-y-1">
+                    <div class="h-56 relative overflow-hidden bg-slate-900">
+                        <img src="${project.image}" class="w-full h-full object-cover opacity-80 group-hover:scale-110 group-hover:opacity-100 transition-all duration-700">
+                        <span class="absolute top-4 right-4 ${project.badgeClasses} text-[10px] font-black px-3 py-1.5 rounded-full uppercase tracking-widest shadow-lg border">${escapeHtml(project.badge)}</span>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col">
+                        <span class="text-[11px] font-black text-primary uppercase tracking-widest mb-2 block">${escapeHtml(project.category)}</span>
+                        <h3 class="font-bold text-xl text-dark leading-tight mb-3 group-hover:text-primary transition-colors">${escapeHtml(project.title)}</h3>
+                        <p class="text-sm text-slate-500 mb-6 line-clamp-2 leading-relaxed">${escapeHtml(project.description)}</p>
+                        <div class="flex items-center gap-3 mb-8">
+                            <div class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold border ${project.avatarClasses}">${escapeHtml(project.avatar)}</div>
+                            <div>
+                                <div class="text-sm font-bold text-slate-700 flex items-center gap-1">${escapeHtml(project.researcher)} <i class="fa-solid fa-circle-check text-primary text-[10px]"></i></div>
+                                <div class="text-xs text-slate-500">${escapeHtml(project.institution)}</div>
+                            </div>
+                        </div>
+                        <div class="mt-auto">
+                            <div class="flex justify-between items-end mb-2">
+                                <span class="font-black text-dark text-xl">${escapeHtml(project.value)}</span>
+                                <span class="text-xs font-bold text-slate-400">${escapeHtml(project.progressLabel)}</span>
+                            </div>
+                            <div class="w-full bg-slate-100 rounded-full h-2.5 mb-4 overflow-hidden border border-slate-200/50">
+                                <div class="bg-primary h-full rounded-full" style="width: ${project.progressWidth}"></div>
+                            </div>
+                            <div class="flex justify-between items-center text-xs font-medium text-slate-500">
+                                <span class="bg-slate-100 px-2 py-1 rounded-md"><i class="fa-solid fa-users mr-1"></i> ${escapeHtml(project.supportLabel)}</span>
+                                <span class="bg-slate-100 px-2 py-1 rounded-md"><i class="fa-regular fa-clock mr-1"></i> ${escapeHtml(project.timeLabel)}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderDonorDashboard() {
+            const metrics = document.getElementById('donor-metrics');
+            const followed = document.getElementById('donor-followed-campaigns');
+            const contributions = document.getElementById('donor-contributions');
+            if (metrics) {
+                metrics.innerHTML = donorMetrics.map(metric => `
+                    <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+                        <div class="text-2xl font-black ${metric.accent}">${escapeHtml(metric.value)}</div>
+                        <div class="text-xs uppercase tracking-widest text-slate-500 mt-1">${escapeHtml(metric.label)}</div>
+                    </div>
+                `).join('');
+            }
+            if (followed) {
+                followed.innerHTML = donorFollowedCampaigns.map(item => `
+                    <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm flex items-center justify-between">
+                        <div>
+                            <div class="font-bold text-dark">${escapeHtml(item.title)}</div>
+                            <div class="text-sm text-slate-500 mt-1">${escapeHtml(item.meta)}</div>
+                        </div>
+                        <span class="inline-flex items-center rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-widest ${item.accent}">${escapeHtml(item.meta)}</span>
+                    </div>
+                `).join('');
+            }
+            if (contributions) {
+                contributions.innerHTML = donorContributions.map(item => `
+                    <tr class="hover:bg-slate-50 transition-colors">
+                        <td class="px-8 py-5 font-mono text-xs text-slate-500">${escapeHtml(item.date)}</td>
+                        <td class="px-8 py-5 font-bold text-slate-700">${escapeHtml(item.project)}</td>
+                        <td class="px-8 py-5 font-semibold text-dark">${escapeHtml(item.value)}</td>
+                        <td class="px-8 py-5 text-slate-600">${escapeHtml(item.payment)}</td>
+                        <td class="px-8 py-5"><span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-black ${item.statusClass}">${escapeHtml(item.status)}</span></td>
+                    </tr>
+                `).join('');
+            }
+        }
+
+        function renderResearcherDashboard() {
+            const stats = document.getElementById('researcher-stats');
+            const progress = document.getElementById('researcher-progress');
+            const projects = document.getElementById('researcher-projects');
+            const summaryCards = document.getElementById('researcher-summary-cards');
+            if (stats) {
+                stats.innerHTML = researcherStats.map(stat => `
+                    <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                        <div class="text-2xl font-black ${stat.accent}">${escapeHtml(stat.value)}</div>
+                        <div class="text-xs uppercase tracking-widest text-slate-500 mt-1">${escapeHtml(stat.label)}</div>
+                    </div>
+                `).join('');
+            }
+            if (progress) {
+                progress.innerHTML = `
+                    <div class="flex items-center justify-between mb-3">
+                        <div>
+                            <div class="text-[11px] font-black uppercase tracking-widest text-slate-400">${escapeHtml(researcherProgress.title)}</div>
+                            <div class="text-xl font-black text-dark mt-1">${escapeHtml(researcherProgress.value)}</div>
+                        </div>
+                        <span class="text-sm font-bold text-primary">${escapeHtml(researcherProgress.width)}</span>
+                    </div>
+                    <div class="w-full bg-slate-200 rounded-full h-3 overflow-hidden">
+                        <div class="bg-primary h-full rounded-full" style="width: ${researcherProgress.width}"></div>
+                    </div>
+                `;
+            }
+            if (projects) {
+                projects.innerHTML = researcherProjects.map(project => `
+                    <tr class="hover:bg-slate-50 transition-colors">
+                        <td class="px-6 py-4 font-semibold text-slate-700">${escapeHtml(project.campaign)}</td>
+                        <td class="px-6 py-4 text-slate-600">${escapeHtml(project.gross)}</td>
+                        <td class="px-6 py-4 text-slate-600">${escapeHtml(project.net)}</td>
+                        <td class="px-6 py-4 text-slate-600">${escapeHtml(project.donors)}</td>
+                        <td class="px-6 py-4 text-slate-600">${escapeHtml(project.deadline)}</td>
+                        <td class="px-6 py-4 text-slate-600">${escapeHtml(project.goal)}</td>
+                        <td class="px-6 py-4"><span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-black ${project.statusClass}">${escapeHtml(project.status)}</span></td>
+                    </tr>
+                `).join('');
+            }
+            if (summaryCards) {
+                summaryCards.innerHTML = researcherSummaryCards.map(card => `
+                    <div class="rounded-2xl border border-slate-200 p-5 ${card.accent}">
+                        <div class="text-[11px] font-black uppercase tracking-widest">${escapeHtml(card.title)}</div>
+                        <div class="text-3xl font-black mt-2">${escapeHtml(card.value)}</div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function renderCreateFormContent() {
+            const areaSelect = document.getElementById('create-area-options');
+            const modelOptions = document.getElementById('create-model-options');
+            if (areaSelect) {
+                areaSelect.innerHTML = createAreaOptions.map(area => `
+                    <option value="${escapeHtml(area.value)}">${escapeHtml(area.label)}</option>
+                `).join('');
+            }
+            if (modelOptions) {
+                modelOptions.innerHTML = createModelOptions.map(option => `
+                    <label class="flex-1 rounded-2xl border border-slate-200 p-5 cursor-pointer bg-slate-50 hover:border-primary transition-all">
+                        <input type="radio" name="modelo-financiamento" value="${escapeHtml(option.value)}" ${option.checked ? 'checked' : ''} class="mr-3 accent-primary">
+                        <div class="font-bold text-dark mb-1">${escapeHtml(option.title)}</div>
+                        <div class="text-sm text-slate-500">${escapeHtml(option.description)}</div>
+                    </label>
+                `).join('');
+            }
+        }
+
+        function renderAdminMenu() {
+            const container = document.getElementById('admin-menu-sections');
+            if (!container) return;
+            container.innerHTML = adminMenuGroups.map(group => `
+                <div class="mb-6">
+                    <div class="text-[10px] uppercase tracking-widest text-slate-400 font-black mb-3">${escapeHtml(group.title)}</div>
+                    <div class="space-y-2">
+                        ${group.items.map(item => `
+                            <button type="button" data-tab="${escapeHtml(item.tab)}" onclick="setAdminTab('${escapeHtml(item.tab)}')" class="admin-menu-item w-full text-left px-3 py-2.5 flex items-center gap-3 rounded-md ${currentAdminTab === item.tab ? 'bg-slate-100 border-l-2 border-primary text-dark font-semibold' : 'bg-transparent text-slate-600 hover:bg-slate-100 hover:text-dark transition-colors'}">
+                                <i class="fa-solid ${escapeHtml(item.icon)} ${currentAdminTab === item.tab ? 'text-primary' : 'text-slate-400'}"></i>
+                                <span class="text-sm">${escapeHtml(item.label)}</span>
+                                ${item.count ? `<span class="ml-auto inline-flex items-center justify-center rounded-full ${item.countClass} text-[10px] font-black px-2 py-1">${escapeHtml(item.count)}</span>` : ''}
+                            </button>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderAdminContent() {
+            const overviewMetrics = document.getElementById('admin-overview-metrics');
+            const approvals = document.getElementById('admin-approvals-list');
+            const upgrades = document.getElementById('admin-upgrade-list');
+            const complaints = document.getElementById('admin-complaints-list');
+            const earlyClosures = document.getElementById('admin-early-closures-list');
+            const areas = document.getElementById('admin-areas-list');
+            const reasons = document.getElementById('admin-reasons-list');
+            const rbac = document.getElementById('admin-rbac-list');
+
+            if (overviewMetrics) {
+                overviewMetrics.innerHTML = adminOverviewMetrics.map(item => `
+                    <tr class="hover:bg-slate-50 transition-colors">
+                        <td class="px-6 py-4 font-medium text-slate-700">${escapeHtml(item.label)}</td>
+                        <td class="text-right px-6 py-4 font-black ${item.label.includes('Aguardando') ? 'text-amber-600' : item.label.includes('Não') ? 'text-rose-600' : 'text-dark'}">${escapeHtml(item.value)}</td>
+                        <td class="text-right px-6 py-4"><span class="inline-flex items-center px-3 py-1 rounded-sm ${item.statusClass} text-xs font-bold">${escapeHtml(item.status)}</span></td>
+                    </tr>
+                `).join('');
+            }
+            if (approvals) {
+                approvals.innerHTML = adminPendingApprovals.map(item => `
+                    <tr class="hover:bg-slate-50 transition-colors">
+                        <td class="px-6 py-5 font-mono text-xs text-slate-500">${escapeHtml(item.submission)}</td>
+                        <td class="px-6 py-5 font-bold text-slate-700">${escapeHtml(item.project)}</td>
+                        <td class="px-6 py-5 text-slate-500 text-xs">${escapeHtml(item.researcher)}</td>
+                        <td class="px-6 py-5">
+                            <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full ${item.modelClass} text-[10px] uppercase tracking-widest">${escapeHtml(item.model)}</span>
+                            <div class="mt-2 text-slate-500 text-sm font-semibold">${escapeHtml(item.value)}</div>
+                        </td>
+                        <td class="px-6 py-5 text-right space-x-2">
+                            <button onclick="showAction('Recusa de campanha simulada.');" class="text-red-600 hover:text-white hover:bg-red-600/90 px-4 py-2 rounded text-xs font-bold border border-red-300">Recusar</button>
+                            <button onclick="showAction('Aprovação de captação simulada.');" class="bg-primary hover:bg-primary-dark text-white px-4 py-2 rounded text-xs font-bold">Aprovar</button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+            if (upgrades) {
+                upgrades.innerHTML = adminUpgradeRequests.map(item => `
+                    <tr class="hover:bg-slate-50 transition-colors">
+                        <td class="px-6 py-5 font-semibold text-slate-700">${escapeHtml(item.requester)}</td>
+                        <td class="px-6 py-5 text-slate-600">${escapeHtml(item.link)}</td>
+                        <td class="px-6 py-5 text-slate-500 text-xs">${escapeHtml(item.date)}</td>
+                        <td class="px-6 py-5"><span class="inline-flex items-center gap-1 px-3 py-1 rounded-full ${item.statusClass} text-xs font-black">${escapeHtml(item.status)}</span></td>
+                        <td class="px-6 py-5 text-right"><button onclick="showAction('Solicitação de upgrade em análise.');" class="bg-primary hover:bg-primary-dark text-white px-4 py-2 rounded text-xs font-bold">Ver</button></td>
+                    </tr>
+                `).join('');
+            }
+            if (complaints) {
+                complaints.innerHTML = adminComplaints.map(item => `
+                    <tr class="hover:bg-slate-50 transition-colors">
+                        <td class="px-6 py-5 font-semibold text-slate-700">${escapeHtml(item.type)}</td>
+                        <td class="px-6 py-5 text-slate-600">${escapeHtml(item.target)}</td>
+                        <td class="px-6 py-5 text-slate-700">${escapeHtml(item.complainant)}</td>
+                        <td class="px-6 py-5 text-slate-500 text-xs">${escapeHtml(item.date)}</td>
+                        <td class="px-6 py-5"><span class="inline-flex items-center gap-1 px-3 py-1 rounded-full ${item.statusClass} text-xs font-black">${escapeHtml(item.status)}</span></td>
+                        <td class="px-6 py-5 text-right"><button onclick="showAction('Abertura de denúncia.');" class="bg-primary hover:bg-primary-dark text-white px-4 py-2 rounded text-xs font-bold">Ver</button></td>
+                    </tr>
+                `).join('');
+            }
+            if (earlyClosures) {
+                earlyClosures.innerHTML = adminEarlyClosures.map(item => `
+                    <tr class="hover:bg-slate-50 transition-colors">
+                        <td class="px-6 py-5 font-semibold text-slate-700">${escapeHtml(item.researcher)}</td>
+                        <td class="px-6 py-5 text-slate-600">${escapeHtml(item.campaign)}</td>
+                        <td class="px-6 py-5 text-slate-600">${escapeHtml(item.model)}</td>
+                        <td class="px-6 py-5 text-slate-700 font-semibold">${escapeHtml(item.value)}</td>
+                        <td class="px-6 py-5 text-slate-600">${escapeHtml(item.reason)}</td>
+                        <td class="px-6 py-5 text-right"><button onclick="showAction('Análise de encerramento antecipado ativada.');" class="bg-primary hover:bg-primary-dark text-white px-4 py-2 rounded text-xs font-bold">Analisar</button></td>
+                    </tr>
+                `).join('');
+            }
+            if (areas) {
+                areas.innerHTML = adminCnpqAreas.map(item => `
+                    <tr class="hover:bg-slate-50 transition-colors ${item.inactive ? 'opacity-70' : ''}">
+                        <td class="px-6 py-4 font-medium ${item.inactive ? 'text-slate-500' : 'text-slate-700'}">${escapeHtml(item.name)}</td>
+                        <td class="px-6 py-4 text-right"><span class="inline-flex items-center px-3 py-1 rounded-sm ${item.statusClass} text-xs font-bold">${escapeHtml(item.status)}</span></td>
+                    </tr>
+                `).join('');
+            }
+            if (reasons) {
+                reasons.innerHTML = adminComplaintReasons.map(item => `
+                    <tr class="hover:bg-slate-50 transition-colors">
+                        <td class="px-6 py-4 font-medium text-slate-700">${escapeHtml(item.name)}</td>
+                        <td class="px-6 py-4 text-right"><span class="inline-flex items-center px-3 py-1 rounded-sm ${item.statusClass} text-xs font-bold">${escapeHtml(item.status)}</span></td>
+                    </tr>
+                `).join('');
+            }
+            if (rbac) {
+                rbac.innerHTML = adminRbacRows.map(item => `
+                    <tr class="hover:bg-slate-50">
+                        <td class="py-4 font-semibold text-slate-700">${escapeHtml(item.resource)}</td>
+                        <td class="py-4 text-center">${escapeHtml(item.anonymous)}</td>
+                        <td class="py-4 text-center">${escapeHtml(item.registered)}</td>
+                        <td class="py-4 text-center">${escapeHtml(item.researcher)}</td>
+                        <td class="py-4 text-center">${escapeHtml(item.admin)}</td>
+                    </tr>
+                `).join('');
+            }
+            setAdminTab(currentAdminTab);
+        }
+
+        function renderHomeContent() {
+            renderHomeProfiles();
+            renderHomeStats();
+            renderFeaturedProjects();
+        }
+
+        function showAction(message) {
+            if(window.navigator && navigator.clipboard) {
+                console.log('Action:', message);
+            }
+            alert(message);
+        }
+
+        function copyPix() {
+            const pixField = document.getElementById('pix-code');
+            if (!pixField) {
+                showAction('Não foi possível copiar o código PIX.');
+                return;
+            }
+            const value = pixField.value;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(value).then(() => {
+                    showAction('Código PIX copiado para a área de transferência.');
+                }).catch(() => {
+                    showAction('Cópia automática não disponível. Selecione e copie manualmente.');
+                });
+            } else {
+                pixField.select();
+                document.execCommand('copy');
+                showAction('Código PIX copiado para a área de transferência.');
+            }
+        }
+
+        function setProjectTab(tab) {
+            const tabs = ['sobre', 'metodologia', 'atualizacoes', 'endossos'];
+            tabs.forEach(current => {
+                const content = document.getElementById('tab-' + current);
+                const button = document.getElementById('tab-btn-' + current);
+                if (content) content.classList.toggle('active', current === tab);
+                if (button) {
+                    button.classList.toggle('bg-slate-100', current === tab);
+                    button.classList.toggle('text-dark', current === tab);
+                    button.classList.toggle('text-slate-500', current !== tab);
+                }
+            });
+        }
+
+        let currentAdminTab = 'visao-geral';
+        function setAdminTab(tabId) {
+            currentAdminTab = tabId;
+            document.querySelectorAll('.admin-menu-item').forEach(item => {
+                const isActive = item.dataset.tab === tabId;
+                item.classList.toggle('bg-slate-100', isActive);
+                item.classList.toggle('text-dark', isActive);
+                item.classList.toggle('font-semibold', isActive);
+                item.classList.toggle('border-l-2', isActive);
+                item.classList.toggle('border-primary', isActive);
+                item.classList.toggle('text-slate-600', !isActive);
+                const icon = item.querySelector('i');
+                if (icon) {
+                    icon.classList.toggle('text-primary', isActive);
+                    icon.classList.toggle('text-slate-400', !isActive);
+                }
+            });
+            document.querySelectorAll('.admin-content-panel').forEach(panel => {
+                panel.style.display = panel.id === 'admin-' + tabId ? 'block' : 'none';
+            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function nav(viewId) {
+            // Oculta todas as sections
+            document.querySelectorAll('.view-section').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            const header = document.querySelector('header');
+            const footer = document.querySelector('footer');
+            header.style.display = 'block';
+            footer.style.display = 'block';
+
+            // Exibe a tela alvo
+            const target = document.getElementById('view-' + viewId);
+            if(target) {
+                target.classList.add('active');
+                if (viewId === 'admin') setAdminTab('visao-geral');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+        
+        renderHomeContent();
+        renderDonorDashboard();
+        renderResearcherDashboard();
+        renderCreateFormContent();
+        renderAdminMenu();
+        renderAdminContent();
+
+        // Inicializa o protótipo na Home
+        nav('home');
+    </script>
+</body>
+</html>
