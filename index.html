@@ -194,101 +194,10 @@
                         <span class="absolute bottom-4 left-4 bg-white/90 text-slate-700 text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full border border-slate-200">RF-033: Vídeo incorporado</span>
                     </div>
 
-                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 mb-8 p-2 flex gap-2 overflow-x-auto hide-scrollbar">
-                        <button onclick="setProjectTab('sobre')" id="tab-btn-sobre" class="bg-slate-100 text-dark font-bold px-6 py-3 rounded-xl text-sm whitespace-nowrap transition">Sobre a Pesquisa</button>
-                        <button onclick="setProjectTab('metodologia')" id="tab-btn-metodologia" class="text-slate-500 hover:bg-slate-50 hover:text-dark font-medium px-6 py-3 rounded-xl text-sm whitespace-nowrap transition">Metodologia e Custos</button>
-                        <button onclick="setProjectTab('atualizacoes')" id="tab-btn-atualizacoes" class="text-slate-500 hover:bg-slate-50 hover:text-dark font-medium px-6 py-3 rounded-xl text-sm whitespace-nowrap transition flex items-center gap-2">Atualizações <span class="bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full text-[10px] font-bold">3</span></button>
-                        <button onclick="setProjectTab('endossos')" id="tab-btn-endossos" class="text-slate-500 hover:bg-slate-50 hover:text-dark font-medium px-6 py-3 rounded-xl text-sm whitespace-nowrap transition flex items-center gap-2">Endossos Acadêmicos <span class="bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full text-[10px] font-bold">2</span></button>
-                    </div>
+                    <div id="project-tab-buttons" class="bg-white rounded-2xl shadow-sm border border-slate-200 mb-8 p-2 flex gap-2 overflow-x-auto hide-scrollbar"></div>
 
                     <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-8 md:p-10">
-                        <div id="tab-sobre" class="tab-content active">
-                            <div class="prose prose-slate prose-lg max-w-none prose-headings:font-serif prose-headings:text-dark prose-p:text-slate-600 prose-a:text-primary">
-                                <p class="lead text-xl text-slate-700 font-medium mb-8">O Rio Paraná é um dos ecossistemas aquáticos mais importantes do Brasil. Recentemente, detectamos altas concentrações de polímeros sintéticos em amostras preliminares. Este projeto visa investigar os impactos fisiológicos e genéticos dessa contaminação na ictiofauna nativa.</p>
-                                
-                                <h3 class="text-2xl mt-10 mb-4 border-b border-slate-100 pb-2">O Problema</h3>
-                                <p>Durante 18 meses, coletaremos amostras em 5 pontos críticos da bacia. Realizaremos análises de microscopia confocal, testes de toxicidade aguda e sequenciamento de DNA. Os resultados fomentarão políticas públicas de proteção ambiental e regulação de descarte industrial.</p>
-                                
-                                <div class="bg-blue-50 border-l-4 border-blue-500 p-6 rounded-r-xl my-8">
-                                    <h4 class="text-blue-900 font-bold m-0 mb-2 text-lg">Por que financiar este projeto?</h4>
-                                    <p class="text-blue-800 m-0 text-sm">A pesquisa sobre microplásticos em águas doces brasileiras ainda é escassa. O fomento tradicional sofreu cortes, e a janela climática para coleta exige ação imediata neste semestre.</p>
-                                </div>
-
-                                <h3 class="text-2xl mt-10 mb-6 border-b border-slate-100 pb-2">Destinação dos Recursos</h3>
-                                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 not-prose mb-8">
-                                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-100">
-                                        <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center text-primary mb-4"><i class="fa-solid fa-microscope text-lg"></i></div>
-                                        <h4 class="font-bold text-dark text-sm mb-1">Equipamentos</h4>
-                                        <div class="text-lg font-black text-primary mb-2">R$ 18.000</div>
-                                        <p class="text-xs text-slate-500">Aluguel de horas no microscópio confocal e digestor de amostras.</p>
-                                    </div>
-                                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-100">
-                                        <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center text-primary mb-4"><i class="fa-solid fa-vial text-lg"></i></div>
-                                        <h4 class="font-bold text-dark text-sm mb-1">Reagentes</h4>
-                                        <div class="text-lg font-black text-primary mb-2">R$ 12.000</div>
-                                        <p class="text-xs text-slate-500">Kits de extração de DNA e solventes HPLC de alta pureza.</p>
-                                    </div>
-                                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-100">
-                                        <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center text-primary mb-4"><i class="fa-solid fa-book-open text-lg"></i></div>
-                                        <h4 class="font-bold text-dark text-sm mb-1">Publicação</h4>
-                                        <div class="text-lg font-black text-primary mb-2">R$ 5.000</div>
-                                        <p class="text-xs text-slate-500">Taxas de publicação em periódicos científicos (Open Access).</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="tab-metodologia" class="tab-content">
-                            <h3 class="text-2xl font-semibold text-dark mb-4">Metodologia e Custos</h3>
-                            <p class="text-slate-600 mb-6">O protótipo apresenta a capacidade da plataforma em expor com clareza custos de campo, análises de laboratório e publicações científicas. Esta visão ajuda o apoiador a entender onde o recurso será aplicado.</p>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                                <div class="bg-slate-50 p-6 rounded-3xl border border-slate-200">
-                                    <h4 class="font-bold text-dark mb-3">Metodologia</h4>
-                                    <ul class="list-disc list-inside text-sm text-slate-600 space-y-2">
-                                        <li>Coleta de amostras em 5 pontos críticos.</li>
-                                        <li>Análises de microscopia confocal e sequenciamento.</li>
-                                        <li>Testes de toxicidade e modelagem ambiental.</li>
-                                    </ul>
-                                </div>
-                                <div class="bg-slate-50 p-6 rounded-3xl border border-slate-200">
-                                    <h4 class="font-bold text-dark mb-3">Custo estimado</h4>
-                                    <ul class="list-disc list-inside text-sm text-slate-600 space-y-2">
-                                        <li>R$ 18.000 em equipamentos.</li>
-                                        <li>R$ 12.000 em reagentes.</li>
-                                        <li>R$ 5.000 em publicações.</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="tab-atualizacoes" class="tab-content">
-                            <h3 class="text-2xl font-semibold text-dark mb-4">Atualizações de Campanha</h3>
-                            <ul class="space-y-5 text-slate-600">
-                                <li class="bg-slate-50 p-5 rounded-3xl border border-slate-200">
-                                    <div class="flex justify-between items-center mb-2">
-                                        <span class="font-bold text-dark">15/05/2026</span>
-                                        <span class="text-xs text-slate-500 uppercase tracking-widest">Atualizado</span>
-                                    </div>
-                                    <p>Nova análise laboratorial confirma presença de microplásticos em 4 espécies nativas.</p>
-                                </li>
-                                <li class="bg-slate-50 p-5 rounded-3xl border border-slate-200">
-                                    <div class="flex justify-between items-center mb-2">
-                                        <span class="font-bold text-dark">01/05/2026</span>
-                                        <span class="text-xs text-slate-500 uppercase tracking-widest">Planejamento</span>
-                                    </div>
-                                    <p>Definidos protocolos de coleta e cronograma de amostragem para os próximos 3 meses.</p>
-                                </li>
-                            </ul>
-                        </div>
-                        <div id="tab-endossos" class="tab-content">
-                            <div class="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest bg-emerald-100 text-emerald-800 px-3 py-2 rounded-full border border-emerald-200 mb-6">RF-064: Seção de Endossos Acadêmicos</div>
-                            <div class="bg-emerald-50 border border-emerald-100 rounded-3xl p-5 mb-6 text-sm text-emerald-800">
-                                <p class="font-semibold">Endossos aprovados são visíveis publicamente nesta página como prova de suporte acadêmico.</p>
-                            </div>
-                            <h3 class="text-2xl font-semibold text-dark mb-4">Endossos Acadêmicos</h3>
-                            <div class="space-y-4 text-slate-600">
-                                <p class="bg-slate-50 p-5 rounded-3xl border border-slate-200">Dra. Luciana Pereira, Universidade Estadual, endossa o projeto por seu impacto ambiental e base metodológica sólida.</p>
-                                <p class="bg-slate-50 p-5 rounded-3xl border border-slate-200">Instituto de Pesquisa em Recursos Hídricos destaca a importância de dados reais para políticas públicas.</p>
-                            </div>
-                        </div>
+                        <div id="project-tab-panels"></div>
                     </div>
                 </div>
 
@@ -330,23 +239,7 @@
                                 <p class="leading-relaxed">Este projeto usa o modelo <strong>Tudo ou Nada</strong>: se a meta não for atingida, as contribuições não são cobradas ou são devolvidas. No modelo Flexível, o valor arrecadado permanece com o projeto.</p>
                             </div>
                             
-                            <div class="mb-6 text-sm text-slate-600 leading-relaxed">
-                                <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 mb-4">
-                                    <p class="font-semibold text-slate-800 mb-2">Regras de pagamento</p>
-                                    <p>Contribuições anônimas são aceitas apenas via <strong>PIX</strong>. Cartão de crédito, débito e boleto estão disponíveis somente para usuários cadastrados e autenticados.</p>
-                                </div>
-                                <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 mb-4">
-                                    <p class="font-semibold text-slate-800 mb-2">Modelo de financiamento</p>
-                                    <ul class="list-disc list-inside text-sm text-slate-600 space-y-2">
-                                        <li><strong>Tudo ou Nada:</strong> se a meta não for atingida, as contribuições são estornadas ou não cobradas.</li>
-                                        <li><strong>Flexível:</strong> o valor arrecadado é mantido mesmo que a meta não seja alcançada.</li>
-                                    </ul>
-                                </div>
-                                <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 text-xs text-amber-800 leading-relaxed flex items-start gap-3">
-                                    <i class="fa-solid fa-shield-halved mt-0.5 text-amber-500 text-lg"></i>
-                                    <div><strong>Garantia Tudo ou Nada:</strong> Seu apoio só é efetivado (cobrado ou não devolvido) se o projeto atingir 100% da meta no prazo. Risco zero.</div>
-                                </div>
-                            </div>
+                            <div id="project-support-info" class="mb-6 text-sm text-slate-600 leading-relaxed"></div>
                         </div>
 
                         <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
@@ -531,18 +424,7 @@
                         </div>
                     </div>
                     
-                    <nav class="space-y-2 mb-8">
-                        <button class="w-full flex items-center justify-between px-4 py-3 text-sm font-bold rounded-xl bg-primary/10 text-primary-dark">
-                            <span class="flex items-center gap-3"><i class="fa-solid fa-heart w-4"></i> Meus Apoios</span>
-                            <i class="fa-solid fa-chevron-right text-[10px]"></i>
-                        </button>
-                        <button onclick="showAction('Campanhas seguidas listadas no painel do usuário.');" class="w-full flex items-center justify-between px-4 py-3 text-sm font-bold rounded-xl text-slate-600 hover:bg-slate-50 transition-colors">
-                            <span class="flex items-center gap-3"><i class="fa-solid fa-star w-4"></i> Campanhas Seguidas</span>
-                        </button>
-                        <button disabled class="w-full flex items-center justify-between px-4 py-3 text-sm font-bold rounded-xl bg-slate-100 text-slate-400 border border-slate-200 cursor-not-allowed">
-                            <span class="flex items-center gap-3"><i class="fa-solid fa-lock w-4"></i> Projetos Criados</span>
-                        </button>
-                    </nav>
+                    <nav id="donor-sidebar-nav" class="space-y-2 mb-8"></nav>
                     <p class="text-[10px] uppercase tracking-widest text-slate-400 mb-6">RF-012/RF-013: disponível somente para usuários com perfil de Pesquisador. Complete seu perfil para liberar essa aba.</p>
                     
                     <div class="bg-indigo-50 border border-indigo-100 rounded-2xl p-5 text-center relative overflow-hidden group">
@@ -593,21 +475,7 @@
                         </div>
                     </div>
                     
-                    <nav class="space-y-2">
-                        <button class="w-full flex items-center justify-between px-4 py-3 text-sm font-bold rounded-xl bg-indigo-50 text-indigo-700 border border-indigo-100">
-                            <span class="flex items-center gap-3"><i class="fa-solid fa-flask w-4"></i> Meus Projetos</span>
-                            <i class="fa-solid fa-chevron-right text-[10px]"></i>
-                        </button>
-                        <button class="w-full flex items-center justify-between px-4 py-3 text-sm font-bold rounded-xl text-slate-600 hover:bg-slate-50 transition-colors">
-                            <span class="flex items-center gap-3"><i class="fa-solid fa-wallet w-4"></i> Extrato Financeiro</span>
-                        </button>
-                        <button class="w-full flex items-center justify-between px-4 py-3 text-sm font-bold rounded-xl text-slate-600 hover:bg-slate-50 transition-colors">
-                            <span class="flex items-center gap-3"><i class="fa-solid fa-comments w-4"></i> Endossos Recebidos</span>
-                        </button>
-                        <button class="w-full flex items-center justify-between px-4 py-3 text-sm font-bold rounded-xl text-slate-600 hover:bg-slate-50 transition-colors">
-                            <span class="flex items-center gap-3"><i class="fa-solid fa-bell w-4"></i> Comentários</span>
-                        </button>
-                    </nav>
+                    <nav id="researcher-sidebar-nav" class="space-y-2"></nav>
                 </aside>
 
                 <div class="flex-1 space-y-8">
@@ -748,8 +616,8 @@
 
         <main id="view-admin" class="view-section flex-grow bg-slate-100 min-h-screen">
             <div class="max-w-7xl mx-auto px-4 py-10">
-                <div class="grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-8">
-                    <aside class="bg-white border-r border-slate-200 p-6 sticky top-0 self-start h-[calc(100vh-4rem)] overflow-y-auto">
+                <div class="grid grid-cols-1 lg:grid-cols-[280px_minmax(0,1fr)] gap-8 lg:items-start">
+                    <aside class="bg-white border border-slate-200 rounded-3xl p-6 lg:sticky lg:top-20 lg:self-start lg:h-[calc(100vh-6rem)] lg:overflow-y-auto shadow-sm">
                         <div class="flex items-center gap-3 mb-6">
                             <i class="fa-solid fa-shield-halved text-[#991B1B] text-lg"></i>
                             <div>
@@ -1255,6 +1123,133 @@
             { value: 'flex', title: 'Flexível', description: 'O valor arrecadado permanece com o projeto mesmo sem meta completa.', checked: false }
         ];
 
+        const donorSidebarItems = [
+            { label: 'Meus Apoios', icon: 'fa-heart', active: true, disabled: false },
+            { label: 'Campanhas Seguidas', icon: 'fa-star', actionMessage: 'Campanhas seguidas listadas no painel do usuário.', disabled: false },
+            { label: 'Projetos Criados', icon: 'fa-lock', disabled: true }
+        ];
+
+        const researcherSidebarItems = [
+            { label: 'Meus Projetos', icon: 'fa-flask', active: true },
+            { label: 'Extrato Financeiro', icon: 'fa-wallet' },
+            { label: 'Endossos Recebidos', icon: 'fa-comments' },
+            { label: 'Comentários', icon: 'fa-bell' }
+        ];
+
+        const projectTabs = [
+            {
+                id: 'sobre',
+                label: 'Sobre a Pesquisa',
+                content: `
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="text-xl font-black text-dark mb-3">Por que esta pesquisa importa</h3>
+                            <p class="text-slate-600 leading-relaxed">Esta investigação mede a concentração de microplásticos em tecidos de peixes nativos e correlaciona os dados com sinais de estresse oxidativo e alterações metabólicas em ambientes impactados pela urbanização e agricultura intensiva.</p>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+                                <div class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">Objetivo principal</div>
+                                <div class="font-bold text-dark">Mapear o risco ecológico e sanitário</div>
+                            </div>
+                            <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+                                <div class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">Impacto esperado</div>
+                                <div class="font-bold text-dark">Subsídios para políticas públicas de preservação fluvial</div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                id: 'metodologia',
+                label: 'Metodologia e Custos',
+                content: `
+                    <div class="space-y-6">
+                        <div class="rounded-2xl border border-slate-200 p-6">
+                            <h3 class="text-lg font-black text-dark mb-3">Fluxo metodológico</h3>
+                            <ul class="space-y-3 text-slate-600">
+                                <li><span class="font-semibold text-dark">1.</span> Coleta de amostras e análise de ingestão em peixes de diferentes trechos do rio.</li>
+                                <li><span class="font-semibold text-dark">2.</span> Identificação por espectroscopia e validação em laboratório.</li>
+                                <li><span class="font-semibold text-dark">3.</span> Comparação entre espécies nativas e indicadores ambientais.</li>
+                            </ul>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="rounded-2xl border border-emerald-200 bg-emerald-50 p-5">
+                                <div class="text-[10px] font-black uppercase tracking-widest text-emerald-700 mb-2">Custo principal</div>
+                                <div class="text-2xl font-black text-dark">R$ 18.500</div>
+                            </div>
+                            <div class="rounded-2xl border border-blue-200 bg-blue-50 p-5">
+                                <div class="text-[10px] font-black uppercase tracking-widest text-blue-700 mb-2">Itens cobertos</div>
+                                <div class="font-bold text-dark">Equipamentos, análise laboratorial e logística.</div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                id: 'atualizacoes',
+                label: 'Atualizações',
+                badge: '3',
+                badgeClass: 'bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full text-[10px] font-bold',
+                content: `
+                    <div class="space-y-4">
+                        <div class="border-l-4 border-primary pl-4">
+                            <div class="text-sm font-black text-dark">Nova coleta realizada em março</div>
+                            <div class="text-sm text-slate-600 mt-1">Foram analisadas 24 amostras adicionais em área de maior pressão urbana.</div>
+                        </div>
+                        <div class="border-l-4 border-slate-300 pl-4">
+                            <div class="text-sm font-black text-dark">Parceria com laboratório local</div>
+                            <div class="text-sm text-slate-600 mt-1">A equipe passou a contar com suporte de um laboratório parceiro para validação de espectros.</div>
+                        </div>
+                        <div class="border-l-4 border-slate-300 pl-4">
+                            <div class="text-sm font-black text-dark">Revisão do cronograma</div>
+                            <div class="text-sm text-slate-600 mt-1">A fase de análise segue dentro do previsto, sem impacto no prazo final.</div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                id: 'endossos',
+                label: 'Endossos Acadêmicos',
+                badge: '2',
+                badgeClass: 'bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full text-[10px] font-bold',
+                content: `
+                    <div class="space-y-4">
+                        <div class="rounded-2xl border border-slate-200 p-5">
+                            <div class="font-bold text-dark">Prof. Dr. Renato Barros</div>
+                            <div class="text-sm text-slate-500 mt-1">Instituto de Biociências — UNESP</div>
+                            <p class="text-sm text-slate-600 mt-3">A proposta apresenta metodologia sólida e relevância direta para conservação de ecossistemas fluviais.</p>
+                        </div>
+                        <div class="rounded-2xl border border-slate-200 p-5">
+                            <div class="font-bold text-dark">Dra. Cíntia Mendes</div>
+                            <div class="text-sm text-slate-500 mt-1">Departamento de Saúde Pública — USP</div>
+                            <p class="text-sm text-slate-600 mt-3">A integração entre saúde ambiental e biodiversidade potencializa a aplicação dos resultados.</p>
+                        </div>
+                    </div>
+                `
+            }
+        ];
+
+        const projectSupportInfo = [
+            {
+                variant: 'default',
+                title: 'Regras de pagamento',
+                body: 'Contribuições anônimas são aceitas apenas via PIX. Cartão de crédito, débito e boleto estão disponíveis somente para usuários cadastrados e autenticados.'
+            },
+            {
+                variant: 'list',
+                title: 'Modelo de financiamento',
+                items: [
+                    '<strong>Tudo ou Nada:</strong> se a meta não for atingida, as contribuições são estornadas ou não cobradas.',
+                    '<strong>Flexível:</strong> o valor arrecadado é mantido mesmo que a meta não seja alcançada.'
+                ]
+            },
+            {
+                variant: 'warning',
+                title: 'Garantia Tudo ou Nada',
+                body: 'Seu apoio só é efetivado (cobrado ou não devolvido) se o projeto atingir 100% da meta no prazo. Risco zero.'
+            }
+        ];
+
         const adminMenuGroups = [
             {
                 title: 'MODERAÇÃO',
@@ -1331,6 +1326,13 @@
                 .replace(/'/g, '&#39;');
         }
 
+        function escapeAttribute(value) {
+            return String(value)
+                .replace(/&/g, '&amp;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
         function renderHomeProfiles() {
             const container = document.getElementById('profiles-grid');
             if (!container) return;
@@ -1393,6 +1395,51 @@
             `).join('');
         }
 
+        function renderSidebarNav(containerId, items) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            container.innerHTML = items.map(item => {
+                const actionAttr = item.actionMessage ? `onclick="showAction('${escapeAttribute(item.actionMessage)}')"` : '';
+                return `
+                    <button ${item.disabled ? 'disabled' : ''} ${actionAttr} class="w-full flex items-center justify-between px-4 py-3 text-sm font-bold rounded-xl ${item.active ? 'bg-primary/10 text-primary-dark' : item.disabled ? 'bg-slate-100 text-slate-400 border border-slate-200 cursor-not-allowed' : 'text-slate-600 hover:bg-slate-50 transition-colors'}">
+                        <span class="flex items-center gap-3"><i class="fa-solid ${item.icon} w-4"></i> ${escapeHtml(item.label)}</span>
+                        ${item.active ? '<i class="fa-solid fa-chevron-right text-[10px]"></i>' : ''}
+                    </button>
+                `;
+            }).join('');
+        }
+
+        function renderProjectSupportInfo() {
+            const container = document.getElementById('project-support-info');
+            if (!container) return;
+            container.innerHTML = projectSupportInfo.map(item => {
+                if (item.variant === 'list') {
+                    return `
+                        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 mb-4">
+                            <p class="font-semibold text-slate-800 mb-2">${escapeHtml(item.title)}</p>
+                            <ul class="list-disc list-inside text-sm text-slate-600 space-y-2">
+                                ${item.items.map(entry => `<li>${entry}</li>`).join('')}
+                            </ul>
+                        </div>
+                    `;
+                }
+                if (item.variant === 'warning') {
+                    return `
+                        <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 text-xs text-amber-800 leading-relaxed flex items-start gap-3">
+                            <i class="fa-solid fa-shield-halved mt-0.5 text-amber-500 text-lg"></i>
+                            <div><strong>${escapeHtml(item.title)}:</strong> ${escapeHtml(item.body)}</div>
+                        </div>
+                    `;
+                }
+                return `
+                    <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 mb-4">
+                        <p class="font-semibold text-slate-800 mb-2">${escapeHtml(item.title)}</p>
+                        <p>${escapeHtml(item.body)}</p>
+                    </div>
+                `;
+            }).join('');
+        }
+
         function renderDonorDashboard() {
             const metrics = document.getElementById('donor-metrics');
             const followed = document.getElementById('donor-followed-campaigns');
@@ -1430,6 +1477,9 @@
         }
 
         function renderResearcherDashboard() {
+            renderSidebarNav('donor-sidebar-nav', donorSidebarItems);
+            renderSidebarNav('researcher-sidebar-nav', researcherSidebarItems);
+            renderProjectSupportInfo();
             const stats = document.getElementById('researcher-stats');
             const progress = document.getElementById('researcher-progress');
             const projects = document.getElementById('researcher-projects');
@@ -1618,6 +1668,29 @@
             setAdminTab(currentAdminTab);
         }
 
+        function renderProjectTabs() {
+            const buttonsContainer = document.getElementById('project-tab-buttons');
+            const panelsContainer = document.getElementById('project-tab-panels');
+            if (!buttonsContainer && !panelsContainer) return;
+
+            if (buttonsContainer) {
+                buttonsContainer.innerHTML = projectTabs.map(tab => `
+                    <button onclick="setProjectTab('${tab.id}')" id="tab-btn-${tab.id}" class="${tab.id === 'sobre' ? 'bg-slate-100 text-dark font-bold' : 'text-slate-500 hover:bg-slate-50 hover:text-dark font-medium'} px-6 py-3 rounded-xl text-sm whitespace-nowrap transition flex items-center gap-2">
+                        ${escapeHtml(tab.label)}
+                        ${tab.badge ? `<span class="${tab.badgeClass || 'bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full text-[10px] font-bold'}">${escapeHtml(tab.badge)}</span>` : ''}
+                    </button>
+                `).join('');
+            }
+
+            if (panelsContainer) {
+                panelsContainer.innerHTML = projectTabs.map(tab => `
+                    <div id="tab-${tab.id}" class="tab-content ${tab.id === 'sobre' ? 'active' : ''}">
+                        ${tab.content}
+                    </div>
+                `).join('');
+            }
+        }
+
         function renderHomeContent() {
             renderHomeProfiles();
             renderHomeStats();
@@ -1709,6 +1782,7 @@
         }
         
         renderHomeContent();
+        renderProjectTabs();
         renderDonorDashboard();
         renderResearcherDashboard();
         renderCreateFormContent();
