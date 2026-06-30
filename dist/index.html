@@ -8,14 +8,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=DM+Serif+Display&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { sans: ['Inter', 'sans-serif'], serif: ['DM Serif Display', 'serif'] },
-                    colors: { primary: '#0F9B58', 'primary-dark': '#0B7A45', surface: '#F8FAFC', dark: '#0F172A' }
-                }
-            }
+// Configuração do tema customizado do Tailwind (cores, fontes da marca CrowdAcadêmico)
+tailwind.config = {
+    theme: {
+        extend: {
+            fontFamily: { sans: ['Inter', 'sans-serif'], serif: ['DM Serif Display', 'serif'] },
+            colors: { primary: '#0F9B58', 'primary-dark': '#0B7A45', surface: '#F8FAFC', dark: '#0F172A' }
         }
+    }
+}
+
     </script>
     <style>
         .view-section { display: none; opacity: 0; transition: opacity 0.3s ease-in-out; }
@@ -34,6 +36,7 @@
         .toggle-checkbox:checked + .toggle-label { background-color: #0F9B58; }
         .toggle-checkbox { right: 0; z-index: 1; border-color: #e2e8f0; transition: all 0.3s; }
         .toggle-label { width: 3rem; height: 1.5rem; background-color: #cbd5e1; border-radius: 9999px; transition: all 0.3s; }
+
     </style>
 </head>
 <body class="bg-surface text-slate-800 flex flex-col min-h-screen">
@@ -51,6 +54,7 @@
             <button onclick="nav('admin')" class="bg-slate-800 hover:bg-red-600 px-3 py-2 rounded text-left transition-colors">8. Painel Administrativo</button>
         </div>
     </div>
+
 
     <header class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
@@ -71,8 +75,8 @@
         </div>
     </header>
 
-    <div id="app" class="flex-grow flex flex-col w-full">
 
+    <div id="app" class="flex-grow flex flex-col w-full">
         <main id="view-home" class="view-section active flex-grow">
             <section class="bg-gradient-to-br from-[#0A1628] via-[#0F2D1E] to-[#0A1628] py-32 relative overflow-hidden border-b border-slate-800">
                 <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1532187863486-abf9dbad1b14?q=80&w=2070&auto=format&fit=crop')] opacity-[0.18] bg-cover bg-center"></div>
@@ -1011,13 +1015,11 @@
                 footer: 'Gestão centralizada'
             }
         ];
-
         const homeStats = [
             { value: 'R$ 2.4M', valueClass: 'text-white', label: 'Levantados para a ciência' },
             { value: '143', valueClass: 'text-emerald-400', label: 'Projetos financiados' },
             { value: '18.5k', valueClass: 'text-white', label: 'Apoiadores ativos' }
         ];
-
         const featuredProjects = [
             {
                 image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80',
@@ -1070,70 +1072,6 @@
                 supportLabel: '61 apoios',
                 timeLabel: '22 dias rest.'
             }
-        ];
-
-        const donorMetrics = [
-            { value: 'R$ 2.340', label: 'Total doado', accent: 'text-dark' },
-            { value: '7', label: 'Campanhas apoiadas', accent: 'text-primary' },
-            { value: '98%', label: 'Contribuições confirmadas', accent: 'text-emerald-600' }
-        ];
-
-        const donorFollowedCampaigns = [
-            { title: 'Microplásticos no Rio Paraná', meta: 'Em captação', accent: 'bg-emerald-100 text-emerald-700' },
-            { title: 'IA Híbrida para STI', meta: 'Atualização recente', accent: 'bg-blue-100 text-blue-700' }
-        ];
-
-        const donorContributions = [
-            { date: '12/06/2026', project: 'Microplásticos no Rio Paraná', value: 'R$ 150,00', payment: 'PIX', status: 'Confirmado', statusClass: 'bg-emerald-50 text-emerald-700' },
-            { date: '05/06/2026', project: 'IA Híbrida para STI', value: 'R$ 80,00', payment: 'Cartão', status: 'Processando', statusClass: 'bg-amber-50 text-amber-700' }
-        ];
-
-        const researcherStats = [
-            { value: 'R$ 4.500', label: 'Arrecadado', accent: 'text-dark' },
-            { value: '45%', label: 'Meta atingida', accent: 'text-primary' },
-            { value: '22', label: 'Doadores', accent: 'text-indigo-600' },
-            { value: '18', label: 'Dias restantes', accent: 'text-amber-600' }
-        ];
-
-        const researcherProgress = {
-            title: 'Campanha em andamento',
-            value: 'R$ 4.500 / R$ 10.000',
-            width: '45%'
-        };
-
-        const researcherProjects = [
-            { campaign: 'IA Híbrida para STI', gross: 'R$ 4.500', net: 'R$ 3.900', donors: '22', deadline: '18 dias', goal: 'R$ 10.000', status: 'Em captação', statusClass: 'bg-emerald-50 text-emerald-700' },
-            { campaign: 'Biomarcadores de Dengue', gross: 'R$ 9.800', net: 'R$ 8.500', donors: '47', deadline: '12 dias', goal: 'R$ 15.000', status: 'Quase lá', statusClass: 'bg-amber-50 text-amber-700' }
-        ];
-
-        const researcherSummaryCards = [
-            { title: 'Endossos recebidos', value: '3', accent: 'bg-emerald-50 text-emerald-700' },
-            { title: 'Atualizações publicadas', value: '5', accent: 'bg-blue-50 text-blue-700' },
-            { title: 'Pendências', value: '1', accent: 'bg-amber-50 text-amber-700' }
-        ];
-
-        const createAreaOptions = [
-            { value: 'biologicas', label: 'Ciências Biológicas' },
-            { value: 'exatas', label: 'Ciências Exatas e da Terra' },
-            { value: 'saude', label: 'Ciências da Saúde' }
-        ];
-
-        const createModelOptions = [
-            { value: 'all-or-nothing', title: 'Tudo ou Nada', description: 'Apoio só é cobrado se a meta for atingida.', checked: true },
-            { value: 'flex', title: 'Flexível', description: 'O valor arrecadado permanece com o projeto mesmo sem meta completa.', checked: false }
-        ];
-
-        const donorSidebarItems = [
-            { label: 'Meus Apoios', icon: 'fa-heart', active: true, disabled: false },
-            { label: 'Campanhas Seguidas', icon: 'fa-star', actionMessage: 'Campanhas seguidas listadas no painel do usuário.', disabled: false },
-            { label: 'Projetos Criados', icon: 'fa-lock', disabled: true }
-        ];
-
-        const researcherSidebarItems = [
-            { label: 'Meus Projetos', icon: 'fa-flask', active: true },
-            { label: 'Extrato Financeiro', icon: 'fa-wallet' },
-            { label: 'Endossos Recebidos', icon: 'fa-comments' },
-            { label: 'Comentários', icon: 'fa-bell' }
         ];
 
         const projectTabs = [
@@ -1228,7 +1166,6 @@
                 `
             }
         ];
-
         const projectSupportInfo = [
             {
                 variant: 'default',
@@ -1248,6 +1185,62 @@
                 title: 'Garantia Tudo ou Nada',
                 body: 'Seu apoio só é efetivado (cobrado ou não devolvido) se o projeto atingir 100% da meta no prazo. Risco zero.'
             }
+        ];
+
+        const donorMetrics = [
+            { value: 'R$ 2.340', label: 'Total doado', accent: 'text-dark' },
+            { value: '7', label: 'Campanhas apoiadas', accent: 'text-primary' },
+            { value: '98%', label: 'Contribuições confirmadas', accent: 'text-emerald-600' }
+        ];
+        const donorFollowedCampaigns = [
+            { title: 'Microplásticos no Rio Paraná', meta: 'Em captação', accent: 'bg-emerald-100 text-emerald-700' },
+            { title: 'IA Híbrida para STI', meta: 'Atualização recente', accent: 'bg-blue-100 text-blue-700' }
+        ];
+        const donorContributions = [
+            { date: '12/06/2026', project: 'Microplásticos no Rio Paraná', value: 'R$ 150,00', payment: 'PIX', status: 'Confirmado', statusClass: 'bg-emerald-50 text-emerald-700' },
+            { date: '05/06/2026', project: 'IA Híbrida para STI', value: 'R$ 80,00', payment: 'Cartão', status: 'Processando', statusClass: 'bg-amber-50 text-amber-700' }
+        ];
+        const donorSidebarItems = [
+            { label: 'Meus Apoios', icon: 'fa-heart', active: true, disabled: false },
+            { label: 'Campanhas Seguidas', icon: 'fa-star', actionMessage: 'Campanhas seguidas listadas no painel do usuário.', disabled: false },
+            { label: 'Projetos Criados', icon: 'fa-lock', disabled: true }
+        ];
+
+        const researcherStats = [
+            { value: 'R$ 4.500', label: 'Arrecadado', accent: 'text-dark' },
+            { value: '45%', label: 'Meta atingida', accent: 'text-primary' },
+            { value: '22', label: 'Doadores', accent: 'text-indigo-600' },
+            { value: '18', label: 'Dias restantes', accent: 'text-amber-600' }
+        ];
+        const researcherProgress = {
+            title: 'Campanha em andamento',
+            value: 'R$ 4.500 / R$ 10.000',
+            width: '45%'
+        };
+        const researcherProjects = [
+            { campaign: 'IA Híbrida para STI', gross: 'R$ 4.500', net: 'R$ 3.900', donors: '22', deadline: '18 dias', goal: 'R$ 10.000', status: 'Em captação', statusClass: 'bg-emerald-50 text-emerald-700' },
+            { campaign: 'Biomarcadores de Dengue', gross: 'R$ 9.800', net: 'R$ 8.500', donors: '47', deadline: '12 dias', goal: 'R$ 15.000', status: 'Quase lá', statusClass: 'bg-amber-50 text-amber-700' }
+        ];
+        const researcherSummaryCards = [
+            { title: 'Endossos recebidos', value: '3', accent: 'bg-emerald-50 text-emerald-700' },
+            { title: 'Atualizações publicadas', value: '5', accent: 'bg-blue-50 text-blue-700' },
+            { title: 'Pendências', value: '1', accent: 'bg-amber-50 text-amber-700' }
+        ];
+        const researcherSidebarItems = [
+            { label: 'Meus Projetos', icon: 'fa-flask', active: true },
+            { label: 'Extrato Financeiro', icon: 'fa-wallet' },
+            { label: 'Endossos Recebidos', icon: 'fa-comments' },
+            { label: 'Comentários', icon: 'fa-bell' }
+        ];
+
+        const createAreaOptions = [
+            { value: 'biologicas', label: 'Ciências Biológicas' },
+            { value: 'exatas', label: 'Ciências Exatas e da Terra' },
+            { value: 'saude', label: 'Ciências da Saúde' }
+        ];
+        const createModelOptions = [
+            { value: 'all-or-nothing', title: 'Tudo ou Nada', description: 'Apoio só é cobrado se a meta for atingida.', checked: true },
+            { value: 'flex', title: 'Flexível', description: 'O valor arrecadado permanece com o projeto mesmo sem meta completa.', checked: false }
         ];
 
         const adminMenuGroups = [
@@ -1271,43 +1264,35 @@
                 ]
             }
         ];
-
         const adminOverviewMetrics = [
             { label: 'Campanhas Ativas', value: '12', status: 'Publicadas', statusClass: 'bg-emerald-50 text-emerald-700' },
             { label: 'Aguardando Aprovação', value: '4', status: 'Em análise', statusClass: 'bg-amber-50 text-amber-700' },
             { label: 'Campanhas com Sucesso', value: '8', status: 'Encerradas', statusClass: 'bg-emerald-50 text-emerald-700' },
             { label: 'Não Atingidas', value: '3', status: 'Encerradas', statusClass: 'bg-rose-50 text-rose-700' }
         ];
-
         const adminPendingApprovals = [
             { submission: 'Hoje, 14:30', project: 'Testes de VRM em Placas B450', researcher: 'Lucas Novais (IFSP)', model: 'Tudo ou Nada', modelClass: 'bg-amber-100 text-amber-700', value: 'R$ 15.000' }
         ];
-
         const adminUpgradeRequests = [
             { requester: 'Lucas Novais', link: 'IFSP', date: '12/06/2026', status: 'Pendente', statusClass: 'bg-amber-100 text-amber-700' },
             { requester: 'Mariana Silva', link: 'Unesp', date: '08/06/2026', status: 'Aprovado', statusClass: 'bg-emerald-100 text-emerald-700' }
         ];
-
         const adminComplaints = [
             { type: 'Campanha', target: 'Ondas Sustentáveis', complainant: 'Pedro Costa', date: '13/06/2026', status: 'Pendente', statusClass: 'bg-amber-100 text-amber-700' },
             { type: 'Perfil', target: 'Dra. Mariana Alves', complainant: 'Clara Souza', date: '11/06/2026', status: 'Em Análise', statusClass: 'bg-blue-100 text-blue-700' }
         ];
-
         const adminEarlyClosures = [
             { researcher: 'Prof.ª Ana Ribeiro', campaign: 'Sensor de Poluição Urbana', model: 'Flexível', value: 'R$ 8.200', reason: 'Mudança de escopo para protótipo de campo.' }
         ];
-
         const adminCnpqAreas = [
             { name: 'Ciências Exatas e da Terra', status: 'Ativo', statusClass: 'bg-emerald-50 text-emerald-700' },
             { name: 'Engenharias', status: 'Ativo', statusClass: 'bg-emerald-50 text-emerald-700' },
             { name: 'Ciências Agrárias', status: 'Inativo', statusClass: 'bg-slate-100 text-slate-600', inactive: true }
         ];
-
         const adminComplaintReasons = [
             { name: 'Conteúdo Fraudulento', status: 'Ativo', statusClass: 'bg-emerald-50 text-emerald-700' },
             { name: 'Pesquisador Falso', status: 'Ativo', statusClass: 'bg-emerald-50 text-emerald-700' }
         ];
-
         const adminRbacRows = [
             { resource: 'Doar via PIX (RF-046)', anonymous: '✔', registered: '✔', researcher: '✔', admin: '✔' },
             { resource: 'Doar via Cartão (RF-047)', anonymous: '—', registered: '✔', researcher: '✔', admin: '✔' },
@@ -1325,12 +1310,49 @@
                 .replace(/\"/g, '&quot;')
                 .replace(/'/g, '&#39;');
         }
-
         function escapeAttribute(value) {
             return String(value)
                 .replace(/&/g, '&amp;')
                 .replace(/"/g, '&quot;')
                 .replace(/'/g, '&#39;');
+        }
+        function renderSidebarNav(containerId, items) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            container.innerHTML = items.map(item => {
+                const actionAttr = item.actionMessage ? `onclick="showAction('${escapeAttribute(item.actionMessage)}')"` : '';
+                return `
+                    <button ${item.disabled ? 'disabled' : ''} ${actionAttr} class="w-full flex items-center justify-between px-4 py-3 text-sm font-bold rounded-xl ${item.active ? 'bg-primary/10 text-primary-dark' : item.disabled ? 'bg-slate-100 text-slate-400 border border-slate-200 cursor-not-allowed' : 'text-slate-600 hover:bg-slate-50 transition-colors'}">
+                        <span class="flex items-center gap-3"><i class="fa-solid ${item.icon} w-4"></i> ${escapeHtml(item.label)}</span>
+                        ${item.active ? '<i class="fa-solid fa-chevron-right text-[10px]"></i>' : ''}
+                    </button>
+                `;
+            }).join('');
+        }
+        function showAction(message) {
+            if(window.navigator && navigator.clipboard) {
+                console.log('Action:', message);
+            }
+            alert(message);
+        }
+        function nav(viewId) {
+            // Oculta todas as sections
+            document.querySelectorAll('.view-section').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            const header = document.querySelector('header');
+            const footer = document.querySelector('footer');
+            header.style.display = 'block';
+            footer.style.display = 'block';
+
+            // Exibe a tela alvo
+            const target = document.getElementById('view-' + viewId);
+            if(target) {
+                target.classList.add('active');
+                if (viewId === 'admin') setAdminTab('visao-geral');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
         }
 
         function renderHomeProfiles() {
@@ -1348,7 +1370,6 @@
                 </div>
             `).join('');
         }
-
         function renderHomeStats() {
             const container = document.getElementById('home-stats');
             if (!container) return;
@@ -1356,7 +1377,6 @@
                 <div class="py-4 md:py-0"><div class="text-4xl md:text-5xl font-black mb-2 tracking-tight ${stat.valueClass}">${escapeHtml(stat.value)}</div><div class="text-slate-400 text-sm font-bold uppercase tracking-widest">${escapeHtml(stat.label)}</div></div>
             `).join('');
         }
-
         function renderFeaturedProjects() {
             const container = document.getElementById('project-cards');
             if (!container) return;
@@ -1394,19 +1414,10 @@
                 </div>
             `).join('');
         }
-
-        function renderSidebarNav(containerId, items) {
-            const container = document.getElementById(containerId);
-            if (!container) return;
-            container.innerHTML = items.map(item => {
-                const actionAttr = item.actionMessage ? `onclick="showAction('${escapeAttribute(item.actionMessage)}')"` : '';
-                return `
-                    <button ${item.disabled ? 'disabled' : ''} ${actionAttr} class="w-full flex items-center justify-between px-4 py-3 text-sm font-bold rounded-xl ${item.active ? 'bg-primary/10 text-primary-dark' : item.disabled ? 'bg-slate-100 text-slate-400 border border-slate-200 cursor-not-allowed' : 'text-slate-600 hover:bg-slate-50 transition-colors'}">
-                        <span class="flex items-center gap-3"><i class="fa-solid ${item.icon} w-4"></i> ${escapeHtml(item.label)}</span>
-                        ${item.active ? '<i class="fa-solid fa-chevron-right text-[10px]"></i>' : ''}
-                    </button>
-                `;
-            }).join('');
+        function renderHomeContent() {
+            renderHomeProfiles();
+            renderHomeStats();
+            renderFeaturedProjects();
         }
 
         function renderProjectSupportInfo() {
@@ -1438,6 +1449,61 @@
                     </div>
                 `;
             }).join('');
+        }
+        function renderProjectTabs() {
+            const buttonsContainer = document.getElementById('project-tab-buttons');
+            const panelsContainer = document.getElementById('project-tab-panels');
+            if (!buttonsContainer && !panelsContainer) return;
+
+            if (buttonsContainer) {
+                buttonsContainer.innerHTML = projectTabs.map(tab => `
+                    <button onclick="setProjectTab('${tab.id}')" id="tab-btn-${tab.id}" class="${tab.id === 'sobre' ? 'bg-slate-100 text-dark font-bold' : 'text-slate-500 hover:bg-slate-50 hover:text-dark font-medium'} px-6 py-3 rounded-xl text-sm whitespace-nowrap transition flex items-center gap-2">
+                        ${escapeHtml(tab.label)}
+                        ${tab.badge ? `<span class="${tab.badgeClass || 'bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full text-[10px] font-bold'}">${escapeHtml(tab.badge)}</span>` : ''}
+                    </button>
+                `).join('');
+            }
+
+            if (panelsContainer) {
+                panelsContainer.innerHTML = projectTabs.map(tab => `
+                    <div id="tab-${tab.id}" class="tab-content ${tab.id === 'sobre' ? 'active' : ''}">
+                        ${tab.content}
+                    </div>
+                `).join('');
+            }
+        }
+        function setProjectTab(tab) {
+            const tabs = ['sobre', 'metodologia', 'atualizacoes', 'endossos'];
+            tabs.forEach(current => {
+                const content = document.getElementById('tab-' + current);
+                const button = document.getElementById('tab-btn-' + current);
+                if (content) content.classList.toggle('active', current === tab);
+                if (button) {
+                    button.classList.toggle('bg-slate-100', current === tab);
+                    button.classList.toggle('text-dark', current === tab);
+                    button.classList.toggle('text-slate-500', current !== tab);
+                }
+            });
+        }
+
+        function copyPix() {
+            const pixField = document.getElementById('pix-code');
+            if (!pixField) {
+                showAction('Não foi possível copiar o código PIX.');
+                return;
+            }
+            const value = pixField.value;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(value).then(() => {
+                    showAction('Código PIX copiado para a área de transferência.');
+                }).catch(() => {
+                    showAction('Cópia automática não disponível. Selecione e copie manualmente.');
+                });
+            } else {
+                pixField.select();
+                document.execCommand('copy');
+                showAction('Código PIX copiado para a área de transferência.');
+            }
         }
 
         function renderDonorDashboard() {
@@ -1566,7 +1632,6 @@
                 </div>
             `).join('');
         }
-
         function renderAdminContent() {
             const overviewMetrics = document.getElementById('admin-overview-metrics');
             const approvals = document.getElementById('admin-approvals-list');
@@ -1667,77 +1732,6 @@
             }
             setAdminTab(currentAdminTab);
         }
-
-        function renderProjectTabs() {
-            const buttonsContainer = document.getElementById('project-tab-buttons');
-            const panelsContainer = document.getElementById('project-tab-panels');
-            if (!buttonsContainer && !panelsContainer) return;
-
-            if (buttonsContainer) {
-                buttonsContainer.innerHTML = projectTabs.map(tab => `
-                    <button onclick="setProjectTab('${tab.id}')" id="tab-btn-${tab.id}" class="${tab.id === 'sobre' ? 'bg-slate-100 text-dark font-bold' : 'text-slate-500 hover:bg-slate-50 hover:text-dark font-medium'} px-6 py-3 rounded-xl text-sm whitespace-nowrap transition flex items-center gap-2">
-                        ${escapeHtml(tab.label)}
-                        ${tab.badge ? `<span class="${tab.badgeClass || 'bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full text-[10px] font-bold'}">${escapeHtml(tab.badge)}</span>` : ''}
-                    </button>
-                `).join('');
-            }
-
-            if (panelsContainer) {
-                panelsContainer.innerHTML = projectTabs.map(tab => `
-                    <div id="tab-${tab.id}" class="tab-content ${tab.id === 'sobre' ? 'active' : ''}">
-                        ${tab.content}
-                    </div>
-                `).join('');
-            }
-        }
-
-        function renderHomeContent() {
-            renderHomeProfiles();
-            renderHomeStats();
-            renderFeaturedProjects();
-        }
-
-        function showAction(message) {
-            if(window.navigator && navigator.clipboard) {
-                console.log('Action:', message);
-            }
-            alert(message);
-        }
-
-        function copyPix() {
-            const pixField = document.getElementById('pix-code');
-            if (!pixField) {
-                showAction('Não foi possível copiar o código PIX.');
-                return;
-            }
-            const value = pixField.value;
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(value).then(() => {
-                    showAction('Código PIX copiado para a área de transferência.');
-                }).catch(() => {
-                    showAction('Cópia automática não disponível. Selecione e copie manualmente.');
-                });
-            } else {
-                pixField.select();
-                document.execCommand('copy');
-                showAction('Código PIX copiado para a área de transferência.');
-            }
-        }
-
-        function setProjectTab(tab) {
-            const tabs = ['sobre', 'metodologia', 'atualizacoes', 'endossos'];
-            tabs.forEach(current => {
-                const content = document.getElementById('tab-' + current);
-                const button = document.getElementById('tab-btn-' + current);
-                if (content) content.classList.toggle('active', current === tab);
-                if (button) {
-                    button.classList.toggle('bg-slate-100', current === tab);
-                    button.classList.toggle('text-dark', current === tab);
-                    button.classList.toggle('text-slate-500', current !== tab);
-                }
-            });
-        }
-
         let currentAdminTab = 'visao-geral';
         function setAdminTab(tabId) {
             currentAdminTab = tabId;
@@ -1761,36 +1755,22 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function nav(viewId) {
-            // Oculta todas as sections
-            document.querySelectorAll('.view-section').forEach(el => {
-                el.classList.remove('active');
-            });
-            
-            const header = document.querySelector('header');
-            const footer = document.querySelector('footer');
-            header.style.display = 'block';
-            footer.style.display = 'block';
+// Ponto de entrada do protótipo: inicializa todas as páginas e abre a Home.
+// Cada chamada abaixo corresponde a uma página/feature, hoje em src/pages/*.
+// Quando migrar para React, cada render* vira o "useEffect inicial" ou o
+// próprio corpo do componente da respectiva página.
 
-            // Exibe a tela alvo
-            const target = document.getElementById('view-' + viewId);
-            if(target) {
-                target.classList.add('active');
-                if (viewId === 'admin') setAdminTab('visao-geral');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-        }
-        
-        renderHomeContent();
-        renderProjectTabs();
-        renderDonorDashboard();
-        renderResearcherDashboard();
-        renderCreateFormContent();
-        renderAdminMenu();
-        renderAdminContent();
+renderHomeContent();        // src/pages/home
+renderProjectTabs();        // src/pages/campanha
+renderDonorDashboard();     // src/pages/dash-user
+renderResearcherDashboard();// src/pages/dash-pesq
+renderCreateFormContent();  // src/pages/criar
+renderAdminMenu();          // src/pages/admin
+renderAdminContent();       // src/pages/admin
 
-        // Inicializa o protótipo na Home
-        nav('home');
+// Navegação inicial do protótipo (definida em shared/js/utils.js)
+nav('home');
+
     </script>
 </body>
 </html>

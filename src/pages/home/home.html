@@ -1,0 +1,91 @@
+        <main id="view-home" class="view-section active flex-grow">
+            <section class="bg-gradient-to-br from-[#0A1628] via-[#0F2D1E] to-[#0A1628] py-32 relative overflow-hidden border-b border-slate-800">
+                <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1532187863486-abf9dbad1b14?q=80&w=2070&auto=format&fit=crop')] opacity-[0.18] bg-cover bg-center"></div>
+                <div class="absolute inset-0 bg-gradient-to-b from-transparent via-[#0A1628]/75 to-[#0A1628]"></div>
+                <div class="absolute inset-0 bg-[radial-gradient(#10b981_0.8px,transparent_1px)] [background-size:32px_32px] opacity-[0.08]"></div>
+                <div class="absolute top-1/3 right-1/4 w-[28rem] h-[28rem] rounded-full bg-emerald-500/10 blur-[100px] pointer-events-none"></div>
+                <div class="absolute bottom-0 left-1/4 w-[20rem] h-[20rem] rounded-full bg-blue-500/10 blur-[80px] pointer-events-none"></div>
+
+                <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
+                    <div class="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest bg-white/10 backdrop-blur-md text-slate-300 px-3 py-2 rounded-full border border-white/15 mb-6">Requisito Funcional: Captar atenção e apresentar o propósito</div>
+                    <span class="inline-flex items-center gap-1.5 bg-emerald-500/15 backdrop-blur-sm text-emerald-300 text-xs font-bold px-4 py-2 rounded-full uppercase tracking-wider mb-7 border border-emerald-500/30">
+                        <i class="fa-solid fa-shield-check"></i> Pesquisadores Verificados via CNPq Lattes
+                    </span>
+                    <div class="inline-flex items-center justify-center text-xs uppercase tracking-[0.4em] font-black text-emerald-400 mb-5 block">CIÊNCIA FEITA NO BRASIL</div>
+                    <h1 class="font-serif text-5xl md:text-7xl text-white leading-tight mb-8 tracking-tight drop-shadow-[0_18px_24px_rgba(0,0,0,0.35)]">A pesquisa brasileira <br/>precisa de <span class="text-emerald-400">você</span>.</h1>
+                    <p class="text-lg md:text-xl text-slate-200 mb-10 max-w-2xl mx-auto leading-relaxed">Financiamento direto, transparente e sem burocracia entre sociedade e laboratórios universitários brasileiros.</p>
+                    <div class="flex flex-col sm:flex-row justify-center gap-4">
+                        <button onclick="document.getElementById('projetos').scrollIntoView({behavior:'smooth'})" class="bg-emerald-500 hover:bg-emerald-400 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all shadow-lg shadow-emerald-500/25 hover:-translate-y-0.5 hover:shadow-emerald-500/40">Apoiar um Projeto</button>
+                        <button onclick="nav('criar')" class="bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all">Sou Pesquisador</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-slate-50 py-20">
+                <div class="max-w-7xl mx-auto px-4">
+                    <div class="mb-10 text-center">
+                        <div class="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest bg-slate-100 text-slate-600 px-3 py-2 rounded-full border border-slate-200 mb-4">Requisito Funcional: Mostrar perfis de interação da plataforma</div>
+                        <h2 class="text-3xl md:text-4xl font-serif font-bold text-dark mb-3">Quatro perfis, uma experiência adaptada</h2>
+                        <p class="text-sm md:text-base text-slate-500 max-w-2xl mx-auto">Visitante anônimo, apoiador cadastrado, pesquisador e administrador aparecem com jornadas distintas e controle claro.</p>
+                    </div>
+                    <div id="profiles-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6"></div>
+                </div>
+            </section>
+
+            <section class="bg-gradient-to-r from-[#0B1E2D] via-[#10253B] to-[#0B2015] text-white py-14 relative overflow-hidden">
+                <div class="absolute inset-0 bg-[radial-gradient(#10b981_0.8px,transparent_1px)] [background-size:28px_28px] opacity-[0.05]"></div>
+                <div id="home-stats" class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-slate-700/50 relative z-10"></div>
+            </section>
+
+            <section id="projetos" class="max-w-7xl mx-auto px-4 py-20 flex flex-col lg:flex-row gap-10">
+                <aside class="w-full lg:w-64 flex-shrink-0">
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm sticky top-24">
+                        <h3 class="font-bold text-lg text-dark mb-6 flex items-center gap-2"><i class="fa-solid fa-filter text-slate-400"></i> Filtros</h3>
+                        
+                        <div class="mb-6">
+                            <h4 class="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-3">Status da Captação</h4>
+                            <div class="space-y-3">
+                                <label class="flex items-center text-sm font-medium text-slate-700 cursor-pointer group"><input type="checkbox" checked class="mr-3 w-4 h-4 text-primary rounded border-slate-300 focus:ring-primary accent-primary"><span class="group-hover:text-primary transition-colors">Em captação</span></label>
+                                <label class="flex items-center text-sm font-medium text-slate-700 cursor-pointer group"><input type="checkbox" class="mr-3 w-4 h-4 text-primary rounded border-slate-300 focus:ring-primary accent-primary"><span class="group-hover:text-primary transition-colors">Financiados (Sucesso)</span></label>
+                            </div>
+                        </div>
+
+                        <div class="mb-6">
+                            <h4 class="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-3">Área de Conhecimento</h4>
+                            <div class="space-y-3">
+                                <label class="flex items-center text-sm font-medium text-slate-700 cursor-pointer group"><input type="checkbox" class="mr-3 w-4 h-4 accent-primary rounded"><span class="group-hover:text-primary transition-colors">Ciências Biológicas</span></label>
+                                <label class="flex items-center text-sm font-medium text-slate-700 cursor-pointer group"><input type="checkbox" class="mr-3 w-4 h-4 accent-primary rounded"><span class="group-hover:text-primary transition-colors">Exatas e Engenharias</span></label>
+                                <label class="flex items-center text-sm font-medium text-slate-700 cursor-pointer group"><input type="checkbox" class="mr-3 w-4 h-4 accent-primary rounded"><span class="group-hover:text-primary transition-colors">Ciências da Saúde</span></label>
+                                <label class="flex items-center text-sm font-medium text-slate-700 cursor-pointer group"><input type="checkbox" class="mr-3 w-4 h-4 accent-primary rounded"><span class="group-hover:text-primary transition-colors">Ciências Humanas</span></label>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h4 class="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-3">Modelo de Financiamento</h4>
+                            <div class="space-y-3">
+                                <label class="flex items-center text-sm font-medium text-slate-700 cursor-pointer group"><input type="radio" name="filtro-modelo" checked class="mr-3 w-4 h-4 accent-primary"><span class="group-hover:text-primary transition-colors">Todos</span></label>
+                                <label class="flex items-center text-sm font-medium text-slate-700 cursor-pointer group"><input type="radio" name="filtro-modelo" class="mr-3 w-4 h-4 accent-primary"><span class="group-hover:text-primary transition-colors">Tudo ou Nada</span></label>
+                                <label class="flex items-center text-sm font-medium text-slate-700 cursor-pointer group"><input type="radio" name="filtro-modelo" class="mr-3 w-4 h-4 accent-primary"><span class="group-hover:text-primary transition-colors">Flexível</span></label>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+
+                <div class="flex-1">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
+                        <h2 class="text-2xl font-serif text-dark font-bold">Projetos em Destaque</h2>
+                        <select class="bg-white border border-slate-200 text-sm font-medium text-slate-700 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary px-4 py-2.5 outline-none shadow-sm cursor-pointer">
+                            <option>Mais recentes</option>
+                            <option>Maior percentual atingido</option>
+                            <option>Encerrando em breve</option>
+                        </select>
+                    </div>
+
+                    <div id="project-cards" class="grid grid-cols-1 lg:grid-cols-3 gap-10"></div>
+                    
+                    <div class="mt-12 text-center">
+                        <button onclick="showAction('Mais projetos serão exibidos em versões futuras do protótipo.');" class="bg-white border-2 border-slate-200 text-slate-600 font-bold py-3 px-8 rounded-xl hover:bg-slate-50 hover:border-slate-300 hover:text-dark transition-all shadow-sm">Carregar mais projetos</button>
+                    </div>
+                </div>
+            </section>
+        </main>

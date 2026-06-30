@@ -1,0 +1,48 @@
+        <main id="view-login" class="view-section bg-surface">
+            <div class="min-h-[calc(100vh-4rem)] flex items-center justify-center p-4">
+                <div class="max-w-md w-full bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden">
+                    <div class="px-10 pt-8">
+                        <div class="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest bg-slate-100 text-slate-600 px-3 py-2 rounded-full border border-slate-200 mb-6">Requisito Funcional: Tela de login / cadastro de usuário</div>
+                    </div>
+                    <div class="p-10 text-center border-b border-slate-100 relative overflow-hidden bg-slate-50">
+                        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-32 bg-primary/20 rounded-full blur-3xl"></div>
+                        
+                        <div class="w-14 h-14 bg-primary rounded-2xl mx-auto flex items-center justify-center text-white font-bold text-2xl mb-5 shadow-lg relative z-10"><i class="fa-solid fa-flask"></i></div>
+                        <h2 class="text-3xl font-serif font-bold text-dark mb-2 relative z-10">Bem-vindo(a)</h2>
+                        <p class="text-sm text-slate-500 font-medium relative z-10">Acesse sua conta para apoiar a ciência brasileira.</p>
+                    </div>
+                    
+                    <div class="p-10 space-y-6">
+                        <div>
+                            <label class="block text-[11px] font-black text-slate-400 uppercase tracking-widest mb-2">Seu E-mail</label>
+                            <input type="email" class="w-full bg-slate-50 border-2 border-slate-200 rounded-xl p-3.5 outline-none focus:border-primary focus:bg-white text-sm font-medium transition-colors" placeholder="seu@email.com">
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <label class="block text-[11px] font-black text-slate-400 uppercase tracking-widest">Sua Senha</label>
+                                <a href="#" onclick="showAction('Recuperação de senha simulada no protótipo.'); return false;" class="text-xs text-primary font-bold hover:underline">Esqueceu a senha?</a>
+                            </div>
+                            <input type="password" class="w-full bg-slate-50 border-2 border-slate-200 rounded-xl p-3.5 outline-none focus:border-primary focus:bg-white text-sm font-medium transition-colors" placeholder="••••••••">
+                        </div>
+                        
+                        <label class="flex items-start gap-3 cursor-pointer mt-4">
+                            <input type="checkbox" class="mt-1 w-4 h-4 accent-primary rounded border-slate-300">
+                            <span class="text-xs text-slate-500 font-medium">Aceito os <a href="#" onclick="showAction('Termos de Uso simulados no protótipo.'); return false;" class="text-primary font-bold">Termos de Uso</a> da plataforma (Obrigatório para novo cadastro).</span>
+                        </label>
+                        
+                        <button onclick="nav('dash-user')" class="w-full bg-dark hover:bg-black text-white font-bold text-lg py-4 rounded-xl transition-all shadow-lg hover:shadow-xl mt-4">Entrar / Criar Conta</button>
+                        
+                        <div class="relative flex py-4 items-center">
+                            <div class="flex-grow border-t-2 border-slate-100"></div>
+                            <span class="flex-shrink-0 mx-4 text-slate-300 text-[10px] font-black uppercase tracking-widest">Ou acesse com</span>
+                            <div class="flex-grow border-t-2 border-slate-100"></div>
+                        </div>
+                        
+                        <button onclick="showAction('Login social com Google simulado no protótipo.');" class="w-full border-2 border-slate-200 text-dark font-bold py-3.5 rounded-xl hover:bg-slate-50 transition flex items-center justify-center gap-3 text-sm">
+                            <i class="fa-brands fa-google text-red-500 text-lg"></i> Google
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>

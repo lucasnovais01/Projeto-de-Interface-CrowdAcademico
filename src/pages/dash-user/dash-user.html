@@ -1,0 +1,49 @@
+        <main id="view-dash-user" class="view-section flex-grow bg-slate-50 py-10">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest bg-slate-100 text-slate-600 px-3 py-2 rounded-full border border-slate-200 mb-6">Requisito Funcional: Painel do apoiador com histórico e navegação</div>
+            </div>
+            <div class="max-w-7xl mx-auto px-4 flex flex-col lg:flex-row gap-8">
+                <aside class="w-full lg:w-72 bg-white rounded-3xl shadow-sm border border-slate-200 p-6 h-max">
+                    <div class="flex items-center gap-4 mb-8 p-3 bg-slate-50 rounded-2xl border border-slate-100">
+                        <div class="w-14 h-14 bg-slate-200 text-slate-600 rounded-xl flex items-center justify-center font-bold text-xl shadow-inner"><i class="fa-solid fa-user"></i></div>
+                        <div>
+                            <div class="font-black text-dark">Doador Padrão</div>
+                            <div class="text-xs text-slate-500 font-medium mt-0.5">Membro desde 2026</div>
+                        </div>
+                    </div>
+                    
+                    <nav id="donor-sidebar-nav" class="space-y-2 mb-8"></nav>
+                    <p class="text-[10px] uppercase tracking-widest text-slate-400 mb-6">RF-012/RF-013: disponível somente para usuários com perfil de Pesquisador. Complete seu perfil para liberar essa aba.</p>
+                    
+                    <div class="bg-indigo-50 border border-indigo-100 rounded-2xl p-5 text-center relative overflow-hidden group">
+                        <div class="absolute -right-4 -top-4 w-16 h-16 bg-indigo-500/10 rounded-full blur-xl group-hover:bg-indigo-500/20 transition-colors"></div>
+                        <i class="fa-solid fa-graduation-cap text-indigo-500 text-3xl mb-3 drop-shadow-sm"></i>
+                        <h4 class="font-black text-indigo-950 text-sm mb-2">É um pesquisador?</h4>
+                        <p class="text-xs text-indigo-700/80 font-medium mb-4 leading-relaxed">Valide seu vínculo institucional via Lattes para criar campanhas e captar recursos.</p>
+                        <button onclick="nav('dash-pesq')" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold py-3 rounded-xl shadow-md transition-all hover:shadow-indigo-500/30">Solicitar Perfil Científico</button>
+                    </div>
+                </aside>
+
+                <div class="flex-1 space-y-8">
+                    <h2 class="text-3xl font-serif font-bold text-dark">Histórico de Contribuições (RF-007)</h2>
+                    <div id="donor-metrics" class="grid grid-cols-1 sm:grid-cols-3 gap-4"></div>
+                    <div id="donor-followed-campaigns" class="bg-slate-50 rounded-3xl border border-slate-200 p-6 mt-8"></div>
+                    <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-slate-200">
+                                <thead class="bg-slate-50">
+                                    <tr>
+                                        <th class="px-8 py-5 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Data</th>
+                                        <th class="px-8 py-5 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Projeto Apoiado</th>
+                                        <th class="px-8 py-5 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Valor</th>
+                                        <th class="px-8 py-5 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Pagamento</th>
+                                        <th class="px-8 py-5 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Status (RF-051)</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="donor-contributions" class="bg-white divide-y divide-slate-100 text-sm"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>

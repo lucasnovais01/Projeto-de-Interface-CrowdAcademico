@@ -1,0 +1,16 @@
+        .view-section { display: none; opacity: 0; transition: opacity 0.3s ease-in-out; }
+        .view-section.active { display: block; opacity: 1; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        
+        .admin-menu-item { transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease; }
+        .admin-content-panel { transition: transform 0.2s ease, box-shadow 0.2s ease; box-shadow: 0 10px 20px rgba(15, 23, 42, 0.05); }
+        .admin-content-panel:hover { transform: translateY(-1px); box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08); }
+        
+        /* Toggle Switch Customizado para as configurações */
+        .toggle-checkbox:checked { right: 0; border-color: #0F9B58; }
+        .toggle-checkbox:checked + .toggle-label { background-color: #0F9B58; }
+        .toggle-checkbox { right: 0; z-index: 1; border-color: #e2e8f0; transition: all 0.3s; }
+        .toggle-label { width: 3rem; height: 1.5rem; background-color: #cbd5e1; border-radius: 9999px; transition: all 0.3s; }
