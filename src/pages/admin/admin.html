@@ -1,0 +1,315 @@
+        <main id="view-admin" class="view-section flex-grow bg-slate-100 min-h-screen">
+            <div class="max-w-7xl mx-auto px-4 py-10">
+                <div class="grid grid-cols-1 lg:grid-cols-[280px_minmax(0,1fr)] gap-8 lg:items-start">
+                    <aside class="bg-white border border-slate-200 rounded-3xl p-6 lg:sticky lg:top-20 lg:self-start lg:h-[calc(100vh-6rem)] lg:overflow-y-auto shadow-sm">
+                        <div class="flex items-center gap-3 mb-6">
+                            <i class="fa-solid fa-shield-halved text-[#991B1B] text-lg"></i>
+                            <div>
+                                <div class="font-black text-sm text-dark">Painel Administrativo</div>
+                                <div class="text-[10px] uppercase tracking-widest text-slate-400">Acesso Restrito</div>
+                            </div>
+                        </div>
+                        <div class="border-b border-slate-200 mb-6"></div>
+
+                        <div id="admin-menu-sections"></div>
+
+                        <div class="border-b border-slate-200 mb-6"></div>
+
+                        <button type="button" onclick="nav('home')" class="w-full text-left px-3 py-2.5 flex items-center gap-3 text-sm text-slate-500 hover:text-dark hover:bg-slate-100 rounded-md transition-colors">
+                            <i class="fa-solid fa-right-from-bracket text-slate-400"></i>
+                            Sair
+                        </button>
+                    </aside>
+
+                    <div class="space-y-6">
+                        <section id="admin-visao-geral" class="admin-content-panel bg-white rounded-xl border border-slate-200 shadow-sm p-8">
+                            <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
+                                <div>
+                                    <div class="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest bg-slate-100 text-slate-600 px-3 py-2 rounded-full border border-slate-200 mb-3">Requisito Funcional: Tela de administração com métricas e moderação</div>
+                                    <h2 class="text-3xl font-serif font-bold text-dark">Painel de Controle Administrativo</h2>
+                                    <p class="text-sm text-slate-500 max-w-2xl">Visão consolidada das principais métricas e ações de monitoramento da plataforma.</p>
+                                </div>
+                                <div class="inline-flex items-center gap-2 rounded-xl bg-slate-50 px-4 py-3 border border-slate-200">
+                                    <i class="fa-solid fa-circle-check text-emerald-500"></i>
+                                    <span class="text-sm font-bold text-slate-700">Modo Protótipo</span>
+                                </div>
+                            </div>
+                            <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <button onclick="setAdminTab('aprovar')" class="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-primary text-white px-4 py-3 text-sm font-bold hover:bg-primary-dark transition">Aprovar Campanhas</button>
+                                <button onclick="setAdminTab('denuncias')" class="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-slate-100 text-slate-700 px-4 py-3 text-sm font-bold hover:bg-slate-200 transition">Ver Denúncias</button>
+                            </div>
+                            <div class="mt-8 border border-slate-200 rounded-lg overflow-hidden bg-white">
+                                <table class="w-full">
+                                    <thead class="bg-slate-50 border-b border-slate-200">
+                                        <tr>
+                                            <th class="text-left px-6 py-4 text-[11px] font-black uppercase tracking-widest text-slate-500">Métrica</th>
+                                            <th class="text-right px-6 py-4 text-[11px] font-black uppercase tracking-widest text-slate-500">Valor</th>
+                                            <th class="text-right px-6 py-4 text-[11px] font-black uppercase tracking-widest text-slate-500">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="admin-overview-metrics" class="divide-y divide-slate-200 text-sm"></tbody>
+                                </table>
+                            </div>
+
+                            <div class="grid grid-cols-1 xl:grid-cols-[1.5fr_1fr] gap-8 mt-8">
+                                <div class="bg-slate-50 p-6 rounded-3xl border border-slate-200 shadow-sm">
+                                    <div class="flex items-center justify-between mb-5">
+                                        <div>
+                                            <div class="text-[11px] font-black uppercase tracking-widest text-slate-400">Últimas Ações</div>
+                                            <h3 class="font-bold text-dark text-lg mt-1">Atividades recentes</h3>
+                                        </div>
+                                        <span class="text-[10px] uppercase font-black tracking-widest text-slate-500 bg-slate-100 px-3 py-2 rounded-full">Tempo real</span>
+                                    </div>
+                                    <ul class="space-y-4 text-sm text-slate-600">
+                                        <li class="flex items-start gap-3"><span class="mt-1 inline-flex h-2.5 w-2.5 rounded-full bg-primary"></span>Campanha “Testes de VRM em Placas B450” enviada para aprovação.</li>
+                                        <li class="flex items-start gap-3"><span class="mt-1 inline-flex h-2.5 w-2.5 rounded-full bg-amber-500"></span>3 denúncias novas recebidas para campanhas ativas.</li>
+                                        <li class="flex items-start gap-3"><span class="mt-1 inline-flex h-2.5 w-2.5 rounded-full bg-emerald-600"></span>Solicitação de upgrade de perfil de pesquisador aguardando análise.</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-slate-50 p-6 rounded-3xl border border-slate-200 shadow-sm">
+                                    <div class="text-[11px] font-black uppercase tracking-widest text-slate-400 mb-3">Tempo médio de resposta</div>
+                                    <div class="text-4xl font-black text-dark">2,8 dias</div>
+                                    <p class="text-sm text-slate-500 mt-3">Média de tempo entre a submissão e a decisão de aprovação/rejeição.</p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section id="admin-aprovar" class="admin-content-panel hidden bg-white rounded-xl border border-slate-200 shadow-sm p-8">
+                            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
+                                <div>
+                                    <h3 class="text-2xl font-bold text-dark">Projetos Pendentes de Aprovação</h3>
+                                    <p class="text-sm text-slate-500">Avalie os envios de pesquisadores e decida rapidamente.</p>
+                                    <p class="text-xs text-slate-500 uppercase tracking-widest mt-3">Rejeições exigem justificativa e mantêm a campanha oculta até novo envio. (RF-069/RF-070)</p>
+                                </div>
+                                <button onclick="showAction('Lista de campanhas pendentes atualizada.');" class="bg-primary hover:bg-primary-dark text-white text-sm font-bold px-5 py-3 rounded-xl transition-colors">Atualizar Dash</button>
+                            </div>
+                            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+                                <div class="relative w-full sm:max-w-sm">
+                                    <input type="search" class="w-full border border-slate-200 rounded-lg bg-slate-50 py-3 pl-12 pr-4 text-sm text-slate-700 outline-none focus:border-primary" placeholder="Buscar projeto ou pesquisador">
+                                    <i class="fa-solid fa-search text-slate-400 absolute left-4 top-1/2 -translate-y-1/2"></i>
+                                </div>
+                                <div class="flex flex-wrap gap-2">
+                                    <button onclick="showAction('Filtro de modelo aplicado.');" class="text-xs font-bold uppercase tracking-widest bg-slate-100 text-slate-700 px-4 py-2 rounded-lg hover:bg-slate-200 transition">Tudo ou Nada</button>
+                                    <button onclick="showAction('Filtro de modelo aplicado.');" class="text-xs font-bold uppercase tracking-widest bg-slate-100 text-slate-700 px-4 py-2 rounded-lg hover:bg-slate-200 transition">Flexível</button>
+                                    <button onclick="showAction('Mostrar apenas urgentes.');" class="text-xs font-bold uppercase tracking-widest bg-slate-100 text-slate-700 px-4 py-2 rounded-lg hover:bg-slate-200 transition">Urgente</button>
+                                </div>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full divide-y divide-slate-200">
+                                    <thead class="bg-slate-50">
+                                        <tr>
+                                            <th class="px-6 py-4 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Submissão</th>
+                                            <th class="px-6 py-4 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Projeto</th>
+                                            <th class="px-6 py-4 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Pesquisador</th>
+                                            <th class="px-6 py-4 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Modelo / Meta</th>
+                                            <th class="px-6 py-4 text-right text-[11px] font-black text-slate-400 uppercase tracking-widest">Decisão</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="admin-approvals-list" class="divide-y divide-slate-200 text-sm"></tbody>
+                                </table>
+                            </div>
+                        </section>
+
+                        <section id="admin-upgrade" class="admin-content-panel hidden bg-white rounded-xl border border-slate-200 shadow-sm p-8">
+                            <div class="flex items-center justify-between gap-4 mb-8">
+                                <div>
+                                    <h3 class="text-2xl font-bold text-dark">Solicitações de Upgrade de Perfil</h3>
+                                    <p class="text-sm text-slate-500">Acompanhe pedidos de pesquisadores que desejam obter perfil científico.</p>
+                                </div>
+                                <span class="text-xs font-bold uppercase tracking-widest text-slate-500 bg-slate-100 px-3 py-2 rounded-full">RF-010 / RF-016</span>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                                <div class="rounded-3xl border border-slate-200 bg-slate-50 p-6">
+                                    <div class="text-[11px] font-black uppercase tracking-widest text-slate-400 mb-3">Pendentes</div>
+                                    <div class="text-4xl font-black text-amber-600">3</div>
+                                </div>
+                                <div class="rounded-3xl border border-slate-200 bg-slate-50 p-6">
+                                    <div class="text-[11px] font-black uppercase tracking-widest text-slate-400 mb-3">Aprovadas</div>
+                                    <div class="text-4xl font-black text-emerald-600">12</div>
+                                </div>
+                                <div class="rounded-3xl border border-slate-200 bg-slate-50 p-6">
+                                    <div class="text-[11px] font-black uppercase tracking-widest text-slate-400 mb-3">Rejeitadas</div>
+                                    <div class="text-4xl font-black text-rose-600">1</div>
+                                </div>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full divide-y divide-slate-200 text-sm">
+                                    <thead class="bg-slate-50">
+                                        <tr>
+                                            <th class="px-6 py-4 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Solicitante</th>
+                                            <th class="px-6 py-4 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Vínculo</th>
+                                            <th class="px-6 py-4 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Data</th>
+                                            <th class="px-6 py-4 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Status</th>
+                                            <th class="px-6 py-4 text-right text-[11px] font-black text-slate-400 uppercase tracking-widest">Ação</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="admin-upgrade-list" class="bg-white divide-y divide-slate-200"></tbody>
+                                </table>
+                            </div>
+                        </section>
+
+                        <section id="admin-denuncias" class="admin-content-panel hidden bg-white rounded-xl border border-slate-200 shadow-sm p-8">
+                            <div class="flex flex-col gap-4 mb-8">
+                                <div>
+                                    <h3 class="text-2xl font-bold text-dark">Moderação e Reclamações</h3>
+                                    <p class="text-sm text-slate-500">Acompanhe denúncias de campanhas e perfis com status de averiguação.</p>
+                                </div>
+                                <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                                    <div class="relative w-full lg:max-w-sm">
+                                        <input type="search" class="w-full border border-slate-200 rounded-lg bg-slate-50 py-3 pl-12 pr-4 text-sm text-slate-700 outline-none focus:border-primary" placeholder="Buscar denúncia, campanha ou pesquisador">
+                                        <i class="fa-solid fa-search text-slate-400 absolute left-4 top-1/2 -translate-y-1/2"></i>
+                                    </div>
+                                    <div class="flex flex-wrap gap-2">
+                                        <button onclick="showAction('Filtro de tipo aplicado.');" class="text-xs font-bold uppercase tracking-widest bg-slate-100 text-slate-700 px-4 py-2 rounded-lg hover:bg-slate-200 transition">Campanhas</button>
+                                        <button onclick="showAction('Filtro de tipo aplicado.');" class="text-xs font-bold uppercase tracking-widest bg-slate-100 text-slate-700 px-4 py-2 rounded-lg hover:bg-slate-200 transition">Perfis</button>
+                                        <button onclick="showAction('Mostrar apenas pendentes.');" class="text-xs font-bold uppercase tracking-widest bg-slate-100 text-slate-700 px-4 py-2 rounded-lg hover:bg-slate-200 transition">Pendentes</button>
+                                    </div>
+                                </div>
+                                <div class="rounded-lg border border-slate-200 bg-slate-50 p-4">
+                                    <p class="text-sm text-slate-500">Campanhas denunciadas podem ser encerradas e ocultadas imediatamente para proteção do doador, conforme RF-079. A ação de encerramento por moderação deve seguir o modelo da campanha.</p>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <div class="rounded-3xl border border-slate-200 bg-slate-50 p-5">
+                                        <div class="text-[11px] font-black uppercase tracking-widest text-slate-400 mb-3">Pendente</div>
+                                        <div class="text-3xl font-black text-amber-600">4</div>
+                                    </div>
+                                    <div class="rounded-3xl border border-slate-200 bg-slate-50 p-5">
+                                        <div class="text-[11px] font-black uppercase tracking-widest text-slate-400 mb-3">Em Análise</div>
+                                        <div class="text-3xl font-black text-blue-600">2</div>
+                                    </div>
+                                    <div class="rounded-3xl border border-slate-200 bg-slate-50 p-5">
+                                        <div class="text-[11px] font-black uppercase tracking-widest text-slate-400 mb-3">Encerramentos</div>
+                                        <div class="text-3xl font-black text-emerald-600">1</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full divide-y divide-slate-200 text-sm">
+                                    <thead class="bg-slate-50">
+                                        <tr>
+                                            <th class="px-6 py-4 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Tipo</th>
+                                            <th class="px-6 py-4 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Alvo</th>
+                                            <th class="px-6 py-4 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Denunciante</th>
+                                            <th class="px-6 py-4 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Data</th>
+                                            <th class="px-6 py-4 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Status</th>
+                                            <th class="px-6 py-4 text-right text-[11px] font-black text-slate-400 uppercase tracking-widest">Ação</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="admin-complaints-list" class="bg-white divide-y divide-slate-200"></tbody>
+                                </table>
+                            </div>
+                        </section>
+
+                        <section id="admin-enc-antecipados" class="admin-content-panel hidden bg-white rounded-xl border border-slate-200 shadow-sm p-8">
+                            <div class="mb-8">
+                                <div class="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest bg-slate-100 text-slate-600 px-3 py-2 rounded-full border border-slate-200 mb-3">Requisito Funcional: RF-040/RF-041</div>
+                                <h3 class="text-2xl font-bold text-dark">Encerramentos Antecipados</h3>
+                                <p class="text-sm text-slate-500">Solicitações de pesquisadores com justificativas e valores arrecadados.</p>
+                            </div>
+                            <div class="rounded-lg border border-slate-200 bg-slate-50 p-6 mb-8">
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                    <div>
+                                        <div class="text-[11px] font-black uppercase tracking-widest text-slate-400 mb-2">Solicitações Pendentes</div>
+                                        <div class="text-3xl font-black text-amber-600">2</div>
+                                    </div>
+                                    <div>
+                                        <div class="text-[11px] font-black uppercase tracking-widest text-slate-400 mb-2">Campanhas Ativas com Pedidos</div>
+                                        <div class="text-3xl font-black text-dark">2</div>
+                                    </div>
+                                    <div>
+                                        <div class="text-[11px] font-black uppercase tracking-widest text-slate-400 mb-2">Aguardando Aprovação</div>
+                                        <div class="text-3xl font-black text-blue-600">1</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full divide-y divide-slate-200 text-sm">
+                                    <thead class="bg-slate-50">
+                                        <tr>
+                                            <th class="px-6 py-4 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Pesquisador</th>
+                                            <th class="px-6 py-4 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Campanha</th>
+                                            <th class="px-6 py-4 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Modelo</th>
+                                            <th class="px-6 py-4 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Arrecadado</th>
+                                            <th class="px-6 py-4 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Justificativa</th>
+                                            <th class="px-6 py-4 text-right text-[11px] font-black text-slate-400 uppercase tracking-widest">Ação</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="admin-early-closures-list" class="divide-y divide-slate-200 text-sm"></tbody>
+                                </table>
+                            </div>
+                        </section>
+
+                        <section id="admin-taxa" class="admin-content-panel hidden bg-white rounded-xl border border-slate-200 shadow-sm p-8">
+                            <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-6">
+                                <div>
+                                    <h3 class="text-2xl font-bold text-dark">Taxa da Plataforma</h3>
+                                    <p class="text-sm text-slate-500 max-w-2xl">Definição da taxa padrão aplicada a projetos aprovados.</p>
+                                </div>
+                                <div class="inline-flex items-center gap-2 rounded-xl bg-slate-50 px-4 py-3 border border-slate-200">
+                                    <i class="fa-solid fa-percent text-primary"></i>
+                                    <span class="text-sm font-bold text-slate-700">RF-036</span>
+                                </div>
+                            </div>
+                            <div class="rounded-2xl border border-slate-200 bg-slate-50 p-6">
+                                <div class="text-[11px] font-black uppercase tracking-widest text-slate-400 mb-3">Taxa padrão</div>
+                                <div class="text-3xl font-black text-dark">5%</div>
+                                <div class="mt-4 text-sm text-slate-600">Taxa aplicável a campanhas aprovadas. O percentual vigente no momento da aprovação é persistido por campanha.</div>
+                                <button onclick="showAction('Ajuste da taxa do protótipo realizado.');" class="mt-6 inline-flex items-center gap-2 bg-primary text-white text-sm font-bold px-5 py-3 rounded-lg hover:bg-primary-dark transition-colors">Editar Taxa</button>
+                            </div>
+                        </section>
+
+                        <section id="admin-areas" class="admin-content-panel hidden bg-white rounded-xl border border-slate-200 shadow-sm p-8">
+                            <div class="flex items-center justify-between mb-6 border-b border-slate-200 pb-4">
+                                <div>
+                                    <div class="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest bg-slate-100 text-slate-600 px-3 py-2 rounded-full border border-slate-200 mb-3">RF-028</div>
+                                    <h3 class="text-2xl font-bold text-dark">Áreas CNPq</h3>
+                                    <p class="text-sm text-slate-500">Gerencie os campos de pesquisa exibidos aos pesquisadores.</p>
+                                </div>
+                                <button onclick="showAction('Nova área cadastrada no protótipo.');" class="text-blue-500 hover:text-primary text-sm font-bold">Nova Área</button>
+                            </div>
+                            <div class="border border-slate-200 rounded-lg overflow-hidden mt-6">
+                                <table class="w-full">
+                                    <tbody id="admin-areas-list" class="divide-y divide-slate-200"></tbody>
+                                </table>
+                            </div>
+                        </section>
+
+                        <section id="admin-denuncias-tipo" class="admin-content-panel hidden bg-white rounded-xl border border-slate-200 shadow-sm p-8">
+                            <div class="flex items-center justify-between mb-6 border-b border-slate-200 pb-4">
+                                <div>
+                                    <h3 class="text-2xl font-bold text-dark">Motivos de Denúncia</h3>
+                                    <p class="text-sm text-slate-500">Defina categorias de moderação para relatórios de conteúdo.</p>
+                                </div>
+                                <button onclick="showAction('Novo motivo adicionado no protótipo.');" class="text-red-500 hover:text-red-600 text-sm font-bold">Novo Motivo</button>
+                            </div>
+                            <div class="border border-slate-200 rounded-lg overflow-hidden mt-6">
+                                <table class="w-full">
+                                    <tbody id="admin-reasons-list" class="divide-y divide-slate-200"></tbody>
+                                </table>
+                            </div>
+                        </section>
+
+                        <section id="admin-rbac" class="admin-content-panel hidden bg-white rounded-xl border border-slate-200 shadow-sm p-8">
+                            <div class="mb-6">
+                                <h3 class="text-2xl font-bold text-dark">Matriz de Permissões (RBAC)</h3>
+                                <p class="text-sm text-slate-500">Acompanhe o acesso de cada perfil aos recursos principais.</p>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full divide-y divide-slate-200 text-sm">
+                                    <thead>
+                                        <tr>
+                                            <th class="pb-4 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest w-1/3">Recurso / Ação</th>
+                                            <th class="pb-4 text-center text-[11px] font-black text-slate-400 uppercase tracking-widest">Anônimo</th>
+                                            <th class="pb-4 text-center text-[11px] font-black text-slate-400 uppercase tracking-widest">Cadastrado</th>
+                                            <th class="pb-4 text-center text-[11px] font-black text-slate-400 uppercase tracking-widest">Pesquisador</th>
+                                            <th class="pb-4 text-center text-[11px] font-black text-slate-400 uppercase tracking-widest">Admin</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="admin-rbac-list" class="divide-y divide-slate-200 text-sm"></tbody>
+                                </table>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </main>

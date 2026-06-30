@@ -1,0 +1,101 @@
+        <main id="view-campanha" class="view-section flex-grow">
+            <section class="bg-gradient-to-br from-[#0A1628] via-[#0F2D1E] to-[#0A1628] pt-14 pb-24 border-b border-slate-800 relative overflow-hidden">
+                <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1532187863486-abf9dbad1b14?q=80&w=2070&auto=format&fit=crop')] opacity-[0.18] bg-cover bg-center"></div>
+                <div class="absolute inset-0 bg-gradient-to-b from-transparent via-[#0A1628]/70 to-[#0A1628]"></div>
+                <div class="absolute inset-0 bg-[radial-gradient(#10b981_0.8px,transparent_1px)] [background-size:32px_32px] opacity-[0.065]"></div>
+                <div class="max-w-7xl mx-auto px-4 relative z-10">
+                    <div class="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest bg-white/10 text-slate-300 px-3 py-2 rounded-full border border-white/15 mb-6">Requisito Funcional: RF-044 / RF-033 — Tela de detalhes de projeto com CTA de apoio</div>
+                    <p class="text-sm font-medium text-slate-300 mb-6 flex items-center gap-2"><span class="cursor-pointer hover:text-white transition" onclick="nav('home')"><i class="fa-solid fa-house text-xs"></i> Home</span> <i class="fa-solid fa-chevron-right text-[10px]"></i> Ciências Biológicas</p>
+                    <span class="bg-amber-500/20 text-amber-200 border border-amber-500/30 text-[10px] font-black px-3 py-1.5 rounded-full uppercase tracking-widest mb-4 inline-block">Projeto Tudo ou Nada</span>
+                    <h1 class="text-3xl md:text-5xl font-serif text-white font-bold leading-tight max-w-4xl mb-6">Análise do impacto de microplásticos na saúde de peixes nativos do Rio Paraná</h1>
+                    <div class="flex flex-col sm:flex-row sm:items-center gap-4 text-slate-300 text-sm font-medium">
+                        <span class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-emerald-500 flex items-center justify-center text-white font-bold text-xs">M</div> Dra. Marina Souza (UNESP)</span>
+                        <span class="text-slate-600">|</span>
+                        <span><i class="fa-solid fa-location-dot mr-1"></i> Ilha Solteira, SP</span>
+                        <span class="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-200 text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full">2 endossos aprovados</span>
+                    </div>
+                </div>
+            </section>
+
+            <div class="max-w-7xl mx-auto px-4 -mt-16 pb-16 flex flex-col lg:flex-row gap-10 relative z-10">
+                <div class="flex-1">
+                    <div class="w-full aspect-video bg-slate-900 rounded-2xl overflow-hidden relative flex items-center justify-center mb-10 shadow-2xl group cursor-pointer border-4 border-white">
+                        <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1200&q=80" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-105 transition-transform duration-700">
+                        <div class="w-20 h-20 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center z-10 group-hover:bg-primary transition-colors border border-white/30">
+                            <i class="fa-solid fa-play text-white text-2xl ml-1"></i>
+                        </div>
+                        <span class="absolute bottom-4 left-4 bg-white/90 text-slate-700 text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full border border-slate-200">RF-033: Vídeo incorporado</span>
+                    </div>
+
+                    <div id="project-tab-buttons" class="bg-white rounded-2xl shadow-sm border border-slate-200 mb-8 p-2 flex gap-2 overflow-x-auto hide-scrollbar"></div>
+
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-8 md:p-10">
+                        <div id="project-tab-panels"></div>
+                    </div>
+                </div>
+
+                <div class="w-full lg:w-[400px] flex-shrink-0">
+                    <div class="sticky top-24 space-y-6">
+                        
+                        <div class="bg-white rounded-2xl border border-slate-200 p-8 shadow-xl">
+                            <div class="mb-8">
+                                <div class="text-5xl font-black text-dark mb-2 tracking-tight">R$ 22.750</div>
+                                <p class="text-sm text-slate-500 font-medium">arrecadados da meta de R$ 35.000</p>
+                            </div>
+                            
+                            <div class="w-full bg-slate-100 rounded-full h-3 mb-6 overflow-hidden border border-slate-200/50">
+                                <div class="bg-primary h-full rounded-full" style="width: 65%"></div>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 gap-4 mb-8">
+                                <div class="bg-slate-50 rounded-xl p-3 border border-slate-100 text-center">
+                                    <div class="text-xl font-bold text-dark">65%</div>
+                                    <div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Atingido</div>
+                                </div>
+                                <div class="bg-amber-50 rounded-xl p-3 border border-amber-100 text-center">
+                                    <div class="text-xl font-bold text-amber-700">18</div>
+                                    <div class="text-[10px] uppercase font-bold text-amber-600/70 tracking-wider">Dias Restantes</div>
+                                </div>
+                            </div>
+
+                            <button onclick="nav('checkout')" class="w-full bg-primary hover:bg-primary-dark text-white font-bold text-lg py-4 rounded-xl transition-all shadow-lg hover:shadow-primary/30 hover:-translate-y-0.5 flex items-center justify-center gap-2 mb-4">
+                                Apoiar esta Pesquisa <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                            
+                            <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 mb-6 text-sm text-slate-600">
+                                <p class="font-semibold text-slate-800 mb-2">Fluxo de contribuição</p>
+                                <p class="leading-relaxed">Para apoiar anonimamente, siga para o checkout PIX. Usuários logados podem ter opções extras de pagamento via cartão ou boleto, mas elas não estão disponíveis neste fluxo anônimo.</p>
+                            </div>
+                            
+                            <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 mb-6 text-sm text-slate-600">
+                                <p class="font-semibold text-slate-800 mb-2">Modelo de financiamento</p>
+                                <p class="leading-relaxed">Este projeto usa o modelo <strong>Tudo ou Nada</strong>: se a meta não for atingida, as contribuições não são cobradas ou são devolvidas. No modelo Flexível, o valor arrecadado permanece com o projeto.</p>
+                            </div>
+                            
+                            <div id="project-support-info" class="mb-6 text-sm text-slate-600 leading-relaxed"></div>
+                        </div>
+
+                        <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+                            <h3 class="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-5 border-b border-slate-100 pb-3">Pesquisador Responsável</h3>
+                            <div class="flex items-center gap-4 mb-5">
+                                <div class="w-14 h-14 bg-emerald-100 border border-emerald-200 text-emerald-700 rounded-full flex items-center justify-center text-xl font-black shadow-inner">M</div>
+                                <div>
+                                    <div class="font-bold text-dark text-base flex items-center gap-1.5">Dra. Marina Souza <i class="fa-solid fa-circle-check text-primary text-xs" title="Identidade Validada"></i></div>
+                                    <div class="text-xs text-slate-500 mb-0.5">Laboratório de Ecologia Aquática</div>
+                                    <div class="text-xs font-bold text-slate-600">UNESP Ilha Solteira</div>
+                                </div>
+                            </div>
+                            <a href="#" onclick="showAction('Link Lattes aberto.'); return false;" class="w-full inline-flex justify-center items-center gap-2 border-2 border-slate-200 text-slate-700 hover:border-slate-300 hover:bg-slate-50 text-sm font-bold py-3 rounded-xl transition-all">
+                                <i class="fa-solid fa-link text-slate-400"></i> Ver Currículo Lattes
+                            </a>
+                            
+                            <div class="mt-6 pt-4 border-t border-slate-100 text-center">
+                                <button onclick="showAction('Denúncia simulada. A moderação é parte do fluxo prototipado.');" class="text-xs font-bold text-slate-400 hover:text-red-500 transition flex items-center justify-center w-full gap-1.5">
+                                    <i class="fa-regular fa-flag"></i> Denunciar irregularidade
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
