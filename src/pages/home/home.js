@@ -2,12 +2,14 @@
             const container = document.getElementById('profiles-grid');
             if (!container) return;
             container.innerHTML = homeProfiles.map(profile => `
-                <div class="bg-white rounded-3xl border border-slate-200 shadow-xl p-6 hover:-translate-y-1 transition-all">
-                    <div class="inline-flex items-center justify-center w-14 h-14 rounded-3xl ${profile.iconBg} mb-5 shadow-sm"><i class="fa-solid ${profile.icon} text-lg"></i></div>
-                    <div class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-3">${escapeHtml(profile.title)}</div>
-                    <h3 class="text-xl font-bold text-dark mb-3">${escapeHtml(profile.heading)}</h3>
-                    <p class="text-sm text-slate-500">${escapeHtml(profile.description)}</p>
-                    <div class="mt-6 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-md p-5 hover:-translate-y-1 transition-all flex flex-col">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="inline-flex items-center justify-center w-10 h-10 rounded-xl ${profile.iconBg} shadow-sm flex-shrink-0"><i class="fa-solid ${profile.icon} text-sm"></i></div>
+                        <div class="text-[10px] font-black uppercase tracking-widest text-slate-400">${escapeHtml(profile.title)}</div>
+                    </div>
+                    <h3 class="text-lg font-bold text-dark mb-2">${escapeHtml(profile.heading)}</h3>
+                    <p class="text-sm text-slate-500 leading-relaxed flex-1">${escapeHtml(profile.description)}</p>
+                    <div class="mt-4 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 border-t border-slate-100 pt-4">
                         <span class="w-2 h-2 rounded-full ${profile.badge}"></span> ${escapeHtml(profile.footer)}
                     </div>
                 </div>
@@ -25,15 +27,15 @@
             if (!container) return;
             container.innerHTML = featuredProjects.map(project => `
                 <div onclick="nav('campanha')" class="bg-white rounded-2xl border border-slate-200 overflow-hidden hover:shadow-2xl transition-all cursor-pointer flex flex-col group h-full hover:-translate-y-1">
-                    <div class="h-56 relative overflow-hidden bg-slate-900">
+                    <div class="h-44 relative overflow-hidden bg-slate-900">
                         <img src="${project.image}" class="w-full h-full object-cover opacity-80 group-hover:scale-110 group-hover:opacity-100 transition-all duration-700">
                         <span class="absolute top-4 right-4 ${project.badgeClasses} text-[10px] font-black px-3 py-1.5 rounded-full uppercase tracking-widest shadow-lg border">${escapeHtml(project.badge)}</span>
                     </div>
-                    <div class="p-6 flex-1 flex flex-col">
-                        <span class="text-[11px] font-black text-primary uppercase tracking-widest mb-2 block">${escapeHtml(project.category)}</span>
-                        <h3 class="font-bold text-xl text-dark leading-tight mb-3 group-hover:text-primary transition-colors">${escapeHtml(project.title)}</h3>
-                        <p class="text-sm text-slate-500 mb-6 line-clamp-2 leading-relaxed">${escapeHtml(project.description)}</p>
-                        <div class="flex items-center gap-3 mb-8">
+                    <div class="p-5 flex-1 flex flex-col">
+                        <span class="text-[11px] font-black text-primary uppercase tracking-widest mb-1 block">${escapeHtml(project.category)}</span>
+                        <h3 class="font-bold text-base text-dark leading-tight mb-2 group-hover:text-primary transition-colors">${escapeHtml(project.title)}</h3>
+                        <p class="text-sm text-slate-500 mb-4 line-clamp-2 leading-relaxed">${escapeHtml(project.description)}</p>
+                        <div class="flex items-center gap-3 mb-4">
                             <div class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold border ${project.avatarClasses}">${escapeHtml(project.avatar)}</div>
                             <div>
                                 <div class="text-sm font-bold text-slate-700 flex items-center gap-1">${escapeHtml(project.researcher)} <i class="fa-solid fa-circle-check text-primary text-[10px]"></i></div>

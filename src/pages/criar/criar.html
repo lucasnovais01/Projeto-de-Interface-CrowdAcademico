@@ -1,6 +1,6 @@
         <main id="view-criar" class="view-section flex-grow bg-slate-50 py-12">
             <div class="max-w-4xl mx-auto px-4">
-                <div class="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest bg-slate-100 text-slate-600 px-3 py-2 rounded-full border border-slate-200 mb-6">Requisito Funcional: RF-020 / RF-024 / RF-027 / RF-028 — Formulário de submissão de campanha</div>
+                <!-- Requisito Funcional: RF-020 / RF-024 / RF-027 / RF-028 — Formulário de submissão de campanha -->
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
                     <div>
                         <h1 class="text-4xl font-serif font-bold text-dark">Submeter Projeto Científico</h1>
@@ -15,24 +15,25 @@
                     <div class="bg-blue-50 border border-blue-200 rounded-2xl p-6 mb-10 flex gap-4 items-start shadow-inner">
                         <div class="bg-blue-100 text-blue-600 p-2 rounded-lg mt-0.5"><i class="fa-solid fa-microscope text-xl"></i></div>
                         <div>
-                            <h4 class="font-bold text-blue-900 mb-1">Análise de Curadoria (RF-016)</h4>
+                            <!-- RF-016: Análise de Curadoria -->
+                            <h4 class="font-bold text-blue-900 mb-1">Análise de Curadoria</h4>
                             <p class="text-sm text-blue-800/80 font-medium leading-relaxed">Todo projeto submetido passa por uma rigorosa avaliação do Conselho Científico da plataforma antes de ser publicado. Certifique-se de que o escopo e o orçamento estejam perfeitamente justificados.</p>
                         </div>
                     </div>
 
-                    <form class="space-y-8" onsubmit="event.preventDefault(); alert('Projeto submetido com sucesso! Status: Aguardando Aprovação (RF-027).'); nav('dash-pesq')">
+                    <form class="space-y-8" onsubmit="event.preventDefault(); alert('Projeto submetido com sucesso! Status: Aguardando Aprovação.'); nav('dash-pesq')">
                         <div>
                             <label class="block text-[11px] font-black text-slate-500 uppercase tracking-widest mb-2">Título do Projeto</label>
                             <input type="text" required class="w-full bg-slate-50 border-2 border-slate-200 rounded-xl p-4 outline-none focus:border-primary focus:bg-white text-base font-bold text-dark transition-colors placeholder:font-medium placeholder:text-slate-400" placeholder="Ex: Impacto das altas temperaturas em SSDs NVMe">
                         </div>
                         <div>
-                            <label class="block text-[11px] font-black text-slate-500 uppercase tracking-widest mb-2">Descrição Detalhada do Projeto (RF-020 / RF-024)</label>
+                            <label class="block text-[11px] font-black text-slate-500 uppercase tracking-widest mb-2">Descrição Detalhada do Projeto</label>
                             <textarea required rows="6" class="w-full bg-slate-50 border-2 border-slate-200 rounded-2xl p-4 outline-none focus:border-primary focus:bg-white text-sm font-medium text-dark transition-colors resize-none" placeholder="Descreva objetivos, metodologia, resultados esperados e impacto científico."></textarea>
                         </div>
                         
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                             <div>
-                                <label class="block text-[11px] font-black text-slate-500 uppercase tracking-widest mb-2">Área CNPq (RF-028)</label>
+                                <label class="block text-[11px] font-black text-slate-500 uppercase tracking-widest mb-2">Área CNPq</label>
                                 <select id="create-area-options" class="w-full bg-slate-50 border-2 border-slate-200 rounded-xl p-4 outline-none focus:border-primary focus:bg-white text-sm font-bold text-dark transition-colors appearance-none cursor-pointer"></select>
                                 <p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Áreas ativas listadas em ordem alfabética.</p>
                             </div>
@@ -53,7 +54,7 @@
                                 </div>
                             </div>
                             <div>
-                                <label class="block text-[11px] font-black text-slate-500 uppercase tracking-widest mb-2">Prazo de Captação (RF-045)</label>
+                                <label class="block text-[11px] font-black text-slate-500 uppercase tracking-widest mb-2">Prazo de Captação</label>
                                 <div class="relative">
                                     <input type="number" required min="15" max="60" value="30" class="w-full bg-slate-50 border-2 border-slate-200 rounded-xl p-4 pr-16 outline-none focus:border-primary focus:bg-white text-base font-bold text-dark transition-colors">
                                     <span class="absolute right-4 top-1/2 -translate-y-1/2 font-bold text-slate-400 text-sm">Dias</span>
@@ -69,7 +70,8 @@
                         
                         <div class="bg-slate-50 border border-slate-200 rounded-3xl p-5 text-sm text-slate-600 mb-6">
                             <p class="font-semibold text-slate-800 mb-2">Importante</p>
-                            <p class="leading-relaxed">Projetos enviados entram em status <strong>Aguardando Aprovação</strong> e só são exibidos publicamente após aprovação do administrador (RF-027). O máximo permitido é <strong>2 campanhas simultâneas</strong> em andamento ou aguardando aprovação por pesquisador (RF-029). Em campanhas all-or-nothing, apenas PIX é aceito e contribuições são canceladas se a meta não for atingida (RF-022).</p>
+                            <!-- RF-027, RF-029, RF-022 -->
+                            <p class="leading-relaxed">Projetos enviados entram em status <strong>Aguardando Aprovação</strong> e só são exibidos publicamente após aprovação do administrador. O máximo permitido é <strong>2 campanhas simultâneas</strong> em andamento ou aguardando aprovação por pesquisador. Em campanhas all-or-nothing, apenas PIX é aceito e contribuições são canceladas se a meta não for atingida.</p>
                         </div>
                         <div class="pt-8 mt-10 border-t-2 border-slate-100 flex flex-col sm:flex-row justify-between gap-4">
                             <button type="button" onclick="nav('dash-pesq')" class="px-8 py-4 rounded-xl font-bold text-slate-500 hover:bg-slate-100 hover:text-dark transition-colors">Descartar Rascunho</button>

@@ -26,16 +26,24 @@ tailwind.config = {
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         .tab-content { display: none; }
         .tab-content.active { display: block; }
-        
+
         .admin-menu-item { transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease; }
         .admin-content-panel { transition: transform 0.2s ease, box-shadow 0.2s ease; box-shadow: 0 10px 20px rgba(15, 23, 42, 0.05); }
         .admin-content-panel:hover { transform: translateY(-1px); box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08); }
-        
-        /* Toggle Switch Customizado para as configurações */
+
+        /* Toggle Switch */
         .toggle-checkbox:checked { right: 0; border-color: #0F9B58; }
         .toggle-checkbox:checked + .toggle-label { background-color: #0F9B58; }
         .toggle-checkbox { right: 0; z-index: 1; border-color: #e2e8f0; transition: all 0.3s; }
         .toggle-label { width: 3rem; height: 1.5rem; background-color: #cbd5e1; border-radius: 9999px; transition: all 0.3s; }
+
+        /* Paleta — fundo levemente off-white para menos cinza puro */
+        body { background-color: #F1F5F9; }
+
+        /* Badges de status com mais contraste */
+        .bg-emerald-50 { background-color: #d1fae5 !important; }
+        .bg-amber-50   { background-color: #fef3c7 !important; }
+        .bg-blue-50    { background-color: #dbeafe !important; }
 
     </style>
 </head>
@@ -86,7 +94,7 @@ tailwind.config = {
                 <div class="absolute bottom-0 left-1/4 w-[20rem] h-[20rem] rounded-full bg-blue-500/10 blur-[80px] pointer-events-none"></div>
 
                 <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
-                    <div class="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest bg-white/10 backdrop-blur-md text-slate-300 px-3 py-2 rounded-full border border-white/15 mb-6">Requisito Funcional: Captar atenção e apresentar o propósito</div>
+                    <!-- Requisito Funcional: Captar atenção e apresentar o propósito -->
                     <span class="inline-flex items-center gap-1.5 bg-emerald-500/15 backdrop-blur-sm text-emerald-300 text-xs font-bold px-4 py-2 rounded-full uppercase tracking-wider mb-7 border border-emerald-500/30">
                         <i class="fa-solid fa-shield-check"></i> Pesquisadores Verificados via CNPq Lattes
                     </span>
@@ -103,7 +111,7 @@ tailwind.config = {
             <section class="bg-slate-50 py-20">
                 <div class="max-w-7xl mx-auto px-4">
                     <div class="mb-10 text-center">
-                        <div class="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest bg-slate-100 text-slate-600 px-3 py-2 rounded-full border border-slate-200 mb-4">Requisito Funcional: Mostrar perfis de interação da plataforma</div>
+                        <!-- Requisito Funcional: Mostrar perfis de interação da plataforma -->
                         <h2 class="text-3xl md:text-4xl font-serif font-bold text-dark mb-3">Quatro perfis, uma experiência adaptada</h2>
                         <p class="text-sm md:text-base text-slate-500 max-w-2xl mx-auto">Visitante anônimo, apoiador cadastrado, pesquisador e administrador aparecem com jornadas distintas e controle claro.</p>
                     </div>
@@ -175,7 +183,7 @@ tailwind.config = {
                 <div class="absolute inset-0 bg-gradient-to-b from-transparent via-[#0A1628]/70 to-[#0A1628]"></div>
                 <div class="absolute inset-0 bg-[radial-gradient(#10b981_0.8px,transparent_1px)] [background-size:32px_32px] opacity-[0.065]"></div>
                 <div class="max-w-7xl mx-auto px-4 relative z-10">
-                    <div class="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest bg-white/10 text-slate-300 px-3 py-2 rounded-full border border-white/15 mb-6">Requisito Funcional: RF-044 / RF-033 — Tela de detalhes de projeto com CTA de apoio</div>
+                    <!-- Requisito Funcional: RF-044 / RF-033 — Tela de detalhes de projeto com CTA de apoio -->
                     <p class="text-sm font-medium text-slate-300 mb-6 flex items-center gap-2"><span class="cursor-pointer hover:text-white transition" onclick="nav('home')"><i class="fa-solid fa-house text-xs"></i> Home</span> <i class="fa-solid fa-chevron-right text-[10px]"></i> Ciências Biológicas</p>
                     <span class="bg-amber-500/20 text-amber-200 border border-amber-500/30 text-[10px] font-black px-3 py-1.5 rounded-full uppercase tracking-widest mb-4 inline-block">Projeto Tudo ou Nada</span>
                     <h1 class="text-3xl md:text-5xl font-serif text-white font-bold leading-tight max-w-4xl mb-6">Análise do impacto de microplásticos na saúde de peixes nativos do Rio Paraná</h1>
@@ -195,7 +203,7 @@ tailwind.config = {
                         <div class="w-20 h-20 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center z-10 group-hover:bg-primary transition-colors border border-white/30">
                             <i class="fa-solid fa-play text-white text-2xl ml-1"></i>
                         </div>
-                        <span class="absolute bottom-4 left-4 bg-white/90 text-slate-700 text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full border border-slate-200">RF-033: Vídeo incorporado</span>
+                        <!-- RF-033: Vídeo incorporado -->
                     </div>
 
                     <div id="project-tab-buttons" class="bg-white rounded-2xl shadow-sm border border-slate-200 mb-8 p-2 flex gap-2 overflow-x-auto hide-scrollbar"></div>
@@ -273,7 +281,7 @@ tailwind.config = {
 
         <main id="view-checkout" class="view-section flex-grow bg-slate-50 py-12">
             <div class="max-w-4xl mx-auto px-4">
-                <div class="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest bg-slate-100 text-slate-600 px-3 py-2 rounded-full border border-slate-200 mb-4">Requisito Funcional: Simular fluxo de pagamento PIX para apoio rápido</div>
+                <!-- Requisito Funcional: Simular fluxo de pagamento PIX para apoio rápido -->
                 <p class="max-w-4xl text-sm text-slate-500 mb-6">Esta tela simula o fluxo de contribuição anônima via PIX. Cartão de crédito, débito e boleto são liberados apenas para usuários cadastrados. O QR Code expira em 30 minutos.</p>
             </div>
             <div class="max-w-4xl mx-auto px-4 flex flex-col md:flex-row gap-8">
@@ -340,7 +348,7 @@ tailwind.config = {
                         
                         <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 mb-6 text-sm text-slate-600">
                             <p class="font-semibold text-slate-800 mb-2">Regras de contribuição</p>
-                            <p class="leading-relaxed">PIX é o meio disponível para apoiadores anônimos. Cartão de crédito, débito e boleto são liberados apenas para usuários cadastrados. O valor mínimo por contribuição é <strong>R$ 5,00</strong> (RF-056).</p>
+                            <p class="leading-relaxed">PIX é o meio disponível para apoiadores anônimos. Cartão de crédito, débito e boleto são liberados apenas para usuários cadastrados. O valor mínimo por contribuição é <strong>R$ 5,00</strong>.</p>
                         </div>
                         
                         <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 mb-6 text-sm text-slate-600">
@@ -350,7 +358,7 @@ tailwind.config = {
                         
                         <label class="flex items-start gap-3 cursor-pointer p-4 bg-slate-50 rounded-xl border border-slate-200 mb-8 hover:bg-slate-100 transition-colors">
                             <input type="checkbox" checked class="mt-1 w-4 h-4 accent-primary rounded border-slate-300">
-                            <span class="text-xs text-slate-600 font-medium leading-relaxed">Li e aceito os <strong class="text-primary">Termos de Pagamento</strong> desta transação e compreendo as regras do modelo de financiamento <strong class="text-dark">Tudo ou Nada</strong>, incluindo as condições de reembolso aplicáveis. (RF-054)</span>
+                            <span class="text-xs text-slate-600 font-medium leading-relaxed">Li e aceito os <strong class="text-primary">Termos de Pagamento</strong> desta transação e compreendo as regras do modelo de financiamento <strong class="text-dark">Tudo ou Nada</strong>, incluindo as condições de reembolso aplicáveis.</span>
                         </label>
                         
                         <button onclick="alert('Simulação: Webhook da API confirmou o pagamento 200 OK!'); nav('dash-user')" class="w-full bg-dark hover:bg-black text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2">
@@ -369,7 +377,7 @@ tailwind.config = {
             <div class="min-h-[calc(100vh-4rem)] flex items-center justify-center p-4">
                 <div class="max-w-md w-full bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden">
                     <div class="px-10 pt-8">
-                        <div class="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest bg-slate-100 text-slate-600 px-3 py-2 rounded-full border border-slate-200 mb-6">Requisito Funcional: Tela de login / cadastro de usuário</div>
+                        <!-- Requisito Funcional: Tela de login / cadastro de usuário -->
                     </div>
                     <div class="p-10 text-center border-b border-slate-100 relative overflow-hidden bg-slate-50">
                         <div class="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-32 bg-primary/20 rounded-full blur-3xl"></div>
@@ -416,7 +424,7 @@ tailwind.config = {
 
         <main id="view-dash-user" class="view-section flex-grow bg-slate-50 py-10">
             <div class="max-w-7xl mx-auto px-4">
-                <div class="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest bg-slate-100 text-slate-600 px-3 py-2 rounded-full border border-slate-200 mb-6">Requisito Funcional: Painel do apoiador com histórico e navegação</div>
+                <!-- Requisito Funcional: Painel do apoiador com histórico e navegação -->
             </div>
             <div class="max-w-7xl mx-auto px-4 flex flex-col lg:flex-row gap-8">
                 <aside class="w-full lg:w-72 bg-white rounded-3xl shadow-sm border border-slate-200 p-6 h-max">
@@ -429,7 +437,7 @@ tailwind.config = {
                     </div>
                     
                     <nav id="donor-sidebar-nav" class="space-y-2 mb-8"></nav>
-                    <p class="text-[10px] uppercase tracking-widest text-slate-400 mb-6">RF-012/RF-013: disponível somente para usuários com perfil de Pesquisador. Complete seu perfil para liberar essa aba.</p>
+                    <!-- RF-012/RF-013: disponível somente para usuários com perfil de Pesquisador -->
                     
                     <div class="bg-indigo-50 border border-indigo-100 rounded-2xl p-5 text-center relative overflow-hidden group">
                         <div class="absolute -right-4 -top-4 w-16 h-16 bg-indigo-500/10 rounded-full blur-xl group-hover:bg-indigo-500/20 transition-colors"></div>
@@ -441,7 +449,7 @@ tailwind.config = {
                 </aside>
 
                 <div class="flex-1 space-y-8">
-                    <h2 class="text-3xl font-serif font-bold text-dark">Histórico de Contribuições (RF-007)</h2>
+                    <h2 class="text-3xl font-serif font-bold text-dark">Histórico de Contribuições</h2>
                     <div id="donor-metrics" class="grid grid-cols-1 sm:grid-cols-3 gap-4"></div>
                     <div id="donor-followed-campaigns" class="bg-slate-50 rounded-3xl border border-slate-200 p-6 mt-8"></div>
                     <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
@@ -453,7 +461,7 @@ tailwind.config = {
                                         <th class="px-8 py-5 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Projeto Apoiado</th>
                                         <th class="px-8 py-5 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Valor</th>
                                         <th class="px-8 py-5 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Pagamento</th>
-                                        <th class="px-8 py-5 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Status (RF-051)</th>
+                                        <th class="px-8 py-5 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Status</th>
                                     </tr>
                                 </thead>
                                 <tbody id="donor-contributions" class="bg-white divide-y divide-slate-100 text-sm"></tbody>
@@ -466,7 +474,7 @@ tailwind.config = {
 
         <main id="view-dash-pesq" class="view-section flex-grow bg-slate-50 py-10">
             <div class="max-w-7xl mx-auto px-4">
-                <div class="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest bg-slate-100 text-slate-600 px-3 py-2 rounded-full border border-slate-200 mb-6">Requisito Funcional: Painel do pesquisador com métricas de campanha</div>
+                <!-- Requisito Funcional: Painel do pesquisador com métricas de campanha -->
             </div>
             <div class="max-w-7xl mx-auto px-4 flex flex-col lg:flex-row gap-8">
                 <aside class="w-full lg:w-72 bg-white rounded-3xl shadow-sm border border-slate-200 p-6 h-max">
@@ -483,6 +491,7 @@ tailwind.config = {
                 </aside>
 
                 <div class="flex-1 space-y-8">
+
                     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                         <h2 class="text-3xl font-serif font-bold text-dark">Gestão de Campanhas</h2>
                         <button onclick="nav('criar')" class="bg-dark hover:bg-black text-white px-6 py-3 rounded-xl font-bold text-sm shadow-lg transition-all hover:shadow-xl hover:-translate-y-0.5 flex items-center gap-2">
@@ -507,7 +516,7 @@ tailwind.config = {
                                     <div class="text-[11px] font-black uppercase tracking-widest text-slate-400">Projetos Criados</div>
                                     <h3 class="text-2xl font-bold text-dark">Campanhas em andamento</h3>
                                 </div>
-                                <span class="text-xs font-bold uppercase tracking-widest text-slate-500 bg-slate-100 px-3 py-2 rounded-full">RF-015</span>
+
                             </div>
                             <div class="overflow-x-auto">
                                 <table class="min-w-full divide-y divide-slate-200 text-sm">
@@ -536,7 +545,7 @@ tailwind.config = {
 
         <main id="view-criar" class="view-section flex-grow bg-slate-50 py-12">
             <div class="max-w-4xl mx-auto px-4">
-                <div class="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest bg-slate-100 text-slate-600 px-3 py-2 rounded-full border border-slate-200 mb-6">Requisito Funcional: RF-020 / RF-024 / RF-027 / RF-028 — Formulário de submissão de campanha</div>
+                <!-- Requisito Funcional: RF-020 / RF-024 / RF-027 / RF-028 — Formulário de submissão de campanha -->
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
                     <div>
                         <h1 class="text-4xl font-serif font-bold text-dark">Submeter Projeto Científico</h1>
@@ -551,24 +560,25 @@ tailwind.config = {
                     <div class="bg-blue-50 border border-blue-200 rounded-2xl p-6 mb-10 flex gap-4 items-start shadow-inner">
                         <div class="bg-blue-100 text-blue-600 p-2 rounded-lg mt-0.5"><i class="fa-solid fa-microscope text-xl"></i></div>
                         <div>
-                            <h4 class="font-bold text-blue-900 mb-1">Análise de Curadoria (RF-016)</h4>
+                            <!-- RF-016: Análise de Curadoria -->
+                            <h4 class="font-bold text-blue-900 mb-1">Análise de Curadoria</h4>
                             <p class="text-sm text-blue-800/80 font-medium leading-relaxed">Todo projeto submetido passa por uma rigorosa avaliação do Conselho Científico da plataforma antes de ser publicado. Certifique-se de que o escopo e o orçamento estejam perfeitamente justificados.</p>
                         </div>
                     </div>
 
-                    <form class="space-y-8" onsubmit="event.preventDefault(); alert('Projeto submetido com sucesso! Status: Aguardando Aprovação (RF-027).'); nav('dash-pesq')">
+                    <form class="space-y-8" onsubmit="event.preventDefault(); alert('Projeto submetido com sucesso! Status: Aguardando Aprovação.'); nav('dash-pesq')">
                         <div>
                             <label class="block text-[11px] font-black text-slate-500 uppercase tracking-widest mb-2">Título do Projeto</label>
                             <input type="text" required class="w-full bg-slate-50 border-2 border-slate-200 rounded-xl p-4 outline-none focus:border-primary focus:bg-white text-base font-bold text-dark transition-colors placeholder:font-medium placeholder:text-slate-400" placeholder="Ex: Impacto das altas temperaturas em SSDs NVMe">
                         </div>
                         <div>
-                            <label class="block text-[11px] font-black text-slate-500 uppercase tracking-widest mb-2">Descrição Detalhada do Projeto (RF-020 / RF-024)</label>
+                            <label class="block text-[11px] font-black text-slate-500 uppercase tracking-widest mb-2">Descrição Detalhada do Projeto</label>
                             <textarea required rows="6" class="w-full bg-slate-50 border-2 border-slate-200 rounded-2xl p-4 outline-none focus:border-primary focus:bg-white text-sm font-medium text-dark transition-colors resize-none" placeholder="Descreva objetivos, metodologia, resultados esperados e impacto científico."></textarea>
                         </div>
                         
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                             <div>
-                                <label class="block text-[11px] font-black text-slate-500 uppercase tracking-widest mb-2">Área CNPq (RF-028)</label>
+                                <label class="block text-[11px] font-black text-slate-500 uppercase tracking-widest mb-2">Área CNPq</label>
                                 <select id="create-area-options" class="w-full bg-slate-50 border-2 border-slate-200 rounded-xl p-4 outline-none focus:border-primary focus:bg-white text-sm font-bold text-dark transition-colors appearance-none cursor-pointer"></select>
                                 <p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Áreas ativas listadas em ordem alfabética.</p>
                             </div>
@@ -589,7 +599,7 @@ tailwind.config = {
                                 </div>
                             </div>
                             <div>
-                                <label class="block text-[11px] font-black text-slate-500 uppercase tracking-widest mb-2">Prazo de Captação (RF-045)</label>
+                                <label class="block text-[11px] font-black text-slate-500 uppercase tracking-widest mb-2">Prazo de Captação</label>
                                 <div class="relative">
                                     <input type="number" required min="15" max="60" value="30" class="w-full bg-slate-50 border-2 border-slate-200 rounded-xl p-4 pr-16 outline-none focus:border-primary focus:bg-white text-base font-bold text-dark transition-colors">
                                     <span class="absolute right-4 top-1/2 -translate-y-1/2 font-bold text-slate-400 text-sm">Dias</span>
@@ -605,7 +615,8 @@ tailwind.config = {
                         
                         <div class="bg-slate-50 border border-slate-200 rounded-3xl p-5 text-sm text-slate-600 mb-6">
                             <p class="font-semibold text-slate-800 mb-2">Importante</p>
-                            <p class="leading-relaxed">Projetos enviados entram em status <strong>Aguardando Aprovação</strong> e só são exibidos publicamente após aprovação do administrador (RF-027). O máximo permitido é <strong>2 campanhas simultâneas</strong> em andamento ou aguardando aprovação por pesquisador (RF-029). Em campanhas all-or-nothing, apenas PIX é aceito e contribuições são canceladas se a meta não for atingida (RF-022).</p>
+                            <!-- RF-027, RF-029, RF-022 -->
+                            <p class="leading-relaxed">Projetos enviados entram em status <strong>Aguardando Aprovação</strong> e só são exibidos publicamente após aprovação do administrador. O máximo permitido é <strong>2 campanhas simultâneas</strong> em andamento ou aguardando aprovação por pesquisador. Em campanhas all-or-nothing, apenas PIX é aceito e contribuições são canceladas se a meta não for atingida.</p>
                         </div>
                         <div class="pt-8 mt-10 border-t-2 border-slate-100 flex flex-col sm:flex-row justify-between gap-4">
                             <button type="button" onclick="nav('dash-pesq')" class="px-8 py-4 rounded-xl font-bold text-slate-500 hover:bg-slate-100 hover:text-dark transition-colors">Descartar Rascunho</button>
@@ -645,7 +656,7 @@ tailwind.config = {
                         <section id="admin-visao-geral" class="admin-content-panel bg-white rounded-xl border border-slate-200 shadow-sm p-8">
                             <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
                                 <div>
-                                    <div class="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest bg-slate-100 text-slate-600 px-3 py-2 rounded-full border border-slate-200 mb-3">Requisito Funcional: Tela de administração com métricas e moderação</div>
+                                    <!-- Requisito Funcional: Tela de administração com métricas e moderação -->
                                     <h2 class="text-3xl font-serif font-bold text-dark">Painel de Controle Administrativo</h2>
                                     <p class="text-sm text-slate-500 max-w-2xl">Visão consolidada das principais métricas e ações de monitoramento da plataforma.</p>
                                 </div>
@@ -699,7 +710,8 @@ tailwind.config = {
                                 <div>
                                     <h3 class="text-2xl font-bold text-dark">Projetos Pendentes de Aprovação</h3>
                                     <p class="text-sm text-slate-500">Avalie os envios de pesquisadores e decida rapidamente.</p>
-                                    <p class="text-xs text-slate-500 uppercase tracking-widest mt-3">Rejeições exigem justificativa e mantêm a campanha oculta até novo envio. (RF-069/RF-070)</p>
+                                    <!-- RF-069/RF-070 -->
+                                    <p class="text-xs text-slate-500 uppercase tracking-widest mt-3">Rejeições exigem justificativa e mantêm a campanha oculta até novo envio.</p>
                                 </div>
                                 <button onclick="showAction('Lista de campanhas pendentes atualizada.');" class="bg-primary hover:bg-primary-dark text-white text-sm font-bold px-5 py-3 rounded-xl transition-colors">Atualizar Dash</button>
                             </div>
@@ -736,7 +748,7 @@ tailwind.config = {
                                     <h3 class="text-2xl font-bold text-dark">Solicitações de Upgrade de Perfil</h3>
                                     <p class="text-sm text-slate-500">Acompanhe pedidos de pesquisadores que desejam obter perfil científico.</p>
                                 </div>
-                                <span class="text-xs font-bold uppercase tracking-widest text-slate-500 bg-slate-100 px-3 py-2 rounded-full">RF-010 / RF-016</span>
+                                <!-- RF-010 / RF-016 -->
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                                 <div class="rounded-3xl border border-slate-200 bg-slate-50 p-6">
@@ -786,7 +798,8 @@ tailwind.config = {
                                     </div>
                                 </div>
                                 <div class="rounded-lg border border-slate-200 bg-slate-50 p-4">
-                                    <p class="text-sm text-slate-500">Campanhas denunciadas podem ser encerradas e ocultadas imediatamente para proteção do doador, conforme RF-079. A ação de encerramento por moderação deve seguir o modelo da campanha.</p>
+                                    <!-- RF-079 -->
+                                    <p class="text-sm text-slate-500">Campanhas denunciadas podem ser encerradas e ocultadas imediatamente para proteção do doador. A ação de encerramento por moderação deve seguir o modelo da campanha.</p>
                                 </div>
                                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                                     <div class="rounded-3xl border border-slate-200 bg-slate-50 p-5">
@@ -822,7 +835,7 @@ tailwind.config = {
 
                         <section id="admin-enc-antecipados" class="admin-content-panel hidden bg-white rounded-xl border border-slate-200 shadow-sm p-8">
                             <div class="mb-8">
-                                <div class="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest bg-slate-100 text-slate-600 px-3 py-2 rounded-full border border-slate-200 mb-3">Requisito Funcional: RF-040/RF-041</div>
+                                <!-- Requisito Funcional: RF-040/RF-041 -->
                                 <h3 class="text-2xl font-bold text-dark">Encerramentos Antecipados</h3>
                                 <p class="text-sm text-slate-500">Solicitações de pesquisadores com justificativas e valores arrecadados.</p>
                             </div>
@@ -865,9 +878,10 @@ tailwind.config = {
                                     <h3 class="text-2xl font-bold text-dark">Taxa da Plataforma</h3>
                                     <p class="text-sm text-slate-500 max-w-2xl">Definição da taxa padrão aplicada a projetos aprovados.</p>
                                 </div>
-                                <div class="inline-flex items-center gap-2 rounded-xl bg-slate-50 px-4 py-3 border border-slate-200">
+                                <!-- RF-036 -->
+                                <div class="inline-flex items-center gap-2 rounded-xl bg-emerald-50 px-4 py-3 border border-emerald-200">
                                     <i class="fa-solid fa-percent text-primary"></i>
-                                    <span class="text-sm font-bold text-slate-700">RF-036</span>
+                                    <span class="text-sm font-bold text-slate-700">Taxa da Plataforma</span>
                                 </div>
                             </div>
                             <div class="rounded-2xl border border-slate-200 bg-slate-50 p-6">
@@ -881,7 +895,7 @@ tailwind.config = {
                         <section id="admin-areas" class="admin-content-panel hidden bg-white rounded-xl border border-slate-200 shadow-sm p-8">
                             <div class="flex items-center justify-between mb-6 border-b border-slate-200 pb-4">
                                 <div>
-                                    <div class="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest bg-slate-100 text-slate-600 px-3 py-2 rounded-full border border-slate-200 mb-3">RF-028</div>
+                                    <!-- RF-028 -->
                                     <h3 class="text-2xl font-bold text-dark">Áreas CNPq</h3>
                                     <p class="text-sm text-slate-500">Gerencie os campos de pesquisa exibidos aos pesquisadores.</p>
                                 </div>
@@ -1359,12 +1373,14 @@ tailwind.config = {
             const container = document.getElementById('profiles-grid');
             if (!container) return;
             container.innerHTML = homeProfiles.map(profile => `
-                <div class="bg-white rounded-3xl border border-slate-200 shadow-xl p-6 hover:-translate-y-1 transition-all">
-                    <div class="inline-flex items-center justify-center w-14 h-14 rounded-3xl ${profile.iconBg} mb-5 shadow-sm"><i class="fa-solid ${profile.icon} text-lg"></i></div>
-                    <div class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-3">${escapeHtml(profile.title)}</div>
-                    <h3 class="text-xl font-bold text-dark mb-3">${escapeHtml(profile.heading)}</h3>
-                    <p class="text-sm text-slate-500">${escapeHtml(profile.description)}</p>
-                    <div class="mt-6 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-md p-5 hover:-translate-y-1 transition-all flex flex-col">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="inline-flex items-center justify-center w-10 h-10 rounded-xl ${profile.iconBg} shadow-sm flex-shrink-0"><i class="fa-solid ${profile.icon} text-sm"></i></div>
+                        <div class="text-[10px] font-black uppercase tracking-widest text-slate-400">${escapeHtml(profile.title)}</div>
+                    </div>
+                    <h3 class="text-lg font-bold text-dark mb-2">${escapeHtml(profile.heading)}</h3>
+                    <p class="text-sm text-slate-500 leading-relaxed flex-1">${escapeHtml(profile.description)}</p>
+                    <div class="mt-4 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 border-t border-slate-100 pt-4">
                         <span class="w-2 h-2 rounded-full ${profile.badge}"></span> ${escapeHtml(profile.footer)}
                     </div>
                 </div>
@@ -1382,15 +1398,15 @@ tailwind.config = {
             if (!container) return;
             container.innerHTML = featuredProjects.map(project => `
                 <div onclick="nav('campanha')" class="bg-white rounded-2xl border border-slate-200 overflow-hidden hover:shadow-2xl transition-all cursor-pointer flex flex-col group h-full hover:-translate-y-1">
-                    <div class="h-56 relative overflow-hidden bg-slate-900">
+                    <div class="h-44 relative overflow-hidden bg-slate-900">
                         <img src="${project.image}" class="w-full h-full object-cover opacity-80 group-hover:scale-110 group-hover:opacity-100 transition-all duration-700">
                         <span class="absolute top-4 right-4 ${project.badgeClasses} text-[10px] font-black px-3 py-1.5 rounded-full uppercase tracking-widest shadow-lg border">${escapeHtml(project.badge)}</span>
                     </div>
-                    <div class="p-6 flex-1 flex flex-col">
-                        <span class="text-[11px] font-black text-primary uppercase tracking-widest mb-2 block">${escapeHtml(project.category)}</span>
-                        <h3 class="font-bold text-xl text-dark leading-tight mb-3 group-hover:text-primary transition-colors">${escapeHtml(project.title)}</h3>
-                        <p class="text-sm text-slate-500 mb-6 line-clamp-2 leading-relaxed">${escapeHtml(project.description)}</p>
-                        <div class="flex items-center gap-3 mb-8">
+                    <div class="p-5 flex-1 flex flex-col">
+                        <span class="text-[11px] font-black text-primary uppercase tracking-widest mb-1 block">${escapeHtml(project.category)}</span>
+                        <h3 class="font-bold text-base text-dark leading-tight mb-2 group-hover:text-primary transition-colors">${escapeHtml(project.title)}</h3>
+                        <p class="text-sm text-slate-500 mb-4 line-clamp-2 leading-relaxed">${escapeHtml(project.description)}</p>
+                        <div class="flex items-center gap-3 mb-4">
                             <div class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold border ${project.avatarClasses}">${escapeHtml(project.avatar)}</div>
                             <div>
                                 <div class="text-sm font-bold text-slate-700 flex items-center gap-1">${escapeHtml(project.researcher)} <i class="fa-solid fa-circle-check text-primary text-[10px]"></i></div>
