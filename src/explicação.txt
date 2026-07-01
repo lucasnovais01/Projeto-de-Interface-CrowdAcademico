@@ -1,0 +1,224 @@
+================================================================================
+  CROWDACADÊMICO — EXPLICAÇÃO COMPLETA DO PROJETO
+  Para desenvolvedores e colaboradores
+================================================================================
+
+--------------------------------------------------------------------------------
+  O QUE ERA O PROJETO ANTES
+--------------------------------------------------------------------------------
+
+O projeto começou como um único arquivo chamado index.html com quase 1800
+linhas. Dentro dele havia tudo misturado: o visual de 8 telas diferentes, os
+estilos CSS, os dados mockados (inventados para simular um banco de dados) e
+todas as funções JavaScript. Isso funcionava, mas tornava o código difícil de
+manter — qualquer alteração numa tela exigia procurar a linha certa dentro de
+um arquivo enorme.
+
+
+--------------------------------------------------------------------------------
+  O QUE FOI FEITO
+--------------------------------------------------------------------------------
+
+O arquivo foi dividido em pedaços menores e organizados por responsabilidade,
+dentro de uma pasta chamada src/. Cada tela, cada componente reutilizável e
+cada trecho de código compartilhado virou um arquivo separado.
+
+A estrutura ficou assim:
+
+  crowdacademico-dividido/
+  │
+  ├── src/                        ← AQUI VOCÊ EDITA O CÓDIGO
+  │   │
+  │   ├── pages/                  ← Uma pasta por tela
+  │   │   ├── home/
+  │   │   │   ├── home.html           Visual da tela Home
+  │   │   │   ├── home.data.js        Dados mockados da Home (perfis, stats, projetos)
+  │   │   │   └── home.js             Funções que montam o visual da Home
+  │   │   │
+  │   │   ├── campanha/
+  │   │   │   ├── campanha.html       Visual da tela de Campanha/Projeto
+  │   │   │   ├── campanha.data.js    Dados mockados das abas e informações do projeto
+  │   │   │   └── campanha.js         Funções que montam as abas da campanha
+  │   │   │
+  │   │   ├── checkout/
+  │   │   │   ├── checkout.html       Visual da tela de Pagamento PIX
+  │   │   │   └── checkout.js         Função de copiar o código PIX
+  │   │   │
+  │   │   ├── login/
+  │   │   │   └── login.html          Visual da tela de Login/Cadastro
+  │   │   │
+  │   │   ├── dash-user/
+  │   │   │   ├── dash-user.html      Visual do painel do Doador
+  │   │   │   ├── dash-user.data.js   Dados mockados do doador (métricas, doações)
+  │   │   │   └── dash-user.js        Funções que montam o painel do doador
+  │   │   │
+  │   │   ├── dash-pesq/
+  │   │   │   ├── dash-pesq.html      Visual do painel do Pesquisador
+  │   │   │   ├── dash-pesq.data.js   Dados mockados do pesquisador (projetos, progresso)
+  │   │   │   └── dash-pesq.js        Funções que montam o painel do pesquisador
+  │   │   │
+  │   │   ├── criar/
+  │   │   │   ├── criar.html          Visual da tela de Criar Campanha
+  │   │   │   ├── criar.data.js       Dados mockados (áreas CNPQ, modelos de campanha)
+  │   │   │   └── criar.js            Funções que montam o formulário de criação
+  │   │   │
+  │   │   └── admin/
+  │   │       ├── admin.html          Visual do Painel Administrativo (todas as seções)
+  │   │       ├── admin.data.js       Dados mockados (métricas, aprovações, denúncias, RBAC)
+  │   │       └── admin.js            Funções que montam o menu lateral e o conteúdo admin
+  │   │
+  │   ├── components/             ← Partes visuais reutilizadas em todas as telas
+  │   │   ├── header/
+  │   │   │   └── header.html         Barra de navegação superior
+  │   │   ├── footer/
+  │   │   │   └── footer.html         Rodapé do site
+  │   │   └── floating-nav/
+  │   │       └── floating-nav.html   Menu flutuante de navegação entre telas (protótipo)
+  │   │
+  │   ├── shared/                 ← Código que é compartilhado entre todas as telas
+  │   │   ├── css/
+  │   │   │   └── global.css          Estilos globais (animações, transições de tela)
+  │   │   └── js/
+  │   │       ├── utils.js            Funções utilitárias: nav(), escapeHtml(),
+  │   │       │                       showAction(), renderSidebarNav()
+  │   │       └── tailwind.config.js  Cores e fontes personalizadas da marca
+  │   │
+  │   └── app.js                  ← Ponto de entrada: chama todos os renders e abre a Home
+  │
+  ├── build.js                    ← Script que gera o dist/index.html (veja abaixo)
+  │
+  └── dist/
+      └── index.html              ← ARQUIVO FINAL gerado automaticamente. Não edite este.
+
+
+--------------------------------------------------------------------------------
+  REGRA DE OURO: O QUE EDITAR E O QUE NÃO EDITAR
+--------------------------------------------------------------------------------
+
+  ✅ EDITE SEMPRE em:   src/
+
+  ❌ NUNCA EDITE:       dist/index.html
+
+
+O arquivo dist/index.html é gerado automaticamente pelo build.js. Se você
+editá-lo diretamente, suas alterações serão apagadas na próxima vez que alguém
+rodar o build. Trate-o como um arquivo descartável.
+
+
+--------------------------------------------------------------------------------
+  COMO FUNCIONA O BUILD
+--------------------------------------------------------------------------------
+
+O arquivo build.js é um script Node.js simples (sem dependências externas) que
+lê todos os arquivos de src/ e os junta em um único dist/index.html. Ele faz
+isso porque o protótipo é HTML/CSS/JS puro — o browser precisa de um arquivo
+só para funcionar sem servidor.
+
+O dist/index.html gerado terá sempre um tamanho parecido com o index.html
+original. Isso é normal e esperado. O que mudou não foi o tamanho do arquivo
+final, mas a organização do código-fonte que você mantém.
+
+
+--------------------------------------------------------------------------------
+  FLUXO DE TRABALHO DO DIA A DIA
+--------------------------------------------------------------------------------
+
+  1. Abra a pasta do projeto no seu editor (VS Code, etc.)
+
+  2. Encontre a tela que quer editar dentro de src/pages/<nome-da-tela>/
+
+  3. Edite o arquivo correspondente:
+       - Quer mudar o visual?      → edite o .html da tela
+       - Quer mudar os dados?      → edite o .data.js da tela
+       - Quer mudar um render?     → edite o .js da tela
+       - Quer mudar algo global?   → edite shared/css/global.css ou shared/js/utils.js
+
+  4. Abra o terminal na pasta do projeto e rode:
+         node build.js
+
+  5. Abra (ou recarregue) o arquivo dist/index.html no seu browser.
+     As alterações aparecerão.
+
+
+--------------------------------------------------------------------------------
+  DICA: WATCH AUTOMÁTICO
+--------------------------------------------------------------------------------
+
+Se quiser que o build rode sozinho toda vez que você salvar um arquivo, use
+o módulo "chokidar" do Node para observar mudanças. Peça ao desenvolvedor
+responsável para configurar isso — é uma adição pequena ao build.js.
+
+Alternativamente, ao migrar para React (próxima fase), o Vite faz isso
+automaticamente com hot reload, sem nenhuma configuração extra.
+
+
+--------------------------------------------------------------------------------
+  POR QUE FIZEMOS ESSA DIVISÃO? (A RAZÃO TÉCNICA)
+--------------------------------------------------------------------------------
+
+O objetivo é preparar o projeto para a migração futura para React + Nest.js.
+A estrutura atual em src/ já espelha os conceitos que serão usados:
+
+  HOJE (HTML/JS puro)           FUTURO (React + Nest.js)
+  ─────────────────────────     ─────────────────────────────────────────
+  src/pages/<tela>/             Uma rota no React Router (ex: /admin)
+  <tela>.html                   Um componente React (<AdminPage />)
+  <tela>.data.js                Uma chamada à API do Nest (fetch/axios)
+  <tela>.js (render function)   O corpo do componente React (JSX)
+  src/components/               src/components/ (igual, só vira JSX)
+  shared/js/utils.js            src/hooks/ e src/utils/ no React
+  shared/css/global.css         global.css ou variáveis CSS no React
+
+Quando chegar a hora de migrar uma tela para React, o trabalho será:
+  1. Pegar o <tela>.html e transformar em JSX (quase copiar e colar)
+  2. Pegar o <tela>.data.js e transformar em uma chamada fetch() à API do Nest
+  3. Pegar o <tela>.js e transformar no corpo do componente React
+
+A divisão atual elimina a etapa de "entender o que pertence a cada tela"
+dentro de um arquivo gigante — esse trabalho já foi feito.
+
+
+--------------------------------------------------------------------------------
+  MAPEAMENTO DAS TELAS E FUTURAS ROTAS
+--------------------------------------------------------------------------------
+
+  Pasta em src/pages/     Rota React (sugestão)        Endpoint Nest (sugestão)
+  ─────────────────────   ──────────────────────────   ─────────────────────────────
+  home                    /                            GET /projetos, GET /stats
+  campanha                /projetos/:id                GET /projetos/:id
+  checkout                /projetos/:id/checkout       POST /doacoes/pix
+  login                   /login  e  /cadastro         POST /auth/login
+  dash-user               /painel/doador               GET /doador/me
+  dash-pesq               /painel/pesquisador          GET /pesquisador/me
+  criar                   /projetos/novo               POST /projetos
+  admin                   /admin                       GET /admin/* (role: admin)
+
+
+--------------------------------------------------------------------------------
+  TECNOLOGIAS USADAS HOJE E NO FUTURO
+--------------------------------------------------------------------------------
+
+  HOJE (protótipo)
+    - HTML5, CSS3, JavaScript puro (sem framework)
+    - Tailwind CSS via CDN
+    - Font Awesome via CDN
+    - Google Fonts via CDN
+    - Node.js apenas para rodar o build.js local
+
+  FUTURO (produção)
+    - Front-end:  React + Vite (ou Next.js) + TypeScript
+    - Back-end:   Nest.js + Node.js
+    - Banco:      MySQL
+    - Estilo:     Tailwind CSS (mesmo, mas instalado via npm)
+
+
+--------------------------------------------------------------------------------
+  RESUMO EM UMA FRASE
+--------------------------------------------------------------------------------
+
+  Edite em src/ → rode node build.js → abra dist/index.html no browser.
+
+
+================================================================================
+  Dúvidas? Fale com o desenvolvedor responsável pela estrutura do projeto.
+================================================================================
